@@ -4,7 +4,7 @@
 
 本項目為「醫療法人德智會」構建現代化跨國醫療服務平台的前端應用。
 
-**技術棧**: Vue 3 + TypeScript + Tailwind CSS + DaisyUI + Pinia + Vue Router + Vue-i18n
+**技術棧**: Vue 3 + TypeScript + Tailwind CSS + Shadcn/ui + Pinia + Vue Router + Vue-i18n
 
 **支援語系**: 簡體中文 (zh-CN)、繁體中文 (zh-TW)、英文 (en)、日文 (ja)
 
@@ -40,7 +40,7 @@
 
 ### 樣式規範
 - 使用 Tailwind CSS 工具類
-- DaisyUI 組件庫提供基礎組件
+- Shadcn/ui 組件庫提供基礎組件
 - 響應式設計優先 (Mobile First)
 - 保持設計系統一致性
 
