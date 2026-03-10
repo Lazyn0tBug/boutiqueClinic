@@ -3,6 +3,22 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import type { Locale } from '@/types/locale'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
+import { Separator } from '@/components/ui/separator'
 
 const { t } = useI18n()
 const appStore = useAppStore()
@@ -48,12 +64,58 @@ const changeLanguage = async (locale: Locale) => {
     <div class="flex items-center justify-between h-16 max-w-7xl mx-auto px-4 lg:px-8">
       <!-- 左側：移動端菜單按鈕與 Logo -->
       <div class="flex items-center gap-3">
-        <button
-          @click="isMobileMenuOpen = !isMobileMenuOpen"
-          class="inline-flex lg:hidden items-center justify-center rounded-md p-2 text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-        >
-          <i class="ph ph-list text-2xl"></i>
-        </button>
+        <!-- 移動端菜單 -->
+        <Sheet v-model:open="isMobileMenuOpen">
+          <SheetTrigger as-child>
+            <Button variant="ghost" size="icon" class="lg:hidden">
+              <i class="ph ph-list text-2xl"></i>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" class="w-72">
+            <SheetHeader>
+              <SheetTitle class="flex items-center gap-2">
+                <i class="ph-fill ph-cross text-primary text-xl"></i>
+                {{ t('footer.brandName') }}
+              </SheetTitle>
+            </SheetHeader>
+            <div class="flex flex-col gap-2 mt-6">
+              <div class="font-semibold text-sm text-muted-foreground px-2 py-1 uppercase tracking-wider">
+                {{ t('nav.services') }}
+              </div>
+              <a
+                href="#services"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                @click="isMobileMenuOpen = false"
+              >{{ t('nav.servicesMenu.featured') }}</a>
+              <a
+                href="#services"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                @click="isMobileMenuOpen = false"
+              >{{ t('nav.servicesMenu.booking') }}</a>
+              <Separator class="my-2" />
+              <a
+                href="#pharmacy"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                @click="isMobileMenuOpen = false"
+              >{{ t('nav.pharmacy') }}</a>
+              <a
+                href="#partners"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                @click="isMobileMenuOpen = false"
+              >{{ t('nav.partners') }}</a>
+              <a
+                href="#information"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                @click="isMobileMenuOpen = false"
+              >{{ t('nav.cases') }}</a>
+              <a
+                href="#footer"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                @click="isMobileMenuOpen = false"
+              >{{ t('nav.about') }}</a>
+            </div>
+          </SheetContent>
+        </Sheet>
 
         <a
           class="flex items-center gap-2 font-bold text-lg md:text-xl tracking-tight hover:opacity-80 transition-opacity cursor-pointer"
@@ -62,150 +124,74 @@ const changeLanguage = async (locale: Locale) => {
           <span class="text-balance">{{ t('footer.brandName') }}</span>
           <span
             class="text-xs text-muted-foreground font-normal hidden xl:inline-block border-l border-border pl-2 ml-1 text-pretty"
-            >{{ t('about.subtitle') }}</span
-          >
+          >{{ t('about.subtitle') }}</span>
         </a>
       </div>
 
       <!-- 中間：PC 端導航菜單 -->
       <nav class="hidden lg:flex items-center gap-1">
-        <div class="relative group">
-          <button
-            class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >
-            {{ t('nav.services') }}
-          </button>
-          <div class="absolute left-0 top-full hidden group-hover:block pt-2">
-            <div
-              class="w-40 rounded-md border border-border bg-popover p-1 shadow-md text-popover-foreground"
-            >
-              <a
-                href="#services"
-                class="block w-full rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-                >{{ t('nav.servicesMenu.featured') }}</a
-              >
-              <a
-                href="#services"
-                class="block w-full rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-                >{{ t('nav.servicesMenu.booking') }}</a
-              >
-            </div>
-          </div>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button variant="ghost">{{ t('nav.services') }}</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              <a href="#services">{{ t('nav.servicesMenu.featured') }}</a>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <a href="#services">{{ t('nav.servicesMenu.booking') }}</a>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-        <a
-          href="#pharmacy"
-          class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >{{ t('nav.pharmacy') }}</a
-        >
-        <a
-          href="#partners"
-          class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >{{ t('nav.partners') }}</a
-        >
-        <a
-          href="#information"
-          class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >{{ t('nav.cases') }}</a
-        >
-        <a
-          href="#footer"
-          class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >{{ t('nav.about') }}</a
-        >
+        <Button variant="ghost" as-child>
+          <a href="#pharmacy">{{ t('nav.pharmacy') }}</a>
+        </Button>
+        <Button variant="ghost" as-child>
+          <a href="#partners">{{ t('nav.partners') }}</a>
+        </Button>
+        <Button variant="ghost" as-child>
+          <a href="#information">{{ t('nav.cases') }}</a>
+        </Button>
+        <Button variant="ghost" as-child>
+          <a href="#footer">{{ t('nav.about') }}</a>
+        </Button>
       </nav>
 
       <!-- 右側：功能按鈕 -->
       <div class="flex items-center gap-1 md:gap-2">
-        <div class="relative group">
-          <button
-            class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-3 border border-transparent hover:border-border"
-          >
-            <i class="ph ph-translate text-lg"></i>
-            <span class="font-medium mx-1 tracking-wide">{{ displayLangCode }}</span>
-            <i class="ph ph-caret-down text-xs text-muted-foreground"></i>
-          </button>
-          <div class="absolute right-0 top-full hidden group-hover:block pt-2">
-            <div
-              class="w-36 rounded-md border border-border bg-popover p-1 shadow-md text-popover-foreground"
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button variant="ghost" class="gap-1">
+              <i class="ph ph-translate text-lg"></i>
+              <span class="font-medium tracking-wide">{{ displayLangCode }}</span>
+              <i class="ph ph-caret-down text-xs text-muted-foreground"></i>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              v-for="lang in languages"
+              :key="lang.code"
+              @click="changeLanguage(lang.code)"
             >
-              <button
-                v-for="lang in languages"
-                :key="lang.code"
-                @click="changeLanguage(lang.code)"
-                class="flex w-full items-center rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors text-left"
-              >
-                {{ lang.label }}
-              </button>
-            </div>
-          </div>
-        </div>
+              {{ lang.label }}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-        <div class="relative group inline-block">
-          <a
-            href="#admin"
-            class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9 border border-transparent hover:border-border"
-          >
-            <i class="ph ph-user text-lg"></i>
-          </a>
-          <div
-            class="absolute top-full left-1/2 -translate-x-1/2 pt-2 hidden group-hover:block z-50 pointer-events-none"
-          >
-            <div
-              class="bg-popover text-popover-foreground text-xs rounded-md py-1.5 px-3 border border-border shadow-md whitespace-nowrap"
-            >
-              {{ t('footer.supportLinks.contact') }}
-            </div>
-          </div>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button variant="ghost" size="icon">
+              <i class="ph ph-user text-lg"></i>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>
+              <a href="#admin">{{ t('footer.supportLinks.contact') }}</a>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-    </div>
-
-    <!-- 移動端下拉菜單 -->
-    <div
-      v-if="isMobileMenuOpen"
-      class="lg:hidden border-t border-border bg-background p-4 flex flex-col gap-2 shadow-lg absolute w-full left-0 scroll-container scroll-thin max-h-[70vh] overflow-y-auto"
-    >
-      <div class="font-semibold text-sm text-muted-foreground px-2 py-1 uppercase tracking-wider">
-        {{ t('nav.services') }}
-      </div>
-      <a
-        href="#services"
-        class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-        @click="isMobileMenuOpen = false"
-        >{{ t('nav.servicesMenu.featured') }}</a
-      >
-      <a
-        href="#services"
-        class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-        @click="isMobileMenuOpen = false"
-        >{{ t('nav.servicesMenu.booking') }}</a
-      >
-      <div class="h-px bg-border my-1"></div>
-      <a
-        href="#pharmacy"
-        class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-        @click="isMobileMenuOpen = false"
-        >{{ t('nav.pharmacy') }}</a
-      >
-      <a
-        href="#partners"
-        class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-        @click="isMobileMenuOpen = false"
-        >{{ t('nav.partners') }}</a
-      >
-      <a
-        href="#information"
-        class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-        @click="isMobileMenuOpen = false"
-        >{{ t('nav.cases') }}</a
-      >
-      <a
-        href="#footer"
-        class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-        @click="isMobileMenuOpen = false"
-        >{{ t('nav.about') }}</a
-      >
     </div>
   </header>
 </template>

@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Separator } from '@/components/ui/separator'
+
+const { t } = useI18n()
+const showMapModal = ref(false)
+</script>
+
 <template>
   <footer class="bg-primary text-primary-foreground">
     <div class="max-w-7xl mx-auto px-4 py-8 md:py-12">
@@ -24,7 +41,9 @@
             </p>
             <p class="flex items-center gap-2">
               <i class="ph ph-map-pin"></i> 
-              <button @click="showMapModal = true" class="underline decoration-dotted hover:text-white">{{ t('common.viewMap') }}</button>
+              <Button variant="link" class="h-auto p-0 text-xs underline decoration-dotted" @click="showMapModal = true">
+                {{ t('common.viewMap') }}
+              </Button>
             </p>
           </div>
         </div>
@@ -57,18 +76,18 @@
         <div>
           <h5 class="font-semibold text-sm mb-3">{{ t('footer.followUs') }}</h5>
           <div class="flex gap-2 mb-4">
-            <a href="#" class="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+            <Button variant="ghost" size="icon" class="w-9 h-9 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20">
               <i class="ph-fill ph-youtube-logo text-lg"></i>
-            </a>
-            <a href="#" class="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+            </Button>
+            <Button variant="ghost" size="icon" class="w-9 h-9 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20">
               <i class="ph-fill ph-instagram-logo text-lg"></i>
-            </a>
-            <a href="#" class="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+            </Button>
+            <Button variant="ghost" size="icon" class="w-9 h-9 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20">
               <i class="ph-fill ph-facebook-logo text-lg"></i>
-            </a>
-            <a href="#" class="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+            </Button>
+            <Button variant="ghost" size="icon" class="w-9 h-9 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20">
               <i class="ph-fill ph-twitter-logo text-lg"></i>
-            </a>
+            </Button>
           </div>
           <!-- 官方頻道 -->
           <div class="text-xs text-primary-foreground/70">
@@ -91,7 +110,8 @@
       </div>
      
       <!-- 底部版權欄 -->
-      <div class="border-t border-primary-foreground/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-primary-foreground/60">
+      <Separator class="mt-8 bg-primary-foreground/10" />
+      <div class="pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-primary-foreground/60">
         <p>{{ t('footer.copyright') }} {{ t('common.allRightsReserved') }}</p>
         <div class="flex gap-6 mt-3 md:mt-0">
           <a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.legal.terms') }}</a>
@@ -102,38 +122,29 @@
     </div>
 
     <!-- 地圖彈窗 -->
-    <div v-if="showMapModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click="showMapModal = false">
-      <div class="bg-background rounded-lg shadow-2xl max-w-4xl w-full mx-4 overflow-hidden" @click.stop>
-        <div class="flex items-center justify-between p-4 border-b border-border">
-          <h3 class="font-semibold text-lg">{{ t('footer.mapModal.title') }}</h3>
-          <button @click="showMapModal = false" class="p-2 hover:bg-accent rounded-full transition-colors">
-            <i class="ph ph-x text-xl"></i>
-          </button>
-        </div>
+    <Dialog v-model:open="showMapModal">
+      <DialogContent class="max-w-4xl">
+        <DialogHeader>
+          <DialogTitle>{{ t('footer.mapModal.title') }}</DialogTitle>
+        </DialogHeader>
         <div class="aspect-video bg-muted flex items-center justify-center scroll-container">
           <div class="text-center p-8">
             <i class="ph ph-map-pin text-5xl text-muted-foreground mb-4"></i>
             <p class="font-medium text-lg mb-2">{{ t('footer.mapModal.mapPlaceholder') }}</p>
             <p class="text-muted-foreground">{{ t('footer.mapModal.address') }}</p>
-            <a 
-              href="https://maps.google.com" 
-              target="_blank"
-              class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity"
-            >
-              <i class="ph ph-external-link"></i>
-              {{ t('common.openInGoogleMaps') }}
-            </a>
+            <Button as-child class="mt-4">
+              <a 
+                href="https://maps.google.com" 
+                target="_blank"
+                class="inline-flex items-center gap-2"
+              >
+                <i class="ph ph-external-link"></i>
+                {{ t('common.openInGoogleMaps') }}
+              </a>
+            </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   </footer>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-
-const { t } = useI18n()
-const showMapModal = ref(false)
-</script>
