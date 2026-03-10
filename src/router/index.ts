@@ -1,6 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import HomeView from '../views/HomeView.vue'
+import { unifiedStorage, StorageKeys } from '@/utils/unifiedStorage'
+import type { Locale } from '@/types/locale'
+
+const VALID_LOCALES: Locale[] = ['zh-CN', 'zh-TW', 'en', 'ja']
+const DEFAULT_LOCALE: Locale = 'zh-TW'
+
+// 内存缓存，用于同步读取语言设置
+let cachedLocale: Locale = DEFAULT_LOCALE
+
+// 初始化缓存（在应用启动时调用）
+export const initializeRouterCache = async () => {
+  const savedLocale = await unifiedStorage.get<Locale>(StorageKeys.APP_LANGUAGE)
+  if (savedLocale && VALID_LOCALES.includes(savedLocale)) {
+    cachedLocale = savedLocale
+  }
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,8 +25,7 @@ const router = createRouter({
     {
       path: '/',
       redirect: () => {
-        const locale = localStorage.getItem('locale') || 'zh-CN'
-        return `/${locale}`
+        return `/${cachedLocale}`
       },
     },
 
@@ -52,20 +67,19 @@ const router = createRouter({
 })
 
 // 路由守卫 - 验证语言参数
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   const locale = to.params.locale as string
-  const validLocales = ['zh-CN', 'zh-TW', 'en', 'ja']
 
   // 如果是带语言前缀的路由,验证语言参数
-  if (locale && !validLocales.includes(locale)) {
+  if (locale && !VALID_LOCALES.includes(locale as Locale)) {
     // 无效语言,重定向到默认语言
-    const defaultLocale = localStorage.getItem('locale') || 'zh-CN'
-    return `/${defaultLocale}${to.path.replace(`/${locale}`, '')}`
+    return `/${cachedLocale}${to.path.replace(`/${locale}`, '')}`
   }
 
-  // 如果是有效语言,更新 localStorage
-  if (locale && validLocales.includes(locale)) {
-    localStorage.setItem('locale', locale)
+  // 如果是有效语言,更新存储和缓存
+  if (locale && VALID_LOCALES.includes(locale as Locale)) {
+    cachedLocale = locale as Locale
+    await unifiedStorage.set(StorageKeys.APP_LANGUAGE, locale as Locale)
   }
 
   // 返回 true 表示允许导航

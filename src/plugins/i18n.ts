@@ -1,19 +1,13 @@
 import { createI18n } from 'vue-i18n'
-import zhTW from '@/locales/zh-TW.json'
 import zhCN from '@/locales/zh-CN.json'
+import zhTW from '@/locales/zh-TW.json'
 import en from '@/locales/en.json'
 import ja from '@/locales/ja.json'
 
-export type Locale = 'zh-TW' | 'zh-CN' | 'en' | 'ja'
+export type Locale = 'zh-CN' | 'zh-TW' | 'en' | 'ja'
 
-// 从 localStorage 或浏览器语言获取默认语言
-function getDefaultLocale(): Locale {
-  const stored = localStorage.getItem('locale') as Locale | null
-  if (stored && ['zh-TW', 'zh-CN', 'en', 'ja'].includes(stored)) {
-    return stored
-  }
-
-  // 从浏览器语言推断
+// 从浏览器语言获取默认语言（仅作为初始值）
+function getBrowserLocale(): Locale {
   const browserLang = navigator.language.toLowerCase()
   if (browserLang.startsWith('zh-cn') || browserLang === 'zh-hans') {
     return 'zh-CN'
@@ -27,14 +21,13 @@ function getDefaultLocale(): Locale {
   if (browserLang.startsWith('en')) {
     return 'en'
   }
-
-  return 'zh-TW' // 默认繁体中文
+  return 'zh-CN' // 默认繁体中文
 }
 
 const i18n = createI18n({
   legacy: false, // 使用 Composition API 模式
-  locale: getDefaultLocale(),
-  fallbackLocale: 'zh-TW',
+  locale: getBrowserLocale(), // 初始值，后续由 appStore.initialize() 从存储中恢复
+  fallbackLocale: 'zh-CN',
   messages: {
     'zh-TW': zhTW,
     'zh-CN': zhCN,

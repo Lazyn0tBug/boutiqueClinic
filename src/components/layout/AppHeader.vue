@@ -32,8 +32,12 @@ const displayLangCode = computed(() => {
 })
 
 // 切換語言
-const changeLanguage = (locale: Locale) => {
-  appStore.setLocale(locale)
+const changeLanguage = async (locale: Locale) => {
+  try {
+    await appStore.setLocale(locale)
+  } catch (error) {
+    console.error('[AppHeader] Failed to change language:', error)
+  }
 }
 </script>
 
