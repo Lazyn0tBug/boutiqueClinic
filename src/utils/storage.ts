@@ -49,9 +49,7 @@ export type StorageKey = (typeof StorageKeys)[keyof typeof StorageKeys]
 let clinicStore: ReturnType<typeof createStore> | null = null
 
 function getStore() {
-  if (!clinicStore) {
-    clinicStore = createStore('boutique-clinic-db', 'clinic-store')
-  }
+  clinicStore ??= createStore('boutique-clinic-db', 'clinic-store')
   return clinicStore
 }
 
@@ -66,21 +64,23 @@ export interface StorageValue<T> {
 
 /**
  * 存储管理器类
+ * 使用现代私有字段语法
  */
 class StorageManager {
+  readonly #memoryCache = new Map<string, unknown>()
+  #cacheEnabled = true
+
   private get store() {
     return getStore()
   }
-  private memoryCache = new Map<string, any>()
-  private cacheEnabled = true
 
   /**
    * 获取存储的值
    */
-  async get<T = any>(key: StorageKey): Promise<T | undefined> {
+  async get<T = unknown>(key: StorageKey): Promise<T | undefined> {
     // 先检查内存缓存
-    if (this.cacheEnabled && this.memoryCache.has(key)) {
-      return this.memoryCache.get(key) as T
+    if (this.#cacheEnabled && this.#memoryCache.has(key)) {
+      return this.#memoryCache.get(key) as T
     }
 
     try {
@@ -91,14 +91,14 @@ class StorageManager {
       }
 
       // 检查是否过期
-      if (stored.expires && Date.now() > stored.expires) {
+      if (stored.expires != null && Date.now() > stored.expires) {
         await this.delete(key)
         return undefined
       }
 
       // 更新内存缓存
-      if (this.cacheEnabled) {
-        this.memoryCache.set(key, stored.data)
+      if (this.#cacheEnabled) {
+        this.#memoryCache.set(key, stored.data)
       }
 
       return stored.data
@@ -114,19 +114,19 @@ class StorageManager {
    * @param value 存储值
    * @param ttl 过期时间（毫秒）
    */
-  async set<T = any>(key: StorageKey, value: T, ttl?: number): Promise<void> {
+  async set<T = unknown>(key: StorageKey, value: T, ttl?: number): Promise<void> {
     try {
       const storageValue: StorageValue<T> = {
         data: value,
         timestamp: Date.now(),
-        expires: ttl ? Date.now() + ttl : undefined,
+        expires: ttl != null ? Date.now() + ttl : undefined,
       }
 
       await set(key, storageValue, this.store)
 
       // 更新内存缓存
-      if (this.cacheEnabled) {
-        this.memoryCache.set(key, value)
+      if (this.#cacheEnabled) {
+        this.#memoryCache.set(key, value)
       }
     } catch (error) {
       console.error(`[Storage] Failed to set key "${key}":`, error)
@@ -142,9 +142,7 @@ class StorageManager {
       await del(key, this.store)
 
       // 清除内存缓存
-      if (this.cacheEnabled) {
-        this.memoryCache.delete(key)
-      }
+      this.#memoryCache.delete(key)
     } catch (error) {
       console.error(`[Storage] Failed to delete key "${key}":`, error)
       throw error
@@ -159,9 +157,7 @@ class StorageManager {
       await clear(this.store)
 
       // 清空内存缓存
-      if (this.cacheEnabled) {
-        this.memoryCache.clear()
-      }
+      this.#memoryCache.clear()
     } catch (error) {
       console.error('[Storage] Failed to clear storage:', error)
       throw error
@@ -171,7 +167,7 @@ class StorageManager {
   /**
    * 获取所有键名
    */
-  async keys(): Promise<IDBValidKey[]> {
+  async keys(): Promise<readonly IDBValidKey[]> {
     try {
       return await getKeys(this.store)
     } catch (error) {
@@ -191,7 +187,9 @@ class StorageManager {
   /**
    * 获取多个值
    */
-  async getMany<T = any>(keys: StorageKey[]): Promise<Map<StorageKey, T | undefined>> {
+  async getMany<T = unknown>(
+    keys: readonly StorageKey[],
+  ): Promise<ReadonlyMap<StorageKey, T | undefined>> {
     const results = new Map<StorageKey, T | undefined>()
 
     await Promise.all(
@@ -207,7 +205,10 @@ class StorageManager {
   /**
    * 设置多个值
    */
-  async setMany(entries: Array<[StorageKey, any]>, ttl?: number): Promise<void> {
+  async setMany(
+    entries: readonly [StorageKey, unknown][],
+    ttl?: number,
+  ): Promise<void> {
     await Promise.all(entries.map(([key, value]) => this.set(key, value, ttl)))
   }
 
@@ -215,26 +216,30 @@ class StorageManager {
    * 启用/禁用内存缓存
    */
   setCacheEnabled(enabled: boolean): void {
-    this.cacheEnabled = enabled
+    this.#cacheEnabled = enabled
     if (!enabled) {
-      this.memoryCache.clear()
+      this.#memoryCache.clear()
     }
+  }
+
+  /**
+   * 获取缓存状态
+   */
+  get cacheEnabled(): boolean {
+    return this.#cacheEnabled
   }
 
   /**
    * 清空内存缓存
    */
   clearCache(): void {
-    this.memoryCache.clear()
+    this.#memoryCache.clear()
   }
 
   /**
    * 获取存储使用情况（估算）
    */
-  async getStorageInfo(): Promise<{
-    keyCount: number
-    estimatedSize: number
-  }> {
+  async getStorageInfo(): Promise<Readonly<{ keyCount: number; estimatedSize: number }>> {
     try {
       const allKeys = await this.keys()
       let estimatedSize = 0
@@ -260,19 +265,18 @@ class StorageManager {
   /**
    * 导出所有数据（用于备份）
    */
-  async exportAll(): Promise<Record<string, any>> {
+  async exportAll(): Promise<Readonly<Record<string, unknown>>> {
     try {
       const allKeys = await this.keys()
-      const data: Record<string, any> = {}
+      const entries = await Promise.all(
+        allKeys.map(async (key) => {
+          const value = await this.get(key as StorageKey)
+          const keyStr = typeof key === 'string' ? key : JSON.stringify(key)
+          return [keyStr, value] as const
+        }),
+      )
 
-      for (const key of allKeys) {
-        const value = await this.get(key as StorageKey)
-        if (value !== undefined) {
-          data[key as string] = value
-        }
-      }
-
-      return data
+      return Object.fromEntries(entries.filter(([, v]) => v !== undefined))
     } catch (error) {
       console.error('[Storage] Failed to export data:', error)
       return {}
@@ -282,9 +286,9 @@ class StorageManager {
   /**
    * 导入数据（用于恢复）
    */
-  async importAll(data: Record<string, any>): Promise<void> {
+  async importAll(data: Readonly<Record<string, unknown>>): Promise<void> {
     try {
-      const entries = Object.entries(data) as Array<[StorageKey, any]>
+      const entries = Object.entries(data) as [StorageKey, unknown][]
       await this.setMany(entries)
     } catch (error) {
       console.error('[Storage] Failed to import data:', error)
@@ -295,7 +299,7 @@ class StorageManager {
   /**
    * 获取原始存储值（包含元数据）
    */
-  async getRaw<T = any>(key: StorageKey): Promise<StorageValue<T> | undefined> {
+  async getRaw<T = unknown>(key: StorageKey): Promise<StorageValue<T> | undefined> {
     try {
       return await get<StorageValue<T>>(key, this.store)
     } catch (error) {
@@ -314,8 +318,8 @@ export default storage
 /**
  * 便捷函数
  */
-export const getStorage = <T = any>(key: StorageKey) => storage.get<T>(key)
-export const setStorage = <T = any>(key: StorageKey, value: T, ttl?: number) =>
+export const getStorage = <T = unknown>(key: StorageKey) => storage.get<T>(key)
+export const setStorage = <T = unknown>(key: StorageKey, value: T, ttl?: number) =>
   storage.set(key, value, ttl)
 export const deleteStorage = (key: StorageKey) => storage.delete(key)
 export const clearStorage = () => storage.clear()

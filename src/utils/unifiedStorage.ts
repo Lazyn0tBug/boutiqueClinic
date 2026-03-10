@@ -28,19 +28,19 @@ function isIndexedDBAvailable(): boolean {
  * 在不支持 IndexedDB 的环境中提供兼容方案
  */
 class LocalStorageFallback {
-  private prefix = 'clinic:'
+  readonly #prefix = 'clinic:'
 
-  async get<T = any>(key: StorageKey): Promise<T | undefined> {
+  async get<T = unknown>(key: StorageKey): Promise<T | undefined> {
     if (typeof localStorage === 'undefined') return undefined
 
     try {
-      const item = localStorage.getItem(this.prefix + key)
+      const item = localStorage.getItem(this.#prefix + key)
       if (!item) return undefined
 
       const stored: StorageValue<T> = JSON.parse(item)
 
       // 检查是否过期
-      if (stored.expires && Date.now() > stored.expires) {
+      if (stored.expires != null && Date.now() > stored.expires) {
         await this.delete(key)
         return undefined
       }
@@ -52,16 +52,16 @@ class LocalStorageFallback {
     }
   }
 
-  async set<T = any>(key: StorageKey, value: T, ttl?: number): Promise<void> {
+  async set<T = unknown>(key: StorageKey, value: T, ttl?: number): Promise<void> {
     if (typeof localStorage === 'undefined') return
 
     try {
       const storageValue: StorageValue<T> = {
         data: value,
         timestamp: Date.now(),
-        expires: ttl ? Date.now() + ttl : undefined,
+        expires: ttl != null ? Date.now() + ttl : undefined,
       }
-      localStorage.setItem(this.prefix + key, JSON.stringify(storageValue))
+      localStorage.setItem(this.#prefix + key, JSON.stringify(storageValue))
     } catch (error) {
       console.error(`[LocalStorage] Failed to set key "${key}":`, error)
       throw error
@@ -72,7 +72,7 @@ class LocalStorageFallback {
     if (typeof localStorage === 'undefined') return
 
     try {
-      localStorage.removeItem(this.prefix + key)
+      localStorage.removeItem(this.#prefix + key)
     } catch (error) {
       console.error(`[LocalStorage] Failed to delete key "${key}":`, error)
       throw error
@@ -84,14 +84,12 @@ class LocalStorageFallback {
 
     try {
       // 只清除带前缀的键
-      const keysToRemove: string[] = []
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i)
-        if (key && key.startsWith(this.prefix)) {
-          keysToRemove.push(key)
-        }
+      const keysToRemove = Array.from({ length: localStorage.length }, (_, i) => localStorage.key(i))
+        .filter((key): key is string => key?.startsWith(this.#prefix) ?? false)
+
+      for (const key of keysToRemove) {
+        localStorage.removeItem(key)
       }
-      keysToRemove.forEach((key) => localStorage.removeItem(key))
     } catch (error) {
       console.error('[LocalStorage] Failed to clear storage:', error)
       throw error
@@ -103,20 +101,15 @@ class LocalStorageFallback {
     return value !== undefined
   }
 
-  async keys(): Promise<string[]> {
+  async keys(): Promise<readonly string[]> {
     if (typeof localStorage === 'undefined') return []
 
-    const keys: string[] = []
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-      if (key && key.startsWith(this.prefix)) {
-        keys.push(key.substring(this.prefix.length))
-      }
-    }
-    return keys
+    return Array.from({ length: localStorage.length }, (_, i) => localStorage.key(i))
+      .filter((key): key is string => key?.startsWith(this.#prefix) ?? false)
+      .map((key) => key.slice(this.#prefix.length))
   }
 
-  async getStorageInfo(): Promise<{ keyCount: number; estimatedSize: number }> {
+  async getStorageInfo(): Promise<Readonly<{ keyCount: number; estimatedSize: number }>> {
     const allKeys = await this.keys()
     let estimatedSize = 0
 
@@ -135,13 +128,13 @@ class LocalStorageFallback {
  * 统一存储接口类型
  */
 interface IStorage {
-  get<T = any>(key: StorageKey): Promise<T | undefined>
-  set<T = any>(key: StorageKey, value: T, ttl?: number): Promise<void>
+  get<T = unknown>(key: StorageKey): Promise<T | undefined>
+  set<T = unknown>(key: StorageKey, value: T, ttl?: number): Promise<void>
   delete(key: StorageKey): Promise<void>
   clear(): Promise<void>
   has(key: StorageKey): Promise<boolean>
-  keys(): Promise<string[] | IDBValidKey[]>
-  getStorageInfo(): Promise<{ keyCount: number; estimatedSize: number }>
+  keys(): Promise<readonly string[] | readonly IDBValidKey[]>
+  getStorageInfo(): Promise<Readonly<{ keyCount: number; estimatedSize: number }>>
 }
 
 /**
@@ -149,59 +142,59 @@ interface IStorage {
  * 自动选择 IndexedDB 或 localStorage 作为后端
  */
 class UnifiedStorage implements IStorage {
-  private backend: IStorage
-  private useIndexedDB: boolean
+  readonly #backend: IStorage
+  readonly #useIndexedDB: boolean
 
   constructor() {
-    this.useIndexedDB = isIndexedDBAvailable()
-    this.backend = this.useIndexedDB ? storage : new LocalStorageFallback()
+    this.#useIndexedDB = isIndexedDBAvailable()
+    this.#backend = this.#useIndexedDB ? storage : new LocalStorageFallback()
 
-    if (!this.useIndexedDB) {
+    if (!this.#useIndexedDB) {
       console.warn('[Storage] IndexedDB not available, falling back to localStorage')
     }
   }
 
-  async get<T = any>(key: StorageKey): Promise<T | undefined> {
-    return this.backend.get<T>(key)
+  async get<T = unknown>(key: StorageKey): Promise<T | undefined> {
+    return this.#backend.get<T>(key)
   }
 
-  async set<T = any>(key: StorageKey, value: T, ttl?: number): Promise<void> {
-    return this.backend.set(key, value, ttl)
+  async set<T = unknown>(key: StorageKey, value: T, ttl?: number): Promise<void> {
+    return this.#backend.set(key, value, ttl)
   }
 
   async delete(key: StorageKey): Promise<void> {
-    return this.backend.delete(key)
+    return this.#backend.delete(key)
   }
 
   async clear(): Promise<void> {
-    return this.backend.clear()
+    return this.#backend.clear()
   }
 
   async has(key: StorageKey): Promise<boolean> {
-    return this.backend.has(key)
+    return this.#backend.has(key)
   }
 
-  async keys(): Promise<string[]> {
-    const result = await this.backend.keys()
+  async keys(): Promise<readonly string[]> {
+    const result = await this.#backend.keys()
     return result.map((k) => (typeof k === 'string' ? k : JSON.stringify(k)))
   }
 
-  async getStorageInfo(): Promise<{ keyCount: number; estimatedSize: number }> {
-    return this.backend.getStorageInfo()
+  async getStorageInfo(): Promise<Readonly<{ keyCount: number; estimatedSize: number }>> {
+    return this.#backend.getStorageInfo()
   }
 
   /**
    * 是否使用 IndexedDB
    */
   isUsingIndexedDB(): boolean {
-    return this.useIndexedDB
+    return this.#useIndexedDB
   }
 
   /**
    * 获取后端类型
    */
   getBackendType(): 'indexeddb' | 'localstorage' | 'none' {
-    if (this.useIndexedDB) return 'indexeddb'
+    if (this.#useIndexedDB) return 'indexeddb'
     if (typeof localStorage !== 'undefined') return 'localstorage'
     return 'none'
   }
@@ -209,7 +202,9 @@ class UnifiedStorage implements IStorage {
   /**
    * 获取多个值
    */
-  async getMany<T = any>(keys: StorageKey[]): Promise<Map<StorageKey, T | undefined>> {
+  async getMany<T = unknown>(
+    keys: readonly StorageKey[],
+  ): Promise<ReadonlyMap<StorageKey, T | undefined>> {
     const results = new Map<StorageKey, T | undefined>()
     await Promise.all(
       keys.map(async (key) => {
@@ -223,32 +218,30 @@ class UnifiedStorage implements IStorage {
   /**
    * 设置多个值
    */
-  async setMany(entries: Array<[StorageKey, any]>, ttl?: number): Promise<void> {
+  async setMany(entries: readonly [StorageKey, unknown][], ttl?: number): Promise<void> {
     await Promise.all(entries.map(([key, value]) => this.set(key, value, ttl)))
   }
 
   /**
    * 导出所有数据（用于备份）
    */
-  async exportAll(): Promise<Record<string, any>> {
+  async exportAll(): Promise<Readonly<Record<string, unknown>>> {
     const allKeys = await this.keys()
-    const data: Record<string, any> = {}
+    const entries = await Promise.all(
+      allKeys.map(async (key) => {
+        const value = await this.get(key as StorageKey)
+        return [key, value] as const
+      }),
+    )
 
-    for (const key of allKeys) {
-      const value = await this.get(key as StorageKey)
-      if (value !== undefined) {
-        data[key] = value
-      }
-    }
-
-    return data
+    return Object.fromEntries(entries.filter(([, v]) => v !== undefined))
   }
 
   /**
    * 导入数据（用于恢复）
    */
-  async importAll(data: Record<string, any>): Promise<void> {
-    const entries = Object.entries(data) as Array<[StorageKey, any]>
+  async importAll(data: Readonly<Record<string, unknown>>): Promise<void> {
+    const entries = Object.entries(data) as [StorageKey, unknown][]
     await this.setMany(entries)
   }
 }
