@@ -10,6 +10,7 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
 
 const { t } = useI18n()
 
@@ -18,6 +19,7 @@ interface Service {
   title: string
   description: string
   image: string
+  imageSrcset?: string
 }
 
 interface PharmacyItem {
@@ -41,6 +43,7 @@ interface Doctor {
   title: string
   specialty: string
   image: string
+  imageSrcset?: string
 }
 
 interface Partner {
@@ -56,18 +59,24 @@ const services = ref<Service[]>([
     description: t('services.items.checkup.description'),
     image:
       'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800',
+    imageSrcset:
+      'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=400 400w, https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800 800w, https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=1200 1200w',
   },
   {
     title: t('services.items.referral.title'),
     description: t('services.items.referral.description'),
     image:
       'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=800',
+    imageSrcset:
+      'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=400 400w, https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=800 800w, https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1200 1200w',
   },
   {
     title: t('services.items.stemCell.title'),
     description: t('services.items.stemCell.description'),
     image:
       'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=800',
+    imageSrcset:
+      'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=400 400w, https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=800 800w, https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=1200 1200w',
   },
 ])
 
@@ -128,6 +137,8 @@ const doctors = ref<Doctor[]>([
     specialty: t('doctors.items.tanaka.specialty'),
     image:
       'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=200',
+    imageSrcset:
+      'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=100 100w, https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=200 200w, https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400 400w',
   },
   {
     name: t('doctors.items.sato.name'),
@@ -135,6 +146,8 @@ const doctors = ref<Doctor[]>([
     specialty: t('doctors.items.sato.specialty'),
     image:
       'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200',
+    imageSrcset:
+      'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=100 100w, https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200 200w, https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400 400w',
   },
 ])
 
@@ -155,15 +168,16 @@ const partners = ref<Partner[]>([
       <div class="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop"
+          srcset="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=640&auto=format&fit=crop 640w, https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1280&auto=format&fit=crop 1280w, https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop 2053w"
+          sizes="100vw"
           class="w-full h-full object-cover"
           alt=""
+          loading="eager"
         />
         <div class="absolute inset-0 bg-background/80 backdrop-blur-[2px]"></div>
       </div>
 
-      <div
-        class="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 md:py-32"
-      >
+      <Container size="lg" class="relative z-10 w-full text-center py-20 md:py-32">
         <div
           class="inline-flex items-center rounded-full border border-border bg-background/80 backdrop-blur-md px-3 py-1 text-sm font-medium mb-8 text-foreground shadow-sm"
         >
@@ -182,22 +196,22 @@ const partners = ref<Partner[]>([
           {{ t('hero.description') }}
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" class="h-12 px-8 text-base shadow-md">
+          <Button size="lg" class="h-12 px-8 text-base shadow-md min-h-[44px]">
             {{ t('hero.btnOverseas') }}
           </Button>
-          <Button variant="outline" size="lg" class="h-12 px-8 text-base bg-background/80 backdrop-blur-sm shadow-sm hover:bg-background">
+          <Button variant="outline" size="lg" class="h-12 px-8 text-base bg-background/80 backdrop-blur-sm shadow-sm hover:bg-background min-h-[44px]">
             {{ t('hero.btnLocal') }}
           </Button>
         </div>
-      </div>
+      </Container>
     </div>
 
     <!-- 快捷入口 -->
-    <div class="max-w-7xl mx-auto px-4 -mt-4 relative z-20 sm:-mt-8 lg:-mt-12 mb-16">
+    <Container class="-mt-4 relative z-20 sm:-mt-8 lg:-mt-12 mb-16">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 card-container">
-        <Card class="flex flex-row items-center p-6 hover:border-primary/50 transition-colors">
+        <Card class="flex flex-row items-center p-4 md:p-6 hover:border-primary/50 transition-colors">
           <div
-            class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20"
+            class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shrink-0"
           >
             <i class="ph ph-stethoscope text-2xl"></i>
           </div>
@@ -206,9 +220,9 @@ const partners = ref<Partner[]>([
             <CardDescription class="mt-1">{{ t('quickAccess.consultation.description') }}</CardDescription>
           </div>
         </Card>
-        <Card class="flex flex-row items-center p-6 hover:border-primary/50 transition-colors">
+        <Card class="flex flex-row items-center p-4 md:p-6 hover:border-primary/50 transition-colors">
           <div
-            class="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center text-secondary-foreground border border-border"
+            class="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center text-secondary-foreground border border-border shrink-0"
           >
             <i class="ph ph-heartbeat text-2xl"></i>
           </div>
@@ -217,9 +231,9 @@ const partners = ref<Partner[]>([
             <CardDescription class="mt-1">{{ t('quickAccess.checkup.description') }}</CardDescription>
           </div>
         </Card>
-        <Card class="flex flex-row items-center p-6 bg-primary text-primary-foreground border-primary">
+        <Card class="flex flex-row items-center p-4 md:p-6 bg-primary text-primary-foreground border-primary">
           <div
-            class="h-12 w-12 rounded-lg bg-white/20 flex items-center justify-center text-white border border-white/20"
+            class="h-12 w-12 rounded-lg bg-white/20 flex items-center justify-center text-white border border-white/20 shrink-0"
           >
             <i class="ph ph-phone-call text-2xl"></i>
           </div>
@@ -229,11 +243,11 @@ const partners = ref<Partner[]>([
           </div>
         </Card>
       </div>
-    </div>
+    </Container>
 
     <!-- ==================== 服務模塊 (Services) ==================== -->
     <section id="services" class="py-16 md:py-24 bg-muted/30 border-y border-border">
-      <div class="max-w-7xl mx-auto px-4">
+      <Container>
         <div class="flex flex-col items-center justify-center text-center mb-12">
           <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
             {{ t('services.title') }}
@@ -253,23 +267,26 @@ const partners = ref<Partner[]>([
             <div class="aspect-[16/10] overflow-hidden border-b border-border">
               <img
                 :src="service.image"
-                :alt="``"
+                :srcset="service.imageSrcset"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                :alt="service.title"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
               />
             </div>
             <CardContent class="p-6 flex flex-col flex-grow">
               <CardTitle class="text-xl mb-2">{{ service.title }}</CardTitle>
               <CardDescription class="mb-6 flex-grow">{{ service.description }}</CardDescription>
-              <Button variant="outline" class="w-full">{{ t('common.viewDetail') }}</Button>
+              <Button variant="outline" class="w-full min-h-[44px]">{{ t('common.viewDetail') }}</Button>
             </CardContent>
           </Card>
         </div>
-      </div>
+      </Container>
     </section>
 
     <!-- ==================== 常用藥專區 (Pharmacy) ==================== -->
     <section id="pharmacy" class="py-16 md:py-24 bg-background">
-      <div class="max-w-7xl mx-auto px-4">
+      <Container>
         <div
           class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 pb-4 border-b border-border"
         >
@@ -277,7 +294,7 @@ const partners = ref<Partner[]>([
             <h2 class="text-3xl font-bold tracking-tight text-foreground mb-2 text-balance">{{ t('pharmacy.title') }}</h2>
             <p class="text-muted-foreground text-pretty">{{ t('pharmacy.subtitle') }}</p>
           </div>
-          <Button variant="ghost" class="mt-4 md:mt-0 gap-1 hidden md:flex">
+          <Button variant="ghost" class="mt-4 md:mt-0 gap-1 hidden md:flex min-h-[44px]">
             {{ t('pharmacy.viewAll') }} <i class="ph ph-arrow-right"></i>
           </Button>
         </div>
@@ -287,7 +304,7 @@ const partners = ref<Partner[]>([
           <Card
             v-for="(medicine, index) in pharmacyItems"
             :key="index"
-            class="p-5 group cursor-pointer hover:border-primary/40 transition-colors"
+            class="p-4 md:p-5 group cursor-pointer hover:border-primary/40 transition-colors"
           >
             <div
               class="aspect-square bg-muted rounded-md flex items-center justify-center relative mb-4 border border-border"
@@ -316,13 +333,13 @@ const partners = ref<Partner[]>([
           </Card>
         </div>
 
-        <Button variant="outline" class="w-full mt-6 md:hidden">{{ t('pharmacy.viewAll') }}</Button>
-      </div>
+        <Button variant="outline" class="w-full mt-6 md:hidden min-h-[44px]">{{ t('pharmacy.viewAll') }}</Button>
+      </Container>
     </section>
 
     <!-- ==================== 信息模塊: 專家與案例 (Information) ==================== -->
     <section id="information" class="py-16 md:py-24 bg-muted/30 border-t border-border scroll-container">
-      <div class="max-w-7xl mx-auto px-4">
+      <Container>
         <!-- 案例展示區 -->
         <div class="mb-24">
           <div class="flex flex-col items-center justify-center text-center mb-12">
@@ -356,7 +373,7 @@ const partners = ref<Partner[]>([
                 </CardDescription>
                 <a
                   href="#"
-                  class="text-sm font-medium text-primary hover:underline flex items-center gap-1 mt-auto w-fit"
+                  class="text-sm font-medium text-primary hover:underline flex items-center gap-1 mt-auto w-fit min-h-[44px] items-center"
                 >{{ t('cases.readReport') }} <i class="ph ph-arrow-right text-xs"></i></a>
               </div>
             </Card>
@@ -367,7 +384,7 @@ const partners = ref<Partner[]>([
         <div>
           <div class="flex justify-between items-end mb-8 border-b border-border pb-4">
             <h2 class="text-2xl font-bold tracking-tight text-foreground text-balance">{{ t('doctors.title') }}</h2>
-            <a href="#" class="text-sm font-medium text-primary hover:underline">{{ t('doctors.viewAll') }}</a>
+            <a href="#" class="text-sm font-medium text-primary hover:underline min-h-[44px] flex items-center">{{ t('doctors.viewAll') }}</a>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 card-container">
@@ -380,7 +397,14 @@ const partners = ref<Partner[]>([
               <div
                 class="aspect-square w-24 mx-auto rounded-full border-4 border-background shadow-sm overflow-hidden mb-4 ring-1 ring-border group-hover:ring-primary/50 transition-all"
               >
-                <img :src="doctor.image" :alt="``" class="w-full h-full object-cover" />
+                <img 
+                  :src="doctor.image" 
+                  :srcset="doctor.imageSrcset"
+                  sizes="96px"
+                  :alt="doctor.name" 
+                  class="w-full h-full object-cover" 
+                  loading="lazy"
+                />
               </div>
               <CardTitle class="text-lg">{{ doctor.name }}</CardTitle>
               <p class="text-sm font-medium text-primary mb-2">{{ doctor.title }}</p>
@@ -389,7 +413,7 @@ const partners = ref<Partner[]>([
 
             <!-- 預留占位 -->
             <Card
-              class="p-6 text-center flex flex-col items-center justify-center border-dashed border-2 hover:border-primary/50 transition-colors bg-transparent shadow-none cursor-pointer"
+              class="p-6 text-center flex flex-col items-center justify-center border-dashed border-2 hover:border-primary/50 transition-colors bg-transparent shadow-none cursor-pointer min-h-[200px]"
             >
               <div class="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-3">
                 <i class="ph ph-user-plus text-2xl text-muted-foreground"></i>
@@ -398,13 +422,13 @@ const partners = ref<Partner[]>([
             </Card>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
 
     <!-- ==================== 合作機構 (Partners) ==================== -->
     <section id="partners" class="py-16 bg-background border-t border-border">
-      <div class="max-w-7xl mx-auto px-4 text-center">
-        <h3 class="text-sm font-semibold tracking-widest text-muted-foreground uppercase mb-8">
+      <Container>
+        <h3 class="text-sm font-semibold tracking-widest text-muted-foreground uppercase mb-8 text-center">
           {{ t('partners.title') }}
         </h3>
         <div
@@ -419,7 +443,7 @@ const partners = ref<Partner[]>([
             {{ partner.name }}
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   </main>
 </template>

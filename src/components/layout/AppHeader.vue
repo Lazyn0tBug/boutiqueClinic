@@ -19,6 +19,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
+import { Container } from '@/components/ui/container'
 
 const { t } = useI18n()
 const appStore = useAppStore()
@@ -61,13 +62,13 @@ const changeLanguage = async (locale: Locale) => {
   <header
     class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 site-header"
   >
-    <div class="flex items-center justify-between h-16 max-w-7xl mx-auto px-4 lg:px-8">
+    <Container class="flex items-center justify-between h-16">
       <!-- 左側：移動端菜單按鈕與 Logo -->
       <div class="flex items-center gap-3">
         <!-- 移動端菜單 -->
         <Sheet v-model:open="isMobileMenuOpen">
           <SheetTrigger as-child>
-            <Button variant="ghost" size="icon" class="lg:hidden">
+            <Button variant="ghost" size="icon" class="lg:hidden min-h-[44px] min-w-[44px]">
               <i class="ph ph-list text-2xl"></i>
             </Button>
           </SheetTrigger>
@@ -84,33 +85,33 @@ const changeLanguage = async (locale: Locale) => {
               </div>
               <a
                 href="#services"
-                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground min-h-[44px] flex items-center"
                 @click="isMobileMenuOpen = false"
               >{{ t('nav.servicesMenu.featured') }}</a>
               <a
                 href="#services"
-                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground min-h-[44px] flex items-center"
                 @click="isMobileMenuOpen = false"
               >{{ t('nav.servicesMenu.booking') }}</a>
               <Separator class="my-2" />
               <a
                 href="#pharmacy"
-                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground min-h-[44px] flex items-center"
                 @click="isMobileMenuOpen = false"
               >{{ t('nav.pharmacy') }}</a>
               <a
                 href="#partners"
-                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground min-h-[44px] flex items-center"
                 @click="isMobileMenuOpen = false"
               >{{ t('nav.partners') }}</a>
               <a
                 href="#information"
-                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground min-h-[44px] flex items-center"
                 @click="isMobileMenuOpen = false"
               >{{ t('nav.cases') }}</a>
               <a
                 href="#footer"
-                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground min-h-[44px] flex items-center"
                 @click="isMobileMenuOpen = false"
               >{{ t('nav.about') }}</a>
             </div>
@@ -132,28 +133,28 @@ const changeLanguage = async (locale: Locale) => {
       <nav class="hidden lg:flex items-center gap-1">
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
-            <Button variant="ghost">{{ t('nav.services') }}</Button>
+            <Button variant="ghost" class="min-h-[44px]">{{ t('nav.services') }}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>
-              <a href="#services">{{ t('nav.servicesMenu.featured') }}</a>
+              <a href="#services" class="min-h-[44px] flex items-center">{{ t('nav.servicesMenu.featured') }}</a>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <a href="#services">{{ t('nav.servicesMenu.booking') }}</a>
+              <a href="#services" class="min-h-[44px] flex items-center">{{ t('nav.servicesMenu.booking') }}</a>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button variant="ghost" as-child>
+        <Button variant="ghost" as-child class="min-h-[44px]">
           <a href="#pharmacy">{{ t('nav.pharmacy') }}</a>
         </Button>
-        <Button variant="ghost" as-child>
+        <Button variant="ghost" as-child class="min-h-[44px]">
           <a href="#partners">{{ t('nav.partners') }}</a>
         </Button>
-        <Button variant="ghost" as-child>
+        <Button variant="ghost" as-child class="min-h-[44px]">
           <a href="#information">{{ t('nav.cases') }}</a>
         </Button>
-        <Button variant="ghost" as-child>
+        <Button variant="ghost" as-child class="min-h-[44px]">
           <a href="#footer">{{ t('nav.about') }}</a>
         </Button>
       </nav>
@@ -162,7 +163,7 @@ const changeLanguage = async (locale: Locale) => {
       <div class="flex items-center gap-1 md:gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
-            <Button variant="ghost" class="gap-1">
+            <Button variant="ghost" class="gap-1 min-h-[44px]">
               <i class="ph ph-translate text-lg"></i>
               <span class="font-medium tracking-wide">{{ displayLangCode }}</span>
               <i class="ph ph-caret-down text-xs text-muted-foreground"></i>
@@ -173,6 +174,7 @@ const changeLanguage = async (locale: Locale) => {
               v-for="lang in languages"
               :key="lang.code"
               @click="changeLanguage(lang.code)"
+              class="min-h-[44px]"
             >
               {{ lang.label }}
             </DropdownMenuItem>
@@ -181,17 +183,17 @@ const changeLanguage = async (locale: Locale) => {
 
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" class="min-h-[44px] min-w-[44px]">
               <i class="ph ph-user text-lg"></i>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>
-              <a href="#admin">{{ t('footer.supportLinks.contact') }}</a>
+              <a href="#admin" class="min-h-[44px] flex items-center">{{ t('footer.supportLinks.contact') }}</a>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </div>
+    </Container>
   </header>
 </template>
