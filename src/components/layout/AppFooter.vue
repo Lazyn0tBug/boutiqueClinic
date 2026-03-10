@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer" class="bg-foreground text-background">
+  <footer id="footer" class="text-primary text-background">
     <!-- 自媒體櫥窗區 -->
     <div class="border-b border-background/10">
       <div class="max-w-7xl mx-auto px-4 py-10">
