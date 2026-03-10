@@ -53,11 +53,11 @@ const showMapModal = ref(false)
         <div>
           <h5 class="font-semibold text-sm mb-3">{{ t('footer.medicalServices') }}</h5>
           <ul class="space-y-1.5 text-xs text-primary-foreground/70">
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.quickLinks.checkup') }}</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.quickLinks.referral') }}</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.quickLinks.stemCell') }}</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.quickLinks.consultation') }}</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.quickLinks.pharmacy') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.checkup') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.referral') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.stemCell') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.consultation') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.pharmacy') }}</a></li>
           </ul>
         </div>
 
@@ -65,11 +65,11 @@ const showMapModal = ref(false)
         <div>
           <h5 class="font-semibold text-sm mb-3">{{ t('footer.helpSupport') }}</h5>
           <ul class="space-y-1.5 text-xs text-primary-foreground/70">
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.supportLinks.guide') }}</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.supportLinks.visa') }}</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.supportLinks.fees') }}</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.supportLinks.faq') }}</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors min-h-[44px] flex items-center">{{ t('footer.supportLinks.contact') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.guide') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.visa') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.fees') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.faq') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.contact') }}</a></li>
           </ul>
         </div>
 
