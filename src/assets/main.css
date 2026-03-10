@@ -1,36 +1,113 @@
 @import 'tailwindcss';
-@import './base.css';
+
+
+/* ==========================================
+   Tailwind v4 @theme 配置 (Shadcn UI 標準)
+   ========================================== */
+@theme {
+  --font-sans: Inter, "Noto Sans TC", sans-serif;
+ 
+  /* OKLCH 變數映射到 Tailwind v4 的顏色主題 */
+  --color-background: oklch(var(--background));
+  --color-foreground: oklch(var(--foreground));
+ 
+  --color-card: oklch(var(--card));
+  --color-card-foreground: oklch(var(--card-foreground));
+ 
+  --color-popover: oklch(var(--popover));
+  --color-popover-foreground: oklch(var(--popover-foreground));
+ 
+  --color-primary: oklch(var(--primary));
+  --color-primary-foreground: oklch(var(--primary-foreground));
+ 
+  --color-secondary: oklch(var(--secondary));
+  --color-secondary-foreground: oklch(var(--secondary-foreground));
+ 
+  --color-accent: oklch(var(--accent));
+  --color-accent-foreground: oklch(var(--accent-foreground));
+ 
+  --color-muted: oklch(var(--muted));
+  --color-muted-foreground: oklch(var(--muted-foreground));
+ 
+  --color-border: oklch(var(--border));
+  --color-input: oklch(var(--input));
+  --color-ring: oklch(var(--ring));
+ 
+  /* 圓角映射 */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+/* ==========================================
+   全局 CSS 變數定義 (Shadcn/UI OKLCH 空間)
+   ========================================== */
+@layer base {
+  :root {
+    --background: 1 0 0;
+    --foreground: 0.14 0.01 260;
+   
+    --card: 1 0 0;
+    --card-foreground: 0.14 0.01 260;
+   
+    --popover: 1 0 0;
+    --popover-foreground: 0.14 0.01 260;
+   
+    --primary: 0.50 0.18 250;
+    --primary-foreground: 0.98 0 0;
+   
+    --secondary: 0.95 0.02 250;
+    --secondary-foreground: 0.20 0.05 250;
+
+    --accent: 0.96 0.01 260;
+    --accent-foreground: 0.14 0.01 260;
+   
+    --muted: 0.96 0.01 260;
+    --muted-foreground: 0.55 0.01 260;
+   
+    --border: 0.90 0.01 260;
+    --input: 0.90 0.01 260;
+    --ring: 0.50 0.18 250;
+   
+    --radius: 0.75rem;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+
+/* ==========================================
+   Shadcn 核心組件樣式 (替代 DaisyUI)
+   ========================================== */
+@layer components {
+  /* 按鈕重構 (shadcn button 風格) */
+  .sh-btn {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+  .sh-btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm;
+  }
+  .sh-btn-outline {
+    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground shadow-sm;
+  }
+
+  /* 卡片重構 (shadcn card 風格) */
+  .shadcn-card {
+    @apply bg-card text-card-foreground border border-border rounded-lg shadow-sm;
+  }
+}
+
+/* ==========================================
+   其他工具樣式
+   ========================================== */
+html { scroll-behavior: smooth; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-background); }
+::-webkit-scrollbar-thumb { background: var(--color-muted-foreground); border-radius: 4px; }
+
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+  min-height: 100vh;
 }

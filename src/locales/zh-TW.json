@@ -1,0 +1,61 @@
+{
+  "common": {
+    "viewDetail": "了解詳情",
+    "learnMore": "了解更多",
+    "contactUs": "聯繫我們",
+    "submit": "提交",
+    "cancel": "取消",
+    "confirm": "確認",
+    "save": "保存",
+    "delete": "刪除",
+    "edit": "編輯",
+    "search": "搜索",
+    "loading": "載入中...",
+    "noData": "暫無數據"
+  },
+  "nav": {
+    "home": "首頁",
+    "services": "醫療服務",
+    "pharmacy": "常用藥專區",
+    "partners": "合作機構",
+    "cases": "成功案例",
+    "about": "關於我們",
+    "servicesMenu": {
+      "featured": "特色醫療",
+      "booking": "在線預約"
+    }
+  },
+  "footer": {
+    "quickLinks": "快速導航",
+    "socialMedia": "官方科普頻道",
+    "followUs": "關注我們的 YouTube 和 Instagram，獲取最新前沿醫療資訊。",
+    "contact": "聯絡方式",
+    "phone": "電話",
+    "email": "電子郵件",
+    "hours": "門診時間",
+    "hoursValue": "週一至週六 09:00 - 18:00",
+    "location": "位置",
+    "copyright": "© 2026 醫療法人德智會. All rights reserved."
+  },
+  "hero": {
+    "badge": "JAPAN TOP MEDICAL",
+    "title": "連接全球患者，<br>提供頂尖醫療方案",
+    "description": "專屬的重症轉診通道、前沿幹細胞治療與高精度癌篩體檢。結合本地優質資源，為您提供跨越國界的健康保障。",
+    "btnOverseas": "海外患者服務通道",
+    "btnLocal": "本地門診指南"
+  },
+  "quickAccess": {
+    "consultation": {
+      "title": "雲問診預約",
+      "description": "線上評估病歷與治療方案"
+    },
+    "checkup": {
+      "title": "精密體檢預約",
+      "description": "PET-CT與早期癌篩服務"
+    },
+    "emergency": {
+      "title": "緊急醫療援助",
+      "description": "24小時多語言支持"
+    }
+  }
+}

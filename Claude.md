@@ -55,6 +55,7 @@
 - `modern-javascript-patterns` - 現代 JavaScript 模式
 - `code-review-expert` - 代碼審查專家
 - `tailwindcss-advanced-layouts` - Tailwind CSS 高級佈局
+- `axum` - Axum
 
 ## 開發流程
 

@@ -1,0 +1,61 @@
+{
+  "common": {
+    "viewDetail": "Learn More",
+    "learnMore": "Learn More",
+    "contactUs": "Contact Us",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "loading": "Loading...",
+    "noData": "No Data"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Medical Services",
+    "pharmacy": "Pharmacy",
+    "partners": "Partners",
+    "cases": "Case Studies",
+    "about": "About Us",
+    "servicesMenu": {
+      "featured": "Featured Services",
+      "booking": "Online Booking"
+    }
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "socialMedia": "Official Channel",
+    "followUs": "Follow our YouTube and Instagram for the latest medical information.",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Hours",
+    "hoursValue": "Mon - Sat 09:00 - 18:00",
+    "location": "Location",
+    "copyright": "© 2026 Tokuchikal Medical Corporation. All rights reserved."
+  },
+  "hero": {
+    "badge": "JAPAN TOP MEDICAL",
+    "title": "Connecting Global Patients,<br>Providing Top Medical Solutions",
+    "description": "Exclusive referral channels for critical cases, cutting-edge stem cell therapy, and high-precision cancer screening. Combined with local quality resources to provide cross-border health protection.",
+    "btnOverseas": "Overseas Patient Services",
+    "btnLocal": "Local Clinic Guide"
+  },
+  "quickAccess": {
+    "consultation": {
+      "title": "Online Consultation",
+      "description": "Online medical record evaluation and treatment plan"
+    },
+    "checkup": {
+      "title": "Comprehensive Checkup",
+      "description": "PET-CT and early cancer screening services"
+    },
+    "emergency": {
+      "title": "Emergency Medical Assistance",
+      "description": "24/7 multilingual support"
+    }
+  }
+}

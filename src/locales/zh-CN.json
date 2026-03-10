@@ -1,0 +1,61 @@
+{
+  "common": {
+    "viewDetail": "了解详情",
+    "learnMore": "了解更多",
+    "contactUs": "联系我们",
+    "submit": "提交",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "search": "搜索",
+    "loading": "加载中...",
+    "noData": "暂无数据"
+  },
+  "nav": {
+    "home": "首页",
+    "services": "医疗服务",
+    "pharmacy": "常用药专区",
+    "partners": "合作机构",
+    "cases": "成功案例",
+    "about": "关于我们",
+    "servicesMenu": {
+      "featured": "特色医疗",
+      "booking": "在线预约"
+    }
+  },
+  "footer": {
+    "quickLinks": "快速导航",
+    "socialMedia": "官方科普频道",
+    "followUs": "关注我们的 YouTube 和 Instagram，获取最新前沿医疗资讯。",
+    "contact": "联络方式",
+    "phone": "电话",
+    "email": "电子邮件",
+    "hours": "门诊时间",
+    "hoursValue": "周一至周六 09:00 - 18:00",
+    "location": "位置",
+    "copyright": "© 2026 医疗法人德智会. All rights reserved."
+  },
+  "hero": {
+    "badge": "JAPAN TOP MEDICAL",
+    "title": "连接全球患者，<br>提供顶尖医疗方案",
+    "description": "专属的重症转诊通道、前沿干细胞治疗与高精度癌筛体检。结合本地优质资源，为您提供跨越国界的健康保障。",
+    "btnOverseas": "海外患者服务通道",
+    "btnLocal": "本地门诊指南"
+  },
+  "quickAccess": {
+    "consultation": {
+      "title": "云问诊预约",
+      "description": "线上评估病历与治疗方案"
+    },
+    "checkup": {
+      "title": "精密体检预约",
+      "description": "PET-CT与早期癌筛服务"
+    },
+    "emergency": {
+      "title": "紧急医疗援助",
+      "description": "24小时多语言支持"
+    }
+  }
+}
