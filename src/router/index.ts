@@ -15,12 +15,13 @@ const isValidLocale = (locale: string): locale is Locale =>
 let cachedLocale: Locale = DEFAULT_LOCALE
 
 // 初始化缓存（在应用启动时调用）
-export const initializeRouterCache = async (): Promise<void> => {
-  const savedLocale = await unifiedStorage.get<Locale>(StorageKeys.APP_LANGUAGE)
-  if (savedLocale != null && isValidLocale(savedLocale)) {
-    cachedLocale = savedLocale
-  }
-}
+export const initializeRouterCache = (): Promise<void> => 
+  Promise.try(async () => {
+    const savedLocale = await unifiedStorage.get<Locale>(StorageKeys.APP_LANGUAGE)
+    if (savedLocale != null && isValidLocale(savedLocale)) {
+      cachedLocale = savedLocale
+    }
+  })
 
 // 获取当前缓存的语言
 export const getCachedLocale = (): Locale => cachedLocale
