@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW" data-theme="corporate">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>醫療法人德智會 | 現代化跨國醫療中心</title>
+
+    <!-- Tailwind CSS & DaisyUI -->
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 引入 Phosphor Icons 作為現代圖標庫 -->
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    
+
+    <script>
+
+        tailwind.config = {
+
+            darkMode: ["class"],
+
+            theme: {
+
+                extend: {
+
+                    fontFamily: {
+
+                        sans: ['Inter', '"Noto Sans TC"', 'sans-serif'],
+
+                    },
+
+                    // 映射 OKLCH CSS 變量到 Tailwind 類名，實現 shadcn 命名規範
+
+                    colors: {
+
+                        border: "oklch(var(--border) / <alpha-value>)",
+
+                        input: "oklch(var(--input) / <alpha-value>)",
+
+                        ring: "oklch(var(--ring) / <alpha-value>)",
+
+                        background: "oklch(var(--background) / <alpha-value>)",
+
+                        foreground: "oklch(var(--foreground) / <alpha-value>)",
+
+                        primary: {
+
+                            DEFAULT: "oklch(var(--primary) / <alpha-value>)",
+
+                            foreground: "oklch(var(--primary-foreground) / <alpha-value>)",
+
+                        },
+
+                        secondary: {
+
+                            DEFAULT: "oklch(var(--secondary) / <alpha-value>)",
+
+                            foreground: "oklch(var(--secondary-foreground) / <alpha-value>)",
+
+                        },
+
+                        muted: {
+
+                            DEFAULT: "oklch(var(--muted) / <alpha-value>)",
+
+                            foreground: "oklch(var(--muted-foreground) / <alpha-value>)",
+
+                        },
+
+                        card: {
+
+                            DEFAULT: "oklch(var(--card) / <alpha-value>)",
+
+                            foreground: "oklch(var(--card-foreground) / <alpha-value>)",
+
+                        },
+
+                    },
+
+                    borderRadius: {
+
+                        lg: "var(--radius)",
+
+                        md: "calc(var(--radius) - 2px)",
+
+                        sm: "calc(var(--radius) - 4px)",
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+    <style>
+
+        :root {
+
+            /* shadcn/ui 設計語言的 OKLCH 色彩空間配置 */
+
+            /* 醫療藍主色調 (L: 50%, C: 0.18, H: 250) 確保足夠對比度與沈穩感 */
+
+            
+
+            --background: 1 0 0; /* 純白 */
+
+            --foreground: 0.14 0.01 260; /* 深灰偏藍 */
+
+            
+
+            --card: 1 0 0;
+
+            --card-foreground: 0.14 0.01 260;
+
+            
+
+            --popover: 1 0 0;
+
+            --popover-foreground: 0.14 0.01 260;
+
+            
+
+            --primary: 0.50 0.18 250; /* 主色：醫療藍 */
+
+            --primary-foreground: 0.98 0 0; /* 主色上的文字：白 */
+
+            
+
+            --secondary: 0.95 0.02 250; /* 淺灰藍，用於次要按鈕或背景 */
+
+            --secondary-foreground: 0.20 0.05 250; 
+
+            
+
+            --muted: 0.96 0.01 260;
+
+            --muted-foreground: 0.55 0.01 260;
+
+            
+
+            --border: 0.90 0.01 260;
+
+            --input: 0.90 0.01 260;
+
+            --ring: 0.50 0.18 250;
+
+            
+
+            --radius: 0.75rem; /* shadcn 風格圓角 */
+
+        }
+
+
+        /* 覆蓋 DaisyUI 原生樣式，使其更貼近 shadcn 的精緻極簡感 */
+
+        body {
+
+            background-color: oklch(var(--background));
+
+            color: oklch(var(--foreground));
+
+        }
+
+
+        /* 按鈕重構 (shadcn button 風格) */
+
+        .btn {
+
+            border-radius: calc(var(--radius) - 2px);
+
+            font-weight: 500;
+
+            text-transform: none;
+
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+            transition-duration: 150ms;
+
+        }
+
+        .btn-primary {
+
+            background-color: oklch(var(--primary)) !important;
+
+            border-color: oklch(var(--primary)) !important;
+
+            color: oklch(var(--primary-foreground)) !important;
+
+        }
+
+        .btn-primary:hover {
+
+            opacity: 0.9;
+
+            background-color: oklch(var(--primary)) !important;
+
+        }
+
+        .btn-outline {
+
+            background-color: transparent !important;
+
+            border-color: oklch(var(--border)) !important;
+
+            color: oklch(var(--foreground)) !important;
+
+        }
+
+        .btn-outline:hover {
+
+            background-color: oklch(var(--muted)) !important;
+
+            color: oklch(var(--foreground)) !important;
+
+        }
+
+
+        /* 卡片重構 (shadcn card 風格) */
+
+        .shadcn-card {
+
+            background-color: oklch(var(--card));
+
+            color: oklch(var(--card-foreground));
+
+            border: 1px solid oklch(var(--border));
+
+            border-radius: var(--radius);
+
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        /* 平滑滾動 */
+
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 8px; }
+
+        ::-webkit-scrollbar-track { background: oklch(var(--background)); }
+
+        ::-webkit-scrollbar-thumb { background: oklch(var(--muted-foreground)); border-radius: 4px; }
+
+    </style>
+
+</head>
+
+<body class="antialiased min-h-screen selection:bg-primary selection:text-primary-foreground">
+
+
+    <!-- ==================== 導航欄 (Header) ==================== -->
+
+    <header class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+
+        <div class="navbar max-w-7xl mx-auto px-4 lg:px-8 h-16">
+
+            <div class="navbar-start">
+
+                <div class="dropdown">
+
+                    <div tabindex="0" role="button" class="btn btn-ghost lg:hidden -ml-3">
+
+                        <i class="ph ph-list text-xl"></i>
+
+                    </div>
+
+                    <!-- 移動端菜單 -->
+
+                    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 border border-border bg-background rounded-lg shadow-md w-52 font-medium">
+
+                        <li>
+
+                            <details>
+
+                                <summary>醫療服務</summary>
+
+                                <ul class="p-2 border-l border-border ml-2">
+
+                                    <li><a href="#services" class="hover:bg-muted">特色醫療</a></li>
+
+                                    <li><a href="#services" class="hover:bg-muted">在線預約</a></li>
+
+                                </ul>
+
+                            </details>
+
+                        </li>
+
+                        <li><a href="#pharmacy" class="hover:bg-muted">常用藥專區</a></li>
+
+                        <li><a href="#partners" class="hover:bg-muted">合作機構</a></li>
+
+                        <li><a href="#information" class="hover:bg-muted">成功案例</a></li>
+
+                        <li><a href="#footer" class="hover:bg-muted">關於我們</a></li>
+
+                    </ul>
+
+                </div>
+
+                <!-- 品牌 Logo -->
+
+                <a class="flex items-center gap-2 font-bold text-lg md:text-xl tracking-tight hover:opacity-80 transition-opacity">
+
+                    <i class="ph-fill ph-cross text-primary text-2xl"></i>
+
+                    <span>醫療法人德智會</span>
+
+                    <span class="text-xs text-muted-foreground font-normal hidden xl:inline-block border-l border-border pl-2 ml-1">現代化跨國醫療中心</span>
+
+                </a>
+
+            </div>
+
+            
+
+            <!-- PC 端居中菜單 -->
+
+            <div class="navbar-center hidden lg:flex">
+
+                <ul class="menu menu-horizontal px-1 font-medium text-[15px] gap-1">
+
+                    <li>
+
+                        <details>
+
+                            <summary class="hover:bg-muted rounded-md px-4">醫療服務</summary>
+
+                            <ul class="p-2 border border-border bg-background rounded-md shadow-md w-40 mt-1">
+
+                                <li><a href="#services" class="hover:bg-muted rounded-sm">特色醫療</a></li>
+
+                                <li><a href="#services" class="hover:bg-muted rounded-sm">在線預約</a></li>
+
+                            </ul>
+
+                        </details>
+
+                    </li>
+
+                    <li><a href="#pharmacy" class="hover:bg-muted rounded-md px-4">常用藥專區</a></li>
+
+                    <li><a href="#partners" class="hover:bg-muted rounded-md px-4">合作機構</a></li>
+
+                    <li><a href="#information" class="hover:bg-muted rounded-md px-4">成功案例</a></li>
+
+                    <li><a href="#footer" class="hover:bg-muted rounded-md px-4">關於我們</a></li>
+
+                </ul>
+
+            </div>
+
+            
+
+            <!-- 右側區域：語言選擇與用戶管理 -->
+
+            <div class="navbar-end gap-1 md:gap-2">
+
+                <!-- 語言切換 (文/A 圖標 + 英文國別) -->
+
+                <div class="dropdown dropdown-end">
+
+                    <div tabindex="0" role="button" class="btn btn-ghost hover:bg-muted btn-sm h-9 px-3 rounded-md border border-transparent hover:border-border">
+
+                        <i class="ph ph-translate text-lg"></i>
+
+                        <span class="font-medium mx-1 text-sm tracking-wide">CN</span>
+
+                        <i class="ph ph-caret-down text-xs"></i>
+
+                    </div>
+
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-1 border border-border bg-background rounded-md shadow-md w-36 mt-2 text-sm">
+
+                        <li><a class="hover:bg-muted rounded-sm">CN 簡體中文</a></li>
+
+                        <li><a class="hover:bg-muted rounded-sm">JP 日本語</a></li>
+
+                        <li><a class="hover:bg-muted rounded-sm">EN English</a></li>
+
+                    </ul>
+
+                </div>
+
+                
+
+                <!-- 用戶管理 (用戶圖標) -->
+
+                <div class="tooltip tooltip-bottom" data-tip="用戶管理">
+
+                    <a href="#admin" class="btn btn-ghost hover:bg-muted btn-sm h-9 w-9 p-0 rounded-md border border-transparent hover:border-border flex items-center justify-center">
+
+                        <i class="ph ph-user text-lg"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==================== 英雄區 (Hero) ==================== -->
+
+    <div class="relative w-full min-h-[70vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-border bg-background">
+
+        <!-- 背景圖片與遮罩 -->
+
+        <div class="absolute inset-0 z-0">
+
+            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop" class="w-full h-full object-cover" alt="">
+
+            <!-- 遮罩層：使用 shadcn 的 background 顏色，帶有透明度與毛玻璃效果以確保文字清晰 -->
+
+            <div class="absolute inset-0 bg-background/80 backdrop-blur-[2px]"></div>
+
+        </div>
+
+
+        <!-- 內容區塊 -->
+
+        <div class="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 md:py-32">
+
+            <div class="inline-flex items-center rounded-full border border-border bg-background/80 backdrop-blur-md px-3 py-1 text-sm font-medium mb-8 text-foreground shadow-sm">
+
+                <span class="flex h-2 w-2 rounded-full bg-primary mr-2"></span>
+
+                JAPAN TOP MEDICAL
+
+            </div>
+
+            <h1 class="text-4xl tracking-tight font-extrabold text-foreground sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.1] mb-6">
+
+                連接全球患者<br/>
+
+                <span class="text-primary mt-2 block">提供頂尖醫療方案</span>
+
+            </h1>
+
+            <p class="mt-6 text-base text-muted-foreground sm:text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+
+                專屬的重症轉診通道、前沿幹細胞治療與高精度癌篩體檢。結合本地優質資源，為您提供跨越國界的健康保障。
+
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+
+                <button class="btn btn-primary h-12 px-8 rounded-md text-base shadow-md hover:opacity-90 transition-opacity">
+
+                    海外患者服務通道
+
+                </button>
+
+                <button class="btn btn-outline h-12 px-8 rounded-md text-base bg-background/80 backdrop-blur-sm shadow-sm hover:bg-background transition-colors">
+
+                    本地門診指南
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- 快捷入口 (shadcn 風格懸浮卡片) -->
+
+    <div class="max-w-7xl mx-auto px-4 -mt-4 relative z-20 sm:-mt-8 lg:-mt-12 mb-16">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+            <div class="shadcn-card p-6 flex flex-row items-center gap-4 hover:border-primary/50 transition-colors bg-background">
+
+                <div class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+
+                    <i class="ph ph-stethoscope text-2xl"></i>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-semibold text-foreground">雲問診預約</h3>
+
+                    <p class="text-sm text-muted-foreground mt-1">線上評估病歷與治療方案</p>
+
+                </div>
+
+            </div>
+
+            <div class="shadcn-card p-6 flex flex-row items-center gap-4 hover:border-primary/50 transition-colors bg-background">
+
+                <div class="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center text-secondary-foreground border border-border">
+
+                    <i class="ph ph-heartbeat text-2xl"></i>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-semibold text-foreground">精密體檢預約</h3>
+
+                    <p class="text-sm text-muted-foreground mt-1">PET-CT與早期癌篩服務</p>
+
+                </div>
+
+            </div>
+
+            <div class="shadcn-card p-6 flex flex-row items-center gap-4 bg-primary text-primary-foreground border-primary">
+
+                <div class="h-12 w-12 rounded-lg bg-white/20 flex items-center justify-center text-white border border-white/20">
+
+                    <i class="ph ph-phone-call text-2xl"></i>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-semibold text-primary-foreground">緊急醫療援助</h3>
+
+                    <p class="text-sm text-primary-foreground/80 mt-1">24小時多語言支持</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================== 服務模塊 (Services) ==================== -->
+
+    <section id="services" class="py-16 md:py-24 bg-muted/30 border-y border-border">
+
+        <div class="max-w-7xl mx-auto px-4">
+
+            <div class="flex flex-col items-center justify-center text-center mb-12">
+
+                <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">特色醫療服務</h2>
+
+                <p class="mt-4 max-w-2xl text-lg text-muted-foreground">匯聚日本尖端醫療技術，為全球患者提供定制化的治療與預防方案。</p>
+
+            </div>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+
+                <!-- 服務卡片 1 -->
+
+                <div class="shadcn-card overflow-hidden group flex flex-col hover:border-primary/40 transition-colors">
+
+                    <div class="h-48 overflow-hidden border-b border-border">
+
+                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-grow bg-card">
+
+                        <h3 class="text-xl font-semibold mb-2">精密體檢 (Ningen Dock)</h3>
+
+                        <p class="text-sm text-muted-foreground mb-6 flex-grow">結合 PET-CT、MRI 等高精度設備的全身深度檢查，有效發現極早期病變，防患於未然。</p>
+
+                        <button class="btn btn-outline w-full h-9 mt-auto">了解詳情</button>
+
+                    </div>
+
+                </div>
+
+                <!-- 服務卡片 2 -->
+
+                <div class="shadcn-card overflow-hidden group flex flex-col hover:border-primary/40 transition-colors">
+
+                    <div class="h-48 overflow-hidden border-b border-border">
+
+                        <img src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=800" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-grow bg-card">
+
+                        <h3 class="text-xl font-semibold mb-2">重症轉診與第二診療意見</h3>
+
+                        <p class="text-sm text-muted-foreground mb-6 flex-grow">對接日本排名前十的大學附屬醫院，由權威專家提供治療方案，並協助辦理醫療簽證。</p>
+
+                        <button class="btn btn-outline w-full h-9 mt-auto">了解詳情</button>
+
+                    </div>
+
+                </div>
+
+                <!-- 服務卡片 3 -->
+
+                <div class="shadcn-card overflow-hidden group flex flex-col hover:border-primary/40 transition-colors">
+
+                    <div class="h-48 overflow-hidden border-b border-border">
+
+                        <img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=800" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-grow bg-card">
+
+                        <h3 class="text-xl font-semibold mb-2">幹細胞再生治療</h3>
+
+                        <p class="text-sm text-muted-foreground mb-6 flex-grow">運用國際領先的細胞培養技術，針對抗衰老、關節損傷及某些慢性疾病的創新療法。</p>
+
+                        <button class="btn btn-outline w-full h-9 mt-auto">了解詳情</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== 常用藥專區 (Pharmacy) ==================== -->
+
+    <section id="pharmacy" class="py-16 md:py-24 bg-background">
+
+        <div class="max-w-7xl mx-auto px-4">
+
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 pb-4 border-b border-border">
+
+                <div>
+
+                    <h2 class="text-3xl font-bold tracking-tight text-foreground mb-2">常用藥科普與指南</h2>
+
+                    <p class="text-muted-foreground">日本高品質處方藥及日常非處方藥(OTC)詳細介紹。</p>
+
+                </div>
+
+                <button class="btn btn-ghost hover:bg-muted text-sm font-medium mt-4 md:mt-0 px-3 h-9 hidden md:flex items-center gap-1 border border-transparent hover:border-border">
+
+                    查看全部藥品 <i class="ph ph-arrow-right"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- 藥品 1 -->
+
+                <div class="shadcn-card p-5 group cursor-pointer hover:border-primary/40 transition-colors">
+
+                    <div class="aspect-square bg-muted rounded-md flex items-center justify-center relative mb-4 border border-border">
+
+                        <span class="absolute top-2 left-2 inline-flex items-center rounded-sm bg-background px-2 py-0.5 text-xs font-semibold text-foreground border border-border">非處方 OTC</span>
+
+                        <i class="ph ph-pills text-5xl text-muted-foreground/50 group-hover:text-primary/70 transition-colors"></i>
+
+                    </div>
+
+                    <h3 class="font-semibold text-foreground truncate">EVE Quick 頭痛藥</h3>
+
+                    <p class="text-xs text-muted-foreground mt-1 line-clamp-2 min-h-[2rem]">緩解頭痛、發熱症狀，見效快且對胃部溫和。</p>
+
+                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-border">
+
+                        <span class="text-xs text-muted-foreground font-medium">鎮痛解熱</span>
+
+                        <i class="ph ph-arrow-right text-muted-foreground"></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 藥品 2 -->
+
+                <div class="shadcn-card p-5 group cursor-pointer hover:border-primary/40 transition-colors">
+
+                    <div class="aspect-square bg-muted rounded-md flex items-center justify-center relative mb-4 border border-border">
+
+                        <span class="absolute top-2 left-2 inline-flex items-center rounded-sm bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-700 border border-red-200">處方藥</span>
+
+                        <i class="ph ph-prescription text-5xl text-muted-foreground/50 group-hover:text-primary/70 transition-colors"></i>
+
+                    </div>
+
+                    <h3 class="font-semibold text-foreground truncate">武田 降壓藥 (示例)</h3>
+
+                    <p class="text-xs text-muted-foreground mt-1 line-clamp-2 min-h-[2rem]">用於高血壓的長期控制，需憑醫生處方購買。</p>
+
+                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-border">
+
+                        <span class="text-xs text-muted-foreground font-medium">心血管</span>
+
+                        <i class="ph ph-arrow-right text-muted-foreground"></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 藥品 3 -->
+
+                <div class="shadcn-card p-5 group cursor-pointer hover:border-primary/40 transition-colors">
+
+                    <div class="aspect-square bg-muted rounded-md flex items-center justify-center relative mb-4 border border-border">
+
+                        <span class="absolute top-2 left-2 inline-flex items-center rounded-sm bg-background px-2 py-0.5 text-xs font-semibold text-foreground border border-border">非處方 OTC</span>
+
+                        <i class="ph ph-first-aid text-5xl text-muted-foreground/50 group-hover:text-primary/70 transition-colors"></i>
+
+                    </div>
+
+                    <h3 class="font-semibold text-foreground truncate">大正 綜合感冒藥</h3>
+
+                    <p class="text-xs text-muted-foreground mt-1 line-clamp-2 min-h-[2rem]">有效緩解感冒引起的多種症狀，家庭常備。</p>
+
+                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-border">
+
+                        <span class="text-xs text-muted-foreground font-medium">呼吸道</span>
+
+                        <i class="ph ph-arrow-right text-muted-foreground"></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 藥品 4 -->
+
+                <div class="shadcn-card p-5 group cursor-pointer hover:border-primary/40 transition-colors">
+
+                    <div class="aspect-square bg-muted rounded-md flex items-center justify-center relative mb-4 border border-border">
+
+                        <span class="absolute top-2 left-2 inline-flex items-center rounded-sm bg-orange-50 px-2 py-0.5 text-xs font-semibold text-orange-700 border border-orange-200">保健品</span>
+
+                        <i class="ph ph-flask text-5xl text-muted-foreground/50 group-hover:text-primary/70 transition-colors"></i>
+
+                    </div>
+
+                    <h3 class="font-semibold text-foreground truncate">高純度 NMN 膠囊</h3>
+
+                    <p class="text-xs text-muted-foreground mt-1 line-clamp-2 min-h-[2rem]">抗衰老細胞修復前沿產品，日本本土製造。</p>
+
+                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-border">
+
+                        <span class="text-xs text-muted-foreground font-medium">再生醫學</span>
+
+                        <i class="ph ph-arrow-right text-muted-foreground"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
+            <button class="btn btn-outline w-full mt-6 md:hidden">查看全部藥品</button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== 信息模塊: 專家與案例 (Information) ==================== -->
+
+    <section id="information" class="py-16 md:py-24 bg-muted/30 border-t border-border">
+
+        <div class="max-w-7xl mx-auto px-4">
+
+            
+
+            <!-- 案例展示區 -->
+
+            <div class="mb-24">
+
+                <div class="flex flex-col items-center justify-center text-center mb-12">
+
+                    <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">醫療案例與成就</h2>
+
+                    <p class="mt-4 max-w-2xl text-lg text-muted-foreground">真實醫療數據背書，見證每一次生命的奇跡。</p>
+
+                </div>
+
+                
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <!-- 案例 1 -->
+
+                    <div class="shadcn-card flex flex-col sm:flex-row overflow-hidden hover:border-primary/50 transition-colors">
+
+                        <div class="w-full sm:w-1/3 bg-muted border-r border-border flex items-center justify-center p-8">
+
+                            <i class="ph ph-shield-check text-6xl text-primary/60"></i>
+
+                        </div>
+
+                        <div class="w-full sm:w-2/3 p-6 flex flex-col justify-center">
+
+                            <span class="inline-flex w-fit items-center rounded-md border border-border bg-background px-2 py-0.5 text-xs font-semibold text-foreground mb-3">早期癌篩</span>
+
+                            <h3 class="text-lg font-bold text-foreground mb-2">通過 PET-CT 發現0期胃癌</h3>
+
+                            <p class="text-sm text-muted-foreground mb-4 line-clamp-2">張先生（55歲，中國籍），在定制精密體檢中發現極早期胃部病變，並於當週安排內視鏡微創切除...</p>
+
+                            <a href="#" class="text-sm font-medium text-primary hover:underline flex items-center gap-1 mt-auto w-fit">閱讀完整報告 <i class="ph ph-arrow-right text-xs"></i></a>
+
+                        </div>
+
+                    </div>
+
+                    <!-- 案例 2 -->
+
+                    <div class="shadcn-card flex flex-col sm:flex-row overflow-hidden hover:border-primary/50 transition-colors">
+
+                        <div class="w-full sm:w-1/3 bg-muted border-r border-border flex items-center justify-center p-8">
+
+                            <i class="ph ph-users-three text-6xl text-primary/60"></i>
+
+                        </div>
+
+                        <div class="w-full sm:w-2/3 p-6 flex flex-col justify-center">
+
+                            <span class="inline-flex w-fit items-center rounded-md border border-border bg-background px-2 py-0.5 text-xs font-semibold text-foreground mb-3">重症轉診</span>
+
+                            <h3 class="text-lg font-bold text-foreground mb-2">晚期肺癌的跨國聯合診療</h3>
+
+                            <p class="text-sm text-muted-foreground mb-4 line-clamp-2">協助國內患者轉診至東京大學醫學部附屬醫院，獲取新型靶向藥治療方案，患者生存質量大幅提升...</p>
+
+                            <a href="#" class="text-sm font-medium text-primary hover:underline flex items-center gap-1 mt-auto w-fit">閱讀完整報告 <i class="ph ph-arrow-right text-xs"></i></a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- 專家團隊區 -->
+
+            <div>
+
+                <div class="flex justify-between items-end mb-8 border-b border-border pb-4">
+
+                    <h2 class="text-2xl font-bold tracking-tight text-foreground">權威專家團隊</h2>
+
+                    <a href="#" class="text-sm font-medium text-primary hover:underline">查看全部醫生</a>
+
+                </div>
+
+                
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <!-- 醫生 1 -->
+
+                    <div class="shadcn-card p-6 text-center group">
+
+                        <div class="w-24 h-24 mx-auto rounded-full border-4 border-background shadow-sm overflow-hidden mb-4 ring-1 ring-border group-hover:ring-primary/50 transition-all">
+
+                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=200" alt="" class="w-full h-full object-cover" />
+
+                        </div>
+
+                        <h3 class="font-bold text-lg text-foreground">田中 健一</h3>
+
+                        <p class="text-sm font-medium text-primary mb-2">腫瘤內科 主任醫師</p>
+
+                        <p class="text-xs text-muted-foreground line-clamp-2">專注於消化道腫瘤的靶向治療與早期篩查。</p>
+
+                    </div>
+
+                    <!-- 醫生 2 -->
+
+                    <div class="shadcn-card p-6 text-center group">
+
+                        <div class="w-24 h-24 mx-auto rounded-full border-4 border-background shadow-sm overflow-hidden mb-4 ring-1 ring-border group-hover:ring-primary/50 transition-all">
+
+                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200" alt="" class="w-full h-full object-cover" />
+
+                        </div>
+
+                        <h3 class="font-bold text-lg text-foreground">佐藤 美咲</h3>
+
+                        <p class="text-sm font-medium text-primary mb-2">再生醫學科 專家</p>
+
+                        <p class="text-xs text-muted-foreground line-clamp-2">主導多項幹細胞抗衰老及組織修復臨床研究。</p>
+
+                    </div>
+
+                    <!-- 預留占位 -->
+
+                    <div class="shadcn-card p-6 text-center flex flex-col items-center justify-center border-dashed border-2 hover:border-primary/50 transition-colors bg-transparent shadow-none cursor-pointer">
+
+                        <div class="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-3">
+
+                            <i class="ph ph-user-plus text-2xl text-muted-foreground"></i>
+
+                        </div>
+
+                        <p class="text-sm font-medium text-muted-foreground">更多特聘專家</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== 合作機構 (Partners) ==================== -->
+
+    <section id="partners" class="py-16 bg-background border-t border-border">
+
+        <div class="max-w-7xl mx-auto px-4 text-center">
+
+            <h3 class="text-sm font-semibold tracking-widest text-muted-foreground uppercase mb-8">深度合作醫療網絡</h3>
+
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+
+                <div class="flex items-center gap-2 font-bold text-lg text-foreground">
+
+                    <i class="ph-fill ph-hospital text-2xl text-muted-foreground"></i> 東京醫學中心
+
+                </div>
+
+                <div class="flex items-center gap-2 font-bold text-lg text-foreground">
+
+                    <i class="ph-fill ph-cross text-2xl text-muted-foreground"></i> 順天堂聯合醫院
+
+                </div>
+
+                <div class="flex items-center gap-2 font-bold text-lg text-foreground">
+
+                    <i class="ph-fill ph-flask text-2xl text-muted-foreground"></i> 關西幹細胞研究所
+
+                </div>
+
+                <div class="flex items-center gap-2 font-bold text-lg text-foreground">
+
+                    <i class="ph-fill ph-first-aid text-2xl text-muted-foreground"></i> 日本精密體檢協會
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== 底部模塊: 自媒體與聯絡 (Footer) ==================== -->
+
+    <footer id="footer" class="bg-foreground text-background">
+
+        
+
+        <!-- 自媒體櫥窗區 -->
+
+        <div class="border-b border-background/10">
+
+            <div class="max-w-7xl mx-auto px-4 py-10">
+
+                <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+
+                    <div>
+
+                        <h4 class="text-lg font-bold flex items-center gap-2 text-background">
+
+                            <i class="ph-fill ph-youtube-logo text-red-500 text-2xl"></i> 官方科普頻道
+
+                        </h4>
+
+                        <p class="text-sm text-background/70 mt-2">關注我們的 YouTube 和 Instagram，獲取最新前沿醫療資訊。</p>
+
+                    </div>
+
+                    <div class="flex gap-4">
+
+                        <div class="relative w-36 h-20 bg-background/10 rounded-md overflow-hidden group cursor-pointer border border-background/20">
+
+                            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=200" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-300" alt=""/>
+
+                            <i class="ph-fill ph-play-circle absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl text-white shadow-sm"></i>
+
+                        </div>
+
+                        <div class="relative w-36 h-20 bg-background/10 rounded-md overflow-hidden group cursor-pointer border border-background/20 hidden sm:block">
+
+                            <img src="https://images.unsplash.com/photo-1551076805-e1869043e560?auto=format&fit=crop&q=80&w=200" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-300" alt=""/>
+
+                            <i class="ph-fill ph-play-circle absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl text-white shadow-sm"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 主 Footer 區域 -->
+
+        <div class="max-w-7xl mx-auto px-4 py-12 md:py-16">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+
+                
+
+                <!-- 品牌與聯繫方式 -->
+
+                <div class="md:col-span-5 lg:col-span-4">
+
+                    <div class="flex items-center gap-2 font-bold text-2xl mb-6 tracking-tight">
+
+                        <i class="ph-fill ph-cross text-background/90"></i> 醫療法人德智會
+
+                    </div>
+
+                    <p class="text-sm text-background/70 mb-8 leading-relaxed max-w-sm">
+
+                        致力於為全球患者提供日本高水準的醫療服務。涵蓋門診、急診、重症轉診、高端體檢及常用藥諮詢。
+
+                    </p>
+
+                    <div class="space-y-4 text-sm font-medium text-background/90">
+
+                        <p class="flex items-center gap-3"><i class="ph ph-phone text-lg opacity-70"></i> +81 03-1234-5678 (支持中文)</p>
+
+                        <p class="flex items-center gap-3"><i class="ph ph-envelope-simple text-lg opacity-70"></i> contact@tokuchikai.jp</p>
+
+                        <p class="flex items-center gap-3"><i class="ph ph-clock text-lg opacity-70"></i> 門診時間：週一至週六 09:00 - 18:00</p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 快速鏈接 -->
+
+                <div class="md:col-span-3 lg:col-span-2 flex flex-col gap-4 text-sm">
+
+                    <h5 class="font-bold text-background uppercase tracking-wider mb-2">快速導航</h5>
+
+                    <a href="#" class="text-background/70 hover:text-background transition-colors">雲問診預約</a>
+
+                    <a href="#" class="text-background/70 hover:text-background transition-colors">門診就醫指南</a>
+
+                    <a href="#" class="text-background/70 hover:text-background transition-colors">醫療簽證協助</a>
+
+                    <a href="#" class="text-background/70 hover:text-background transition-colors">隱私政策</a>
+
+                </div>
+
+
+                <!-- 地圖區域 -->
+
+                <div class="md:col-span-4 lg:col-span-6 rounded-lg overflow-hidden bg-background/10 relative min-h-[200px] border border-background/20">
+
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-foreground/80 backdrop-blur-sm z-10">
+
+                        <i class="ph ph-map-pin text-3xl text-background/90 mb-2"></i>
+
+                        <p class="font-medium text-background">Google Maps 地圖組件</p>
+
+                        <p class="text-xs text-background/60 mt-1">日本東京都港區櫻花大道 1-2-3</p>
+
+                    </div>
+
+                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover opacity-40 mix-blend-overlay" alt="">
+
+                </div>
+
+                
+
+            </div>
+
+            
+
+            <div class="border-t border-background/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-background/60">
+
+                <p>&copy; 2026 醫療法人德智會. All rights reserved.</p>
+
+                <div class="flex gap-5 mt-4 md:mt-0 text-xl">
+
+                    <a href="#" class="hover:text-background transition-colors"><i class="ph-fill ph-instagram-logo"></i></a>
+
+                    <a href="#" class="hover:text-background transition-colors"><i class="ph-fill ph-twitter-logo"></i></a>
+
+                    <a href="#" class="hover:text-background transition-colors"><i class="ph-fill ph-facebook-logo"></i></a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>
