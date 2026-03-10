@@ -19,31 +19,37 @@ const showMapModal = ref(false)
 <template>
   <footer class="bg-primary text-primary-foreground">
     <Container class="py-8 md:py-12">
-      <!-- 主 Footer 區域 - 使用 subgrid 對齊標題和內容 -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+      <!-- 主 Footer 區域 - 使用 CSS subgrid 對齊標題和內容 -->
+      <!-- 父容器定義行：標題行(auto) + 內容行(auto) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 grid-rows-[auto_auto] gap-x-8 gap-y-2 md:gap-x-12 md:gap-y-3">
        
         <!-- 品牌與聯繫方式 -->
-        <div class="col-span-2 md:col-span-1 grid grid-rows-[auto_1fr]">
-          <div class="flex items-center gap-2 font-bold text-lg mb-3 tracking-tight">
-            <i class="ph-fill ph-cross text-white text-xl"></i> {{ t('footer.brandName') }}
+        <div class="col-span-2 md:col-span-1 grid grid-rows-subgrid row-span-2 row-start-1">
+          <div class="flex items-start gap-2 font-bold text-lg tracking-tight">
+            <i class="ph-fill ph-cross text-white text-xl mt-0.5"></i> 
+            <span>{{ t('footer.brandName') }}</span>
           </div>
           <div class="space-y-3">
             <p class="text-xs text-primary-foreground/70 leading-relaxed text-pretty">
               {{ t('footer.brandDescription') }}
             </p>
             <div class="space-y-1.5 text-xs text-primary-foreground/80">
-              <p class="flex items-center gap-2">
-                <i class="ph ph-phone"></i> {{ t('footer.phone') }}
+              <p class="flex items-start gap-2">
+                <i class="ph ph-phone mt-0.5 shrink-0"></i> 
+                <span>{{ t('footer.phone') }}</span>
               </p>
-              <p class="flex items-center gap-2">
-                <i class="ph ph-envelope-simple"></i> {{ t('footer.email') }}
+              <p class="flex items-start gap-2">
+                <i class="ph ph-envelope-simple mt-0.5 shrink-0"></i> 
+                <span>{{ t('footer.email') }}</span>
               </p>
-              <p class="flex items-center gap-2">
-                <i class="ph ph-clock"></i> {{ t('footer.hours') }}
+              <p class="flex items-start gap-2">
+                <i class="ph ph-clock mt-0.5 shrink-0"></i> 
+                <span>{{ t('footer.hours') }}</span>
               </p>
-              <p class="flex items-center gap-2">
-                <i class="ph ph-map-pin"></i> 
-                <Button variant="link" class="h-auto p-0 text-xs underline decoration-dotted" @click="showMapModal = true">
+              <p class="flex items-start gap-2">
+                <i class="ph ph-map-pin mt-0.5 shrink-0"></i> 
+                <span class="flex-1">{{ t('footer.mapModal.address') }}</span>
+                <Button variant="link" class="h-auto p-0 text-xs underline decoration-dotted shrink-0" @click="showMapModal = true">
                   {{ t('common.viewMap') }}
                 </Button>
               </p>
@@ -52,8 +58,8 @@ const showMapModal = ref(false)
         </div>
 
         <!-- 醫療服務 -->
-        <div class="grid grid-rows-[auto_1fr]">
-          <h5 class="font-semibold text-sm mb-3">{{ t('footer.medicalServices') }}</h5>
+        <div class="grid grid-rows-subgrid row-span-2 row-start-1">
+          <h5 class="font-semibold text-sm self-start">{{ t('footer.medicalServices') }}</h5>
           <ul class="space-y-1.5 text-xs text-primary-foreground/70">
             <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.checkup') }}</a></li>
             <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.referral') }}</a></li>
@@ -64,8 +70,8 @@ const showMapModal = ref(false)
         </div>
 
         <!-- 幫助支持 -->
-        <div class="grid grid-rows-[auto_1fr]">
-          <h5 class="font-semibold text-sm mb-3">{{ t('footer.helpSupport') }}</h5>
+        <div class="grid grid-rows-subgrid row-span-2 row-start-1">
+          <h5 class="font-semibold text-sm self-start">{{ t('footer.helpSupport') }}</h5>
           <ul class="space-y-1.5 text-xs text-primary-foreground/70">
             <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.guide') }}</a></li>
             <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.visa') }}</a></li>
@@ -76,8 +82,8 @@ const showMapModal = ref(false)
         </div>
 
         <!-- 關注我們 -->
-        <div class="grid grid-rows-[auto_1fr]">
-          <h5 class="font-semibold text-sm mb-3">{{ t('footer.followUs') }}</h5>
+        <div class="grid grid-rows-subgrid row-span-2 row-start-1">
+          <h5 class="font-semibold text-sm self-start">{{ t('footer.followUs') }}</h5>
           <div class="space-y-3">
             <div class="flex gap-2">
               <Button variant="ghost" size="icon" class="w-11 h-11 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 min-h-[44px] min-w-[44px]">
