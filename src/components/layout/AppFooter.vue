@@ -9,7 +9,7 @@
           <div class="flex items-center gap-2 font-bold text-lg mb-3 tracking-tight">
             <i class="ph-fill ph-cross text-white text-xl"></i> {{ t('footer.brandName') }}
           </div>
-          <p class="text-xs text-primary-foreground/70 mb-4 leading-relaxed">
+          <p class="text-xs text-primary-foreground/70 mb-4 leading-relaxed text-pretty">
             {{ t('footer.brandDescription') }}
           </p>
           <div class="space-y-1.5 text-xs text-primary-foreground/80">
@@ -76,11 +76,11 @@
               <i class="ph-fill ph-youtube-logo text-red-400"></i> {{ t('footer.officialChannel') }}
             </p>
             <div class="flex gap-2">
-              <div class="relative w-20 h-12 bg-primary-foreground/10 rounded overflow-hidden group cursor-pointer border border-primary-foreground/20">
+              <div class="relative w-20 aspect-video bg-primary-foreground/10 rounded overflow-hidden group cursor-pointer border border-primary-foreground/20">
                 <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=200" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" alt=""/>
                 <i class="ph-fill ph-play-circle absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-white drop-shadow"></i>
               </div>
-              <div class="relative w-20 h-12 bg-primary-foreground/10 rounded overflow-hidden group cursor-pointer border border-primary-foreground/20">
+              <div class="relative w-20 aspect-video bg-primary-foreground/10 rounded overflow-hidden group cursor-pointer border border-primary-foreground/20">
                 <img src="https://images.unsplash.com/photo-1551076805-e1869043e560?auto=format&fit=crop&q=80&w=200" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" alt=""/>
                 <i class="ph-fill ph-play-circle absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-white drop-shadow"></i>
               </div>
@@ -110,7 +110,7 @@
             <i class="ph ph-x text-xl"></i>
           </button>
         </div>
-        <div class="aspect-video bg-muted flex items-center justify-center">
+        <div class="aspect-video bg-muted flex items-center justify-center scroll-container">
           <div class="text-center p-8">
             <i class="ph ph-map-pin text-5xl text-muted-foreground mb-4"></i>
             <p class="font-medium text-lg mb-2">{{ t('footer.mapModal.mapPlaceholder') }}</p>

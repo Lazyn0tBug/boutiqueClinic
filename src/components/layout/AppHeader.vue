@@ -43,7 +43,7 @@ const changeLanguage = async (locale: Locale) => {
 
 <template>
   <header
-    class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 site-header"
   >
     <div class="flex items-center justify-between h-16 max-w-7xl mx-auto px-4 lg:px-8">
       <!-- 左側：移動端菜單按鈕與 Logo -->
@@ -59,9 +59,9 @@ const changeLanguage = async (locale: Locale) => {
           class="flex items-center gap-2 font-bold text-lg md:text-xl tracking-tight hover:opacity-80 transition-opacity cursor-pointer"
         >
           <i class="ph-fill ph-cross text-primary text-2xl"></i>
-          <span>{{ t('footer.brandName') }}</span>
+          <span class="text-balance">{{ t('footer.brandName') }}</span>
           <span
-            class="text-xs text-muted-foreground font-normal hidden xl:inline-block border-l border-border pl-2 ml-1"
+            class="text-xs text-muted-foreground font-normal hidden xl:inline-block border-l border-border pl-2 ml-1 text-pretty"
             >{{ t('about.subtitle') }}</span
           >
         </a>
@@ -164,7 +164,7 @@ const changeLanguage = async (locale: Locale) => {
     <!-- 移動端下拉菜單 -->
     <div
       v-if="isMobileMenuOpen"
-      class="lg:hidden border-t border-border bg-background p-4 flex flex-col gap-2 shadow-lg absolute w-full left-0"
+      class="lg:hidden border-t border-border bg-background p-4 flex flex-col gap-2 shadow-lg absolute w-full left-0 scroll-container scroll-thin max-h-[70vh] overflow-y-auto"
     >
       <div class="font-semibold text-sm text-muted-foreground px-2 py-1 uppercase tracking-wider">
         {{ t('nav.services') }}

@@ -116,6 +116,293 @@
 }
 
 /* ==========================================
+   现代化 CSS 特性
+   ========================================== */
+
+/* 1. 滚动条样式 - scrollbar-color 和 scrollbar-gutter */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* 现代 scrollbar-color: thumb track */
+    scrollbar-color: oklch(var(--muted-foreground)) oklch(var(--background));
+    /* scrollbar-gutter: 防止内容因滚动条出现而跳动 */
+    scrollbar-gutter: stable;
+  }
+
+  /* 滚动容器样式 */
+  .scroll-container {
+    scrollbar-color: oklch(var(--muted-foreground) / 0.5) transparent;
+    scrollbar-gutter: stable;
+    overflow-y: auto;
+  }
+
+  /* 细滚动条变体 */
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--muted-foreground) / 0.3) transparent;
+  }
+
+  /* 隐藏滚动条但保持滚动功能 */
+  .scroll-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /* WebKit 滚动条样式 (用于更精细的控制) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: oklch(var(--background));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(var(--muted-foreground));
+    border-radius: 4px;
+    border: 2px solid oklch(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--foreground) / 0.5);
+  }
+
+  /* 水平滚动条 */
+  ::-webkit-scrollbar:horizontal {
+    height: 6px;
+  }
+}
+
+/* 2. 文本换行优化 - text-wrap 和 white-space-collapse */
+@layer base {
+  /* 平衡标题换行 - 浏览器自动优化断行点 */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* 段落优化换行 - 更好的排版效果 */
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* 避免孤行和寡行 */
+  .text-avoid-orphans {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* 白色空间折叠控制 */
+  .whitespace-collapse-discard {
+    white-space-collapse: discard;
+  }
+
+  .whitespace-collapse-trim {
+    white-space-collapse: trim;
+  }
+
+  /* 标题默认使用 text-wrap: balance */
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+
+  /* 段落默认使用 text-wrap: pretty */
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* 3. 宽高比 - aspect-ratio */
+@layer components {
+  /* 常用宽高比预设 */
+  .aspect-video {
+    aspect-ratio: 16 / 9;
+  }
+
+  .aspect-square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .aspect-portrait {
+    aspect-ratio: 3 / 4;
+  }
+
+  .aspect-landscape {
+    aspect-ratio: 4 / 3;
+  }
+
+  .aspect-card {
+    aspect-ratio: 3 / 2;
+  }
+
+  .aspect-hero {
+    aspect-ratio: 21 / 9;
+  }
+
+  /* 医疗卡片常用比例 */
+  .aspect-doctor-photo {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  .aspect-service-card {
+    aspect-ratio: 16 / 10;
+  }
+
+  .aspect-medicine-box {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* 4. 容器查询 - Container Queries */
+@layer components {
+  /* 卡片容器 - 响应式布局基于容器宽度而非视口宽度 */
+  .card-container {
+    container-type: inline-size;
+    container-name: card;
+  }
+
+  /* 通用容器查询容器 */
+  .cq-container {
+    container-type: inline-size;
+  }
+
+  /* 侧边栏容器 */
+  .sidebar-container {
+    container-type: inline-size;
+    container-name: sidebar;
+  }
+
+  /* 网格容器 */
+  .grid-container {
+    container-type: inline-size;
+    container-name: grid;
+  }
+
+  /* 卡片内部响应式样式 */
+  .responsive-card {
+    container-type: inline-size;
+    container-name: responsive-card;
+  }
+
+  /* 容器查询示例：卡片在小容器中垂直布局，大容器中水平布局 */
+  @container card (min-width: 300px) {
+    .card-adaptive {
+      flex-direction: row;
+    }
+  }
+
+  @container card (max-width: 299px) {
+    .card-adaptive {
+      flex-direction: column;
+    }
+  }
+
+  /* 服务卡片容器查询 */
+  @container card (min-width: 400px) {
+    .service-card-content {
+      padding: 1.5rem;
+    }
+  }
+
+  /* 医生卡片容器查询 */
+  @container responsive-card (min-width: 200px) {
+    .doctor-card-info {
+      text-align: left;
+    }
+  }
+}
+
+/* 5. :has() 选择器 - 父元素基于子元素状态选择 */
+@layer components {
+  /* 表单组：包含错误输入时显示错误样式 */
+  .form-group:has(:invalid:not(:placeholder-shown)) {
+    .form-label {
+      color: oklch(var(--destructive));
+    }
+  }
+
+  /* 表单组：包含必填字段时显示标记 */
+  .form-group:has(:required) {
+    .form-label::after {
+      content: ' *';
+      color: oklch(var(--destructive));
+    }
+  }
+
+  /* 卡片：包含图片时调整布局 */
+  .shadcn-card:has(img) {
+    overflow: hidden;
+  }
+
+  /* 导航项：包含激活链接时高亮 */
+  .nav-item:has(.router-link-active) {
+    background-color: oklch(var(--accent));
+    color: oklch(var(--accent-foreground));
+  }
+
+  /* 下拉菜单：包含打开状态时显示 */
+  .dropdown:has(.dropdown-trigger:focus) .dropdown-content,
+  .dropdown:has(.dropdown-trigger[aria-expanded="true"]) .dropdown-content {
+    display: block;
+  }
+
+  /* 表格行：包含选中复选框时高亮 */
+  .table-row:has(input[type="checkbox"]:checked) {
+    background-color: oklch(var(--accent) / 0.5);
+  }
+
+  /* 输入框容器：包含聚焦输入时显示边框 */
+  .input-wrapper:has(:focus) {
+    border-color: oklch(var(--ring));
+    box-shadow: 0 0 0 1px oklch(var(--ring));
+  }
+
+  /* 卡片：悬停时包含聚焦元素 */
+  .shadcn-card:has(:focus-visible) {
+    outline: 2px solid oklch(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* 按钮：包含加载状态时禁用交互 */
+  .sh-btn:has(.loading-spinner) {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  /* 列表项：包含激活状态 */
+  .list-item:has(.active) {
+    border-left: 3px solid oklch(var(--primary));
+    background-color: oklch(var(--primary) / 0.1);
+  }
+
+  /* 移动端菜单：打开时的样式 */
+  .mobile-menu-container:has(.mobile-menu-open) {
+    overflow: hidden;
+  }
+
+  /* 头部：滚动时有阴影 */
+  .site-header:has(.scrolled) {
+    box-shadow: 0 1px 3px oklch(0 0 0 / 0.1);
+  }
+
+  /* 表单：有错误时禁用提交按钮 */
+  form:has(:invalid:not(:focus)) button[type="submit"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* 图片容器：有 alt 属性时显示 */
+  figure:has(img[alt]) figcaption {
+    display: block;
+  }
+}
+
+/* ==========================================
    Shadcn 核心組件樣式 (替代 DaisyUI)
    ========================================== */
 @layer components {
@@ -139,20 +426,6 @@
 /* ==========================================
    其他工具樣式
    ========================================== */
-html {
-  scroll-behavior: smooth;
-}
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-background);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-muted-foreground);
-  border-radius: 4px;
-}
-
 #app {
   min-height: 100vh;
 }

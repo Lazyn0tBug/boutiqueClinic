@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-1">
+  <main class="flex-1 scroll-container">
     <!-- ==================== 英雄區 (Hero) ==================== -->
     <div
       class="relative w-full min-h-[70vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-border bg-background"
@@ -23,13 +23,13 @@
           {{ t('hero.badge') }}
         </div>
         <h1
-          class="text-4xl tracking-tight font-extrabold text-foreground sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.1] mb-6"
+          class="text-4xl tracking-tight font-extrabold text-foreground sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.1] mb-6 text-balance"
         >
           {{ t('hero.title1') }}<br />
           <span class="text-primary mt-2 block">{{ t('hero.title2') }}</span>
         </h1>
         <p
-          class="mt-6 text-base text-muted-foreground sm:text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+          class="mt-6 text-base text-muted-foreground sm:text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed text-pretty"
         >
           {{ t('hero.description') }}
         </p>
@@ -48,9 +48,9 @@
 
     <!-- 快捷入口 -->
     <div class="max-w-7xl mx-auto px-4 -mt-4 relative z-20 sm:-mt-8 lg:-mt-12 mb-16">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 card-container">
         <div
-          class="shadcn-card p-6 flex flex-row items-center gap-4 hover:border-primary/50 transition-colors bg-background"
+          class="shadcn-card p-6 flex flex-row items-center gap-4 hover:border-primary/50 transition-colors bg-background card-adaptive"
         >
           <div
             class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20"
@@ -95,22 +95,22 @@
     <section id="services" class="py-16 md:py-24 bg-muted/30 border-y border-border">
       <div class="max-w-7xl mx-auto px-4">
         <div class="flex flex-col items-center justify-center text-center mb-12">
-          <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
             {{ t('services.title') }}
           </h2>
-          <p class="mt-4 max-w-2xl text-lg text-muted-foreground">
+          <p class="mt-4 max-w-2xl text-lg text-muted-foreground text-pretty">
             {{ t('services.subtitle') }}
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 card-container">
           <!-- 服務卡片動態渲染 -->
           <div
             v-for="(service, index) in services"
             :key="index"
-            class="shadcn-card overflow-hidden group flex flex-col hover:border-primary/40 transition-colors"
+            class="shadcn-card overflow-hidden group flex flex-col hover:border-primary/40 transition-colors responsive-card"
           >
-            <div class="h-48 overflow-hidden border-b border-border">
+            <div class="aspect-[16/10] overflow-hidden border-b border-border">
               <img
                 :src="service.image"
                 :alt="``"
@@ -134,8 +134,8 @@
           class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 pb-4 border-b border-border"
         >
           <div>
-            <h2 class="text-3xl font-bold tracking-tight text-foreground mb-2">{{ t('pharmacy.title') }}</h2>
-            <p class="text-muted-foreground">{{ t('pharmacy.subtitle') }}</p>
+            <h2 class="text-3xl font-bold tracking-tight text-foreground mb-2 text-balance">{{ t('pharmacy.title') }}</h2>
+            <p class="text-muted-foreground text-pretty">{{ t('pharmacy.subtitle') }}</p>
           </div>
           <button
             class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-muted hover:text-foreground h-9 px-3 border border-transparent hover:border-border mt-4 md:mt-0 gap-1 hidden md:flex"
@@ -144,12 +144,12 @@
           </button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 card-container">
           <!-- 藥品卡片動態渲染 -->
           <div
             v-for="(medicine, index) in pharmacyItems"
             :key="index"
-            class="shadcn-card p-5 group cursor-pointer hover:border-primary/40 transition-colors"
+            class="shadcn-card p-5 group cursor-pointer hover:border-primary/40 transition-colors responsive-card"
           >
             <div
               class="aspect-square bg-muted rounded-md flex items-center justify-center relative mb-4 border border-border"
@@ -183,28 +183,28 @@
     </section>
 
     <!-- ==================== 信息模塊: 專家與案例 (Information) ==================== -->
-    <section id="information" class="py-16 md:py-24 bg-muted/30 border-t border-border">
+    <section id="information" class="py-16 md:py-24 bg-muted/30 border-t border-border scroll-container">
       <div class="max-w-7xl mx-auto px-4">
         <!-- 案例展示區 -->
         <div class="mb-24">
           <div class="flex flex-col items-center justify-center text-center mb-12">
-            <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
               {{ t('cases.title') }}
             </h2>
-            <p class="mt-4 max-w-2xl text-lg text-muted-foreground">
+            <p class="mt-4 max-w-2xl text-lg text-muted-foreground text-pretty">
               {{ t('cases.subtitle') }}
             </p>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 card-container">
             <!-- 案例動態渲染 -->
             <div
               v-for="(caseItem, index) in caseStudies"
               :key="index"
-              class="shadcn-card flex flex-col sm:flex-row overflow-hidden hover:border-primary/50 transition-colors"
+              class="shadcn-card flex flex-col sm:flex-row overflow-hidden hover:border-primary/50 transition-colors card-adaptive"
             >
               <div
-                class="w-full sm:w-1/3 bg-muted border-r border-border flex items-center justify-center p-8"
+                class="w-full sm:w-1/3 bg-muted border-r border-border flex items-center justify-center p-8 aspect-[4/3] sm:aspect-auto"
               >
                 <i :class="['ph text-6xl text-primary/60', caseItem.icon]"></i>
               </div>
@@ -230,19 +230,19 @@
         <!-- 專家團隊區 -->
         <div>
           <div class="flex justify-between items-end mb-8 border-b border-border pb-4">
-            <h2 class="text-2xl font-bold tracking-tight text-foreground">{{ t('doctors.title') }}</h2>
+            <h2 class="text-2xl font-bold tracking-tight text-foreground text-balance">{{ t('doctors.title') }}</h2>
             <a href="#" class="text-sm font-medium text-primary hover:underline">{{ t('doctors.viewAll') }}</a>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 card-container">
             <!-- 醫生卡片動態渲染 -->
             <div
               v-for="(doctor, index) in doctors"
               :key="index"
-              class="shadcn-card p-6 text-center group"
+              class="shadcn-card p-6 text-center group responsive-card"
             >
               <div
-                class="w-24 h-24 mx-auto rounded-full border-4 border-background shadow-sm overflow-hidden mb-4 ring-1 ring-border group-hover:ring-primary/50 transition-all"
+                class="aspect-square w-24 mx-auto rounded-full border-4 border-background shadow-sm overflow-hidden mb-4 ring-1 ring-border group-hover:ring-primary/50 transition-all"
               >
                 <img :src="doctor.image" :alt="``" class="w-full h-full object-cover" />
               </div>
