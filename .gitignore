@@ -27,7 +27,12 @@ go.work.sum
 # env file
 .env
 
+# vim swap file
+.swp
+
 # Editor/IDE
 # .idea/
 # .vscode/
 node_modules/
+docs/
+dist/
