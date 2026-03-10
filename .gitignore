@@ -36,3 +36,6 @@ go.work.sum
 node_modules/
 docs/
 dist/
+
+prompt.md
+proto.html
