@@ -11,7 +11,10 @@
     "edit": "編輯",
     "search": "搜索",
     "loading": "載入中...",
-    "noData": "暫無數據"
+    "noData": "暫無數據",
+    "viewMap": "查看地圖",
+    "openInGoogleMaps": "在 Google Maps 中打開",
+    "allRightsReserved": "All rights reserved."
   },
   "nav": {
     "home": "首頁",
@@ -26,20 +29,45 @@
     }
   },
   "footer": {
-    "quickLinks": "快速導航",
-    "socialMedia": "官方科普頻道",
-    "followUs": "關注我們的 YouTube 和 Instagram，獲取最新前沿醫療資訊。",
-    "contact": "聯絡方式",
-    "phone": "電話",
-    "email": "電子郵件",
-    "hours": "門診時間",
-    "hoursValue": "週一至週六 09:00 - 18:00",
-    "location": "位置",
-    "copyright": "© 2026 醫療法人德智會. All rights reserved."
+    "brandName": "醫療法人德智會",
+    "brandDescription": "致力於為全球患者提供日本高水準的醫療服務。",
+    "phone": "+81 03-1234-5678",
+    "email": "contact{'@'}tokuchikai.jp",
+    "hours": "週一至週六 09:00-18:00",
+    "medicalServices": "醫療服務",
+    "helpSupport": "幫助支持",
+    "followUs": "關注我們",
+    "officialChannel": "官方科普頻道",
+    "quickLinks": {
+      "checkup": "精密體檢",
+      "referral": "重症轉診",
+      "stemCell": "幹細胞治療",
+      "consultation": "雲問診預約",
+      "pharmacy": "常用藥專區"
+    },
+    "supportLinks": {
+      "guide": "門診就醫指南",
+      "visa": "醫療簽證協助",
+      "fees": "費用說明",
+      "faq": "常見問題",
+      "contact": "聯繫我們"
+    },
+    "legal": {
+      "terms": "使用條款",
+      "privacy": "隱私政策",
+      "cookies": "Cookie 設置"
+    },
+    "copyright": "© 2026 醫療法人德智會.",
+    "mapModal": {
+      "title": "醫療法人德智會 - 位置",
+      "address": "日本東京都港區櫻花大道 1-2-3",
+      "mapPlaceholder": "Google Maps 地圖組件"
+    }
   },
   "hero": {
     "badge": "JAPAN TOP MEDICAL",
-    "title": "連接全球患者，<br>提供頂尖醫療方案",
+    "title1": "連接全球患者",
+    "title2": "提供頂尖醫療方案",
     "description": "專屬的重症轉診通道、前沿幹細胞治療與高精度癌篩體檢。結合本地優質資源，為您提供跨越國界的健康保障。",
     "btnOverseas": "海外患者服務通道",
     "btnLocal": "本地門診指南"
@@ -57,5 +85,104 @@
       "title": "緊急醫療援助",
       "description": "24小時多語言支持"
     }
+  },
+  "services": {
+    "title": "特色醫療服務",
+    "subtitle": "匯聚日本尖端醫療技術，為全球患者提供定制化的治療與預防方案。",
+    "items": {
+      "checkup": {
+        "title": "精密體檢 (Ningen Dock)",
+        "description": "結合 PET-CT、MRI 等高精度設備的全身深度檢查，有效發現極早期病變，防患於未然。"
+      },
+      "referral": {
+        "title": "重症轉診與第二診療意見",
+        "description": "對接日本排名前十的大學附屬醫院，由權威專家提供治療方案，並協助辦理醫療簽證。"
+      },
+      "stemCell": {
+        "title": "幹細胞再生治療",
+        "description": "運用國際領先的細胞培養技術，針對抗衰老、關節損傷及某些慢性疾病的創新療法。"
+      }
+    }
+  },
+  "pharmacy": {
+    "title": "常用藥科普與指南",
+    "subtitle": "日本高品質處方藥及日常非處方藥(OTC)詳細介紹。",
+    "viewAll": "查看全部藥品",
+    "items": {
+      "eve": {
+        "name": "EVE Quick 頭痛藥",
+        "description": "緩解頭痛、發熱症狀，見效快且對胃部溫和。"
+      },
+      "takeda": {
+        "name": "武田 降壓藥 (示例)",
+        "description": "用於高血壓的長期控制，需憑醫生處方購買。"
+      },
+      "taisho": {
+        "name": "大正 綜合感冒藥",
+        "description": "有效緩解感冒引起的多種症狀，家庭常備。"
+      },
+      "nmn": {
+        "name": "高純度 NMN 膠囊",
+        "description": "抗衰老細胞修復前沿產品，日本本土製造。"
+      }
+    },
+    "categories": {
+      "painRelief": "鎮痛解熱",
+      "cardiovascular": "心血管",
+      "respiratory": "呼吸道",
+      "regenerative": "再生醫學"
+    },
+    "tags": {
+      "otc": "非處方 OTC",
+      "prescription": "處方藥",
+      "supplement": "保健品"
+    }
+  },
+  "cases": {
+    "title": "醫療案例與成就",
+    "subtitle": "真實醫療數據背書，見證每一次生命的奇跡。",
+    "readReport": "閱讀完整報告",
+    "items": {
+      "cancer": {
+        "tag": "早期癌篩",
+        "title": "通過 PET-CT 發現0期胃癌",
+        "summary": "張先生（55歲，中國籍），在定制精密體檢中發現極早期胃部病變，並於當週安排內視鏡微創切除..."
+      },
+      "lungCancer": {
+        "tag": "重症轉診",
+        "title": "晚期肺癌的跨國聯合診療",
+        "summary": "協助國內患者轉診至東京大學醫學部附屬醫院，獲取新型靶向藥治療方案，患者生存質量大幅提升..."
+      }
+    }
+  },
+  "doctors": {
+    "title": "權威專家團隊",
+    "viewAll": "查看全部醫生",
+    "moreExperts": "更多特聘專家",
+    "items": {
+      "tanaka": {
+        "name": "田中 健一",
+        "title": "腫瘤內科 主任醫師",
+        "specialty": "專注於消化道腫瘤的靶向治療與早期篩查。"
+      },
+      "sato": {
+        "name": "佐藤 美咲",
+        "title": "再生醫學科 專家",
+        "specialty": "主導多項幹細胞抗衰老及組織修復臨床研究。"
+      }
+    }
+  },
+  "partners": {
+    "title": "深度合作醫療網絡",
+    "items": {
+      "tokyo": "東京醫學中心",
+      "juntendo": "順天堂聯合醫院",
+      "kansai": "關西幹細胞研究所",
+      "association": "日本精密體檢協會"
+    }
+  },
+  "about": {
+    "title": "關於我們",
+    "subtitle": "致力於連接全球患者與日本頂尖醫療資源"
   }
 }

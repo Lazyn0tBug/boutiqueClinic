@@ -1,7 +1,7 @@
 {
   "common": {
     "viewDetail": "詳細を見る",
-    "learnMore": "詳しく見る",
+    "learnMore": "詳しくはこちら",
     "contactUs": "お問い合わせ",
     "submit": "送信",
     "cancel": "キャンセル",
@@ -11,51 +11,178 @@
     "edit": "編集",
     "search": "検索",
     "loading": "読み込み中...",
-    "noData": "データがありません"
+    "noData": "データがありません",
+    "viewMap": "地図を見る",
+    "openInGoogleMaps": "Google Mapsで開く",
+    "allRightsReserved": "All rights reserved."
   },
   "nav": {
     "home": "ホーム",
     "services": "医療サービス",
-    "pharmacy": "常用薬",
+    "pharmacy": "医薬品ガイド",
     "partners": "提携機関",
-    "cases": "症例紹介",
+    "cases": "成功事例",
     "about": "私たちについて",
     "servicesMenu": {
-      "featured": "特色医療",
+      "featured": "特色ある医療",
       "booking": "オンライン予約"
     }
   },
   "footer": {
-    "quickLinks": "クイックリンク",
-    "socialMedia": "公式チャンネル",
-    "followUs": "YouTubeとInstagramをフォローして、最新の医療情報を入手してください。",
-    "contact": "お問い合わせ",
-    "phone": "電話",
-    "email": "メール",
-    "hours": "診療時間",
-    "hoursValue": "月曜日～土曜日 09:00 - 18:00",
-    "location": "所在地",
-    "copyright": "© 2026 医療法人徳智会. All rights reserved."
+    "brandName": "医療法人徳智会",
+    "brandDescription": "世界中の患者様に日本の高水準医療サービスを提供いたします。",
+    "phone": "+81 03-1234-5678",
+    "email": "contact{'@'}tokuchikai.jp",
+    "hours": "月〜土 09:00-18:00",
+    "medicalServices": "医療サービス",
+    "helpSupport": "ヘルプ＆サポート",
+    "followUs": "フォローする",
+    "officialChannel": "公式チャンネル",
+    "quickLinks": {
+      "checkup": "精密健康診断",
+      "referral": "重症転院",
+      "stemCell": "幹細胞治療",
+      "consultation": "オンライン診療",
+      "pharmacy": "医薬品ガイド"
+    },
+    "supportLinks": {
+      "guide": "受診ガイド",
+      "visa": "医療ビザ支援",
+      "fees": "料金案内",
+      "faq": "よくある質問",
+      "contact": "お問い合わせ"
+    },
+    "legal": {
+      "terms": "利用規約",
+      "privacy": "プライバシーポリシー",
+      "cookies": "Cookie設定"
+    },
+    "copyright": "© 2026 医療法人徳智会.",
+    "mapModal": {
+      "title": "医療法人徳智会 - アクセス",
+      "address": "東京都港区桜大道1-2-3",
+      "mapPlaceholder": "Google Maps コンポーネント"
+    }
   },
   "hero": {
     "badge": "JAPAN TOP MEDICAL",
-    "title": "世界中の患者様をつなぎ、<br>最高の医療ソリューションを提供",
-    "description": "重症転院専用ルート、最先端の幹細胞治療、高精度がん検診。地域の優良リソースと組み合わせて、国境を越えた健康保障を提供します。",
-    "btnOverseas": "海外患者サービス",
-    "btnLocal": "地域診療ガイド"
+    "title1": "世界中の患者様を",
+    "title2": "最高峰の医療へ",
+    "description": "重症転院の専用チャネル、最先端の幹細胞治療、高精度がん検診。地域の優良リソースと組み合わせ、国境を越えた健康保障を提供いたします。",
+    "btnOverseas": "海外患者様サービス",
+    "btnLocal": "地域クリニックガイド"
   },
   "quickAccess": {
     "consultation": {
       "title": "オンライン診療予約",
-      "description": "オンラインでカルテ評価と治療計画"
+      "description": "オンラインで病历評価と治療方針"
     },
     "checkup": {
-      "title": "人間ドック予約",
-      "description": "PET-CTと早期がん検診サービス"
+      "title": "精密健康診断予約",
+      "description": "PET-CTと早期がん検診"
     },
     "emergency": {
       "title": "緊急医療支援",
       "description": "24時間多言語サポート"
     }
+  },
+  "services": {
+    "title": "特色ある医療サービス",
+    "subtitle": "日本の最先端医療技術を結集し、世界中の患者様にオーダーメイドの治療と予防プランを提供いたします。",
+    "items": {
+      "checkup": {
+        "title": "精密健康診断 (人間ドック)",
+        "description": "PET-CT、MRIなど高精度機器を用いた全身精密検査で、極早期の病変を発見し、未然防災します。"
+      },
+      "referral": {
+        "title": "重症転院・セカンドオピニオン",
+        "description": "日本トップ10の大学病院と連携し、権威ある専門医が治療方針を提案。医療ビザ取得もサポートいたします。"
+      },
+      "stemCell": {
+        "title": "幹細胞再生医療",
+        "description": "国際的に先行する細胞培養技術を活用し、アンチエイジング、関節損傷、慢性疾患に対する革新的治療法。"
+      }
+    }
+  },
+  "pharmacy": {
+    "title": "医薬品ガイド",
+    "subtitle": "日本の高品質な処方薬と市販薬(OTC)の詳細紹介。",
+    "viewAll": "全ての医薬品を見る",
+    "items": {
+      "eve": {
+        "name": "EVE Quick 頭痛薬",
+        "description": "頭痛・発熱を緩和し、効果が早く胃に優しい。"
+      },
+      "takeda": {
+        "name": "武田 降圧薬 (例)",
+        "description": "高血圧の長期管理に使用。医師の処方箋が必要です。"
+      },
+      "taisho": {
+        "name": "大正 総合感冒薬",
+        "description": "風邪の様々な症状に効果的、家庭の常備薬。"
+      },
+      "nmn": {
+        "name": "高純度 NMN カプセル",
+        "description": "アンチエイジング細胞修復の最先端製品、日本製。"
+      }
+    },
+    "categories": {
+      "painRelief": "鎮痛解熱",
+      "cardiovascular": "循環器",
+      "respiratory": "呼吸器",
+      "regenerative": "再生医療"
+    },
+    "tags": {
+      "otc": "市販薬 OTC",
+      "prescription": "処方薬",
+      "supplement": "サプリメント"
+    }
+  },
+  "cases": {
+    "title": "医療事例と実績",
+    "subtitle": "実際の医療データに裏打ちされた、一つ一つの命の奇跡。",
+    "readReport": "完全報告を読む",
+    "items": {
+      "cancer": {
+        "tag": "早期がん検診",
+        "title": "PET-CTで0期胃がんを発見",
+        "summary": "張さん（55歳、中国籍）、オーダーメイド精密検診で極早期の胃病変を発見、同週に内視鏡的切除を施行..."
+      },
+      "lungCancer": {
+        "tag": "重症転院",
+        "title": "進行肺がんの国際連携診療",
+        "summary": "国内患者を東京大学医学部付属病院へ転院、新規分子標的薬治療方針を取得、患者のQOLが大幅に改善..."
+      }
+    }
+  },
+  "doctors": {
+    "title": "権威ある専門医チーム",
+    "viewAll": "全ての医師を見る",
+    "moreExperts": "他の専門医",
+    "items": {
+      "tanaka": {
+        "name": "田中 健一",
+        "title": "腫瘍内科 主任医師",
+        "specialty": "消化器腫瘍の分子標的治療と早期スクリーニングに専門。"
+      },
+      "sato": {
+        "name": "佐藤 美咲",
+        "title": "再生医療科 専門医",
+        "specialty": "幹細胞アンチエイジングおよび組織修復の複数の臨床研究を主導。"
+      }
+    }
+  },
+  "partners": {
+    "title": "戦略的医療ネットワーク",
+    "items": {
+      "tokyo": "東京医療センター",
+      "juntendo": "順天堂大学病院",
+      "kansai": "関西幹細胞研究所",
+      "association": "日本精密健康診断協会"
+    }
+  },
+  "about": {
+    "title": "私たちについて",
+    "subtitle": "世界中の患者様と日本のトップ医療リソースを繋ぐ"
   }
 }

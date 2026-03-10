@@ -7,55 +7,55 @@
         <!-- 品牌與聯繫方式 -->
         <div class="col-span-2 md:col-span-1">
           <div class="flex items-center gap-2 font-bold text-lg mb-3 tracking-tight">
-            <i class="ph-fill ph-cross text-white text-xl"></i> 醫療法人德智會
+            <i class="ph-fill ph-cross text-white text-xl"></i> {{ t('footer.brandName') }}
           </div>
           <p class="text-xs text-primary-foreground/70 mb-4 leading-relaxed">
-            致力於為全球患者提供日本高水準的醫療服務。
+            {{ t('footer.brandDescription') }}
           </p>
           <div class="space-y-1.5 text-xs text-primary-foreground/80">
             <p class="flex items-center gap-2">
-              <i class="ph ph-phone"></i> +81 03-1234-5678
+              <i class="ph ph-phone"></i> {{ t('footer.phone') }}
             </p>
             <p class="flex items-center gap-2">
-              <i class="ph ph-envelope-simple"></i> contact@tokuchikai.jp
+              <i class="ph ph-envelope-simple"></i> {{ t('footer.email') }}
             </p>
             <p class="flex items-center gap-2">
-              <i class="ph ph-clock"></i> 週一至週六 09:00-18:00
+              <i class="ph ph-clock"></i> {{ t('footer.hours') }}
             </p>
             <p class="flex items-center gap-2">
               <i class="ph ph-map-pin"></i> 
-              <button @click="showMapModal = true" class="underline decoration-dotted hover:text-white">查看地圖</button>
+              <button @click="showMapModal = true" class="underline decoration-dotted hover:text-white">{{ t('common.viewMap') }}</button>
             </p>
           </div>
         </div>
 
         <!-- 醫療服務 -->
         <div>
-          <h5 class="font-semibold text-sm mb-3">醫療服務</h5>
+          <h5 class="font-semibold text-sm mb-3">{{ t('footer.medicalServices') }}</h5>
           <ul class="space-y-1.5 text-xs text-primary-foreground/70">
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">精密體檢</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">重症轉診</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">幹細胞治療</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">雲問診預約</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">常用藥專區</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.checkup') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.referral') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.stemCell') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.consultation') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.quickLinks.pharmacy') }}</a></li>
           </ul>
         </div>
 
         <!-- 幫助支持 -->
         <div>
-          <h5 class="font-semibold text-sm mb-3">幫助支持</h5>
+          <h5 class="font-semibold text-sm mb-3">{{ t('footer.helpSupport') }}</h5>
           <ul class="space-y-1.5 text-xs text-primary-foreground/70">
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">門診就醫指南</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">醫療簽證協助</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">費用說明</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">常見問題</a></li>
-            <li><a href="#" class="hover:text-primary-foreground transition-colors">聯繫我們</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.guide') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.visa') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.fees') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.faq') }}</a></li>
+            <li><a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.supportLinks.contact') }}</a></li>
           </ul>
         </div>
 
         <!-- 關注我們 -->
         <div>
-          <h5 class="font-semibold text-sm mb-3">關注我們</h5>
+          <h5 class="font-semibold text-sm mb-3">{{ t('footer.followUs') }}</h5>
           <div class="flex gap-2 mb-4">
             <a href="#" class="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
               <i class="ph-fill ph-youtube-logo text-lg"></i>
@@ -73,7 +73,7 @@
           <!-- 官方頻道 -->
           <div class="text-xs text-primary-foreground/70">
             <p class="flex items-center gap-1.5 mb-2">
-              <i class="ph-fill ph-youtube-logo text-red-400"></i> 官方科普頻道
+              <i class="ph-fill ph-youtube-logo text-red-400"></i> {{ t('footer.officialChannel') }}
             </p>
             <div class="flex gap-2">
               <div class="relative w-20 h-12 bg-primary-foreground/10 rounded overflow-hidden group cursor-pointer border border-primary-foreground/20">
@@ -92,11 +92,11 @@
      
       <!-- 底部版權欄 -->
       <div class="border-t border-primary-foreground/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-primary-foreground/60">
-        <p>&copy; 2026 醫療法人德智會. All rights reserved.</p>
+        <p>{{ t('footer.copyright') }} {{ t('common.allRightsReserved') }}</p>
         <div class="flex gap-6 mt-3 md:mt-0">
-          <a href="#" class="hover:text-primary-foreground transition-colors">使用條款</a>
-          <a href="#" class="hover:text-primary-foreground transition-colors">隱私政策</a>
-          <a href="#" class="hover:text-primary-foreground transition-colors">Cookie 設置</a>
+          <a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.legal.terms') }}</a>
+          <a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.legal.privacy') }}</a>
+          <a href="#" class="hover:text-primary-foreground transition-colors">{{ t('footer.legal.cookies') }}</a>
         </div>
       </div>
     </div>
@@ -105,7 +105,7 @@
     <div v-if="showMapModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click="showMapModal = false">
       <div class="bg-background rounded-lg shadow-2xl max-w-4xl w-full mx-4 overflow-hidden" @click.stop>
         <div class="flex items-center justify-between p-4 border-b border-border">
-          <h3 class="font-semibold text-lg">醫療法人德智會 - 位置</h3>
+          <h3 class="font-semibold text-lg">{{ t('footer.mapModal.title') }}</h3>
           <button @click="showMapModal = false" class="p-2 hover:bg-accent rounded-full transition-colors">
             <i class="ph ph-x text-xl"></i>
           </button>
@@ -113,15 +113,15 @@
         <div class="aspect-video bg-muted flex items-center justify-center">
           <div class="text-center p-8">
             <i class="ph ph-map-pin text-5xl text-muted-foreground mb-4"></i>
-            <p class="font-medium text-lg mb-2">Google Maps 地圖組件</p>
-            <p class="text-muted-foreground">日本東京都港區櫻花大道 1-2-3</p>
+            <p class="font-medium text-lg mb-2">{{ t('footer.mapModal.mapPlaceholder') }}</p>
+            <p class="text-muted-foreground">{{ t('footer.mapModal.address') }}</p>
             <a 
               href="https://maps.google.com" 
               target="_blank"
               class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity"
             >
               <i class="ph ph-external-link"></i>
-              在 Google Maps 中打開
+              {{ t('common.openInGoogleMaps') }}
             </a>
           </div>
         </div>
@@ -132,6 +132,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const showMapModal = ref(false)
 </script>

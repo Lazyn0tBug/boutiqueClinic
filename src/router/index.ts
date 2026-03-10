@@ -9,7 +9,7 @@ const router = createRouter({
     {
       path: '/',
       redirect: () => {
-        const locale = localStorage.getItem('locale') || 'zh-TW'
+        const locale = localStorage.getItem('locale') || 'zh-CN'
         return `/${locale}`
       },
     },
@@ -52,16 +52,15 @@ const router = createRouter({
 })
 
 // 路由守卫 - 验证语言参数
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
   const locale = to.params.locale as string
-  const validLocales = ['zh-TW', 'zh-CN', 'en', 'ja']
+  const validLocales = ['zh-CN', 'zh-TW', 'en', 'ja']
 
   // 如果是带语言前缀的路由,验证语言参数
   if (locale && !validLocales.includes(locale)) {
     // 无效语言,重定向到默认语言
-    const defaultLocale = localStorage.getItem('locale') || 'zh-TW'
-    next(`/${defaultLocale}${to.path.replace(`/${locale}`, '')}`)
-    return
+    const defaultLocale = localStorage.getItem('locale') || 'zh-CN'
+    return `/${defaultLocale}${to.path.replace(`/${locale}`, '')}`
   }
 
   // 如果是有效语言,更新 localStorage
@@ -69,7 +68,8 @@ router.beforeEach((to, from, next) => {
     localStorage.setItem('locale', locale)
   }
 
-  next()
+  // 返回 true 表示允许导航
+  return true
 })
 
 export default router

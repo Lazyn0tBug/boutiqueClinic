@@ -11,14 +11,17 @@
     "edit": "Edit",
     "search": "Search",
     "loading": "Loading...",
-    "noData": "No Data"
+    "noData": "No data available",
+    "viewMap": "View Map",
+    "openInGoogleMaps": "Open in Google Maps",
+    "allRightsReserved": "All rights reserved."
   },
   "nav": {
     "home": "Home",
     "services": "Medical Services",
-    "pharmacy": "Pharmacy",
+    "pharmacy": "Pharmacy Guide",
     "partners": "Partners",
-    "cases": "Case Studies",
+    "cases": "Success Stories",
     "about": "About Us",
     "servicesMenu": {
       "featured": "Featured Services",
@@ -26,36 +29,160 @@
     }
   },
   "footer": {
-    "quickLinks": "Quick Links",
-    "socialMedia": "Official Channel",
-    "followUs": "Follow our YouTube and Instagram for the latest medical information.",
-    "contact": "Contact",
-    "phone": "Phone",
-    "email": "Email",
-    "hours": "Hours",
-    "hoursValue": "Mon - Sat 09:00 - 18:00",
-    "location": "Location",
-    "copyright": "© 2026 Tokuchikal Medical Corporation. All rights reserved."
+    "brandName": "Tokuchikai Medical Corporation",
+    "brandDescription": "Dedicated to providing world-class Japanese medical services to patients worldwide.",
+    "phone": "+81 03-1234-5678",
+    "email": "contact{'@'}tokuchikai.jp",
+    "hours": "Mon-Sat 09:00-18:00",
+    "medicalServices": "Medical Services",
+    "helpSupport": "Help & Support",
+    "followUs": "Follow Us",
+    "officialChannel": "Official Channel",
+    "quickLinks": {
+      "checkup": "Health Checkup",
+      "referral": "Critical Care Referral",
+      "stemCell": "Stem Cell Therapy",
+      "consultation": "Online Consultation",
+      "pharmacy": "Pharmacy Guide"
+    },
+    "supportLinks": {
+      "guide": "Patient Guide",
+      "visa": "Medical Visa Assistance",
+      "fees": "Fees & Pricing",
+      "faq": "FAQ",
+      "contact": "Contact Us"
+    },
+    "legal": {
+      "terms": "Terms of Use",
+      "privacy": "Privacy Policy",
+      "cookies": "Cookie Settings"
+    },
+    "copyright": "© 2026 Tokuchikai Medical Corporation.",
+    "mapModal": {
+      "title": "Tokuchikai Medical Corporation - Location",
+      "address": "1-2-3 Sakura Avenue, Minato-ku, Tokyo, Japan",
+      "mapPlaceholder": "Google Maps Component"
+    }
   },
   "hero": {
     "badge": "JAPAN TOP MEDICAL",
-    "title": "Connecting Global Patients,<br>Providing Top Medical Solutions",
-    "description": "Exclusive referral channels for critical cases, cutting-edge stem cell therapy, and high-precision cancer screening. Combined with local quality resources to provide cross-border health protection.",
-    "btnOverseas": "Overseas Patient Services",
+    "title1": "Connecting Global Patients",
+    "title2": "World-Class Healthcare Solutions",
+    "description": "Exclusive critical care referral channels, cutting-edge stem cell therapy, and high-precision cancer screening. Combining local excellence with cross-border healthcare保障.",
+    "btnOverseas": "International Patient Services",
     "btnLocal": "Local Clinic Guide"
   },
   "quickAccess": {
     "consultation": {
       "title": "Online Consultation",
-      "description": "Online medical record evaluation and treatment plan"
+      "description": "Remote medical record evaluation"
     },
     "checkup": {
-      "title": "Comprehensive Checkup",
-      "description": "PET-CT and early cancer screening services"
+      "title": "Health Checkup Booking",
+      "description": "PET-CT & early cancer screening"
     },
     "emergency": {
       "title": "Emergency Medical Assistance",
       "description": "24/7 multilingual support"
     }
+  },
+  "services": {
+    "title": "Featured Medical Services",
+    "subtitle": "Bringing Japan's cutting-edge medical technology to patients worldwide with personalized treatment and prevention solutions.",
+    "items": {
+      "checkup": {
+        "title": "Comprehensive Health Screening (Ningen Dock)",
+        "description": "Full-body examination using PET-CT, MRI, and other advanced equipment for early detection of diseases."
+      },
+      "referral": {
+        "title": "Critical Care Referral & Second Opinion",
+        "description": "Direct access to Japan's top university hospitals with expert treatment plans and medical visa assistance."
+      },
+      "stemCell": {
+        "title": "Stem Cell Regenerative Therapy",
+        "description": "Innovative treatments using advanced cell culture technology for anti-aging, joint injuries, and chronic conditions."
+      }
+    }
+  },
+  "pharmacy": {
+    "title": "Pharmacy Guide",
+    "subtitle": "Comprehensive guide to Japan's high-quality prescription and OTC medications.",
+    "viewAll": "View All Medications",
+    "items": {
+      "eve": {
+        "name": "EVE Quick Pain Relief",
+        "description": "Fast-acting headache and fever relief, gentle on the stomach."
+      },
+      "takeda": {
+        "name": "Takeda Blood Pressure Medication (Example)",
+        "description": "Long-term blood pressure control, prescription required."
+      },
+      "taisho": {
+        "name": "Taisho Cold Medicine",
+        "description": "Effective relief for multiple cold symptoms, a household essential."
+      },
+      "nmn": {
+        "name": "High-Purity NMN Capsules",
+        "description": "Cutting-edge anti-aging supplement, made in Japan."
+      }
+    },
+    "categories": {
+      "painRelief": "Pain Relief",
+      "cardiovascular": "Cardiovascular",
+      "respiratory": "Respiratory",
+      "regenerative": "Regenerative Medicine"
+    },
+    "tags": {
+      "otc": "OTC",
+      "prescription": "Prescription",
+      "supplement": "Supplement"
+    }
+  },
+  "cases": {
+    "title": "Medical Cases & Achievements",
+    "subtitle": "Real medical data supporting every life-changing outcome.",
+    "readReport": "Read Full Report",
+    "items": {
+      "cancer": {
+        "tag": "Early Cancer Screening",
+        "title": "Stage 0 Gastric Cancer Detected via PET-CT",
+        "summary": "Mr. Zhang (55, Chinese), early-stage gastric lesion discovered during comprehensive screening, endoscopic resection performed within the same week..."
+      },
+      "lungCancer": {
+        "tag": "Critical Care Referral",
+        "title": "Cross-Border Treatment for Advanced Lung Cancer",
+        "summary": "Patient referred to University of Tokyo Hospital, receiving novel targeted therapy with significantly improved quality of life..."
+      }
+    }
+  },
+  "doctors": {
+    "title": "Expert Medical Team",
+    "viewAll": "View All Doctors",
+    "moreExperts": "More Specialists",
+    "items": {
+      "tanaka": {
+        "name": "Kenichi Tanaka",
+        "title": "Chief Physician, Oncology",
+        "specialty": "Specializing in targeted therapy and early screening for gastrointestinal tumors."
+      },
+      "sato": {
+        "name": "Misaki Sato",
+        "title": "Regenerative Medicine Specialist",
+        "specialty": "Leading multiple clinical studies on stem cell anti-aging and tissue repair."
+      }
+    }
+  },
+  "partners": {
+    "title": "Strategic Healthcare Network",
+    "items": {
+      "tokyo": "Tokyo Medical Center",
+      "juntendo": "Juntendo University Hospital",
+      "kansai": "Kansai Stem Cell Institute",
+      "association": "Japan Health Screening Association"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Connecting global patients with Japan's top medical resources"
   }
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import type { Locale } from '@/types/locale'
@@ -7,24 +7,34 @@ import type { Locale } from '@/types/locale'
 const { t } = useI18n()
 const appStore = useAppStore()
 
+const isMobileMenuOpen = ref(false)
+
+// 使用 computed 從 store 獲取當前語言
+const currentLocale = computed(() => appStore.locale)
+
+// 語言選項 - 使用正確的 i18n locale codes
+const languages = [
+  { code: 'zh-CN' as Locale, label: 'CN 简体中文' },
+  { code: 'zh-TW' as Locale, label: 'TW 繁体中文' },
+  { code: 'ja' as Locale, label: 'JP 日本語' },
+  { code: 'en' as Locale, label: 'EN English' },
+]
+
+// 顯示用戶友好的語言代碼
+const displayLangCode = computed(() => {
+  const map: Record<string, string> = {
+    'zh-CN': 'CN',
+    'zh-TW': 'TW',
+    'ja': 'JP',
+    'en': 'EN',
+  }
+  return map[currentLocale.value] || 'TW'
+})
+
+// 切換語言
 const changeLanguage = (locale: Locale) => {
   appStore.setLocale(locale)
 }
-
-interface Language {
-  code: string
-  label: string
-}
-
-const isMobileMenuOpen = ref(false)
-const currentLang = ref('CN')
-
-const languages = ref<Language[]>([
-  { code: 'CN', label: 'CN 简体中文' },
-  { code: 'TW', label: 'TW 繁体中文' },
-  { code: 'JP', label: 'JP 日本語' },
-  { code: 'EN', label: 'EN English' },
-])
 </script>
 
 <template>
@@ -45,10 +55,10 @@ const languages = ref<Language[]>([
           class="flex items-center gap-2 font-bold text-lg md:text-xl tracking-tight hover:opacity-80 transition-opacity cursor-pointer"
         >
           <i class="ph-fill ph-cross text-primary text-2xl"></i>
-          <span>醫療法人德智會</span>
+          <span>{{ t('footer.brandName') }}</span>
           <span
             class="text-xs text-muted-foreground font-normal hidden xl:inline-block border-l border-border pl-2 ml-1"
-            >現代化跨國醫療中心</span
+            >{{ t('about.subtitle') }}</span
           >
         </a>
       </div>
@@ -59,7 +69,7 @@ const languages = ref<Language[]>([
           <button
             class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
           >
-            醫療服務
+            {{ t('nav.services') }}
           </button>
           <div class="absolute left-0 top-full hidden group-hover:block pt-2">
             <div
@@ -68,12 +78,12 @@ const languages = ref<Language[]>([
               <a
                 href="#services"
                 class="block w-full rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-                >特色醫療</a
+                >{{ t('nav.servicesMenu.featured') }}</a
               >
               <a
                 href="#services"
                 class="block w-full rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-                >在線預約</a
+                >{{ t('nav.servicesMenu.booking') }}</a
               >
             </div>
           </div>
@@ -82,22 +92,22 @@ const languages = ref<Language[]>([
         <a
           href="#pharmacy"
           class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >常用藥專區</a
+          >{{ t('nav.pharmacy') }}</a
         >
         <a
           href="#partners"
           class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >合作機構</a
+          >{{ t('nav.partners') }}</a
         >
         <a
           href="#information"
           class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >成功案例</a
+          >{{ t('nav.cases') }}</a
         >
         <a
           href="#footer"
           class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >關於我們</a
+          >{{ t('nav.about') }}</a
         >
       </nav>
 
@@ -108,7 +118,7 @@ const languages = ref<Language[]>([
             class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 px-3 border border-transparent hover:border-border"
           >
             <i class="ph ph-translate text-lg"></i>
-            <span class="font-medium mx-1 tracking-wide">{{ currentLang }}</span>
+            <span class="font-medium mx-1 tracking-wide">{{ displayLangCode }}</span>
             <i class="ph ph-caret-down text-xs text-muted-foreground"></i>
           </button>
           <div class="absolute right-0 top-full hidden group-hover:block pt-2">
@@ -118,7 +128,7 @@ const languages = ref<Language[]>([
               <button
                 v-for="lang in languages"
                 :key="lang.code"
-                @click="currentLang = lang.code"
+                @click="changeLanguage(lang.code)"
                 class="flex w-full items-center rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors text-left"
               >
                 {{ lang.label }}
@@ -140,7 +150,7 @@ const languages = ref<Language[]>([
             <div
               class="bg-popover text-popover-foreground text-xs rounded-md py-1.5 px-3 border border-border shadow-md whitespace-nowrap"
             >
-              用戶管理
+              {{ t('footer.supportLinks.contact') }}
             </div>
           </div>
         </div>
@@ -153,44 +163,44 @@ const languages = ref<Language[]>([
       class="lg:hidden border-t border-border bg-background p-4 flex flex-col gap-2 shadow-lg absolute w-full left-0"
     >
       <div class="font-semibold text-sm text-muted-foreground px-2 py-1 uppercase tracking-wider">
-        醫療服務
+        {{ t('nav.services') }}
       </div>
       <a
         href="#services"
         class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
         @click="isMobileMenuOpen = false"
-        >特色醫療</a
+        >{{ t('nav.servicesMenu.featured') }}</a
       >
       <a
         href="#services"
         class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
         @click="isMobileMenuOpen = false"
-        >在線預約</a
+        >{{ t('nav.servicesMenu.booking') }}</a
       >
       <div class="h-px bg-border my-1"></div>
       <a
         href="#pharmacy"
         class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
         @click="isMobileMenuOpen = false"
-        >常用藥專區</a
+        >{{ t('nav.pharmacy') }}</a
       >
       <a
         href="#partners"
         class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
         @click="isMobileMenuOpen = false"
-        >合作機構</a
+        >{{ t('nav.partners') }}</a
       >
       <a
         href="#information"
         class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
         @click="isMobileMenuOpen = false"
-        >成功案例</a
+        >{{ t('nav.cases') }}</a
       >
       <a
         href="#footer"
         class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
         @click="isMobileMenuOpen = false"
-        >關於我們</a
+        >{{ t('nav.about') }}</a
       >
     </div>
   </header>

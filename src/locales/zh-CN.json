@@ -11,7 +11,10 @@
     "edit": "编辑",
     "search": "搜索",
     "loading": "加载中...",
-    "noData": "暂无数据"
+    "noData": "暂无数据",
+    "viewMap": "查看地图",
+    "openInGoogleMaps": "在 Google Maps 中打开",
+    "allRightsReserved": "All rights reserved."
   },
   "nav": {
     "home": "首页",
@@ -26,20 +29,45 @@
     }
   },
   "footer": {
-    "quickLinks": "快速导航",
-    "socialMedia": "官方科普频道",
-    "followUs": "关注我们的 YouTube 和 Instagram，获取最新前沿医疗资讯。",
-    "contact": "联络方式",
-    "phone": "电话",
-    "email": "电子邮件",
-    "hours": "门诊时间",
-    "hoursValue": "周一至周六 09:00 - 18:00",
-    "location": "位置",
-    "copyright": "© 2026 医疗法人德智会. All rights reserved."
+    "brandName": "医疗法人德智会",
+    "brandDescription": "致力于为全球患者提供日本高水准的医疗服务。",
+    "phone": "+81 03-1234-5678",
+    "email": "contact{'@'}tokuchikai.jp",
+    "hours": "周一至周六 09:00-18:00",
+    "medicalServices": "医疗服务",
+    "helpSupport": "帮助支持",
+    "followUs": "关注我们",
+    "officialChannel": "官方科普频道",
+    "quickLinks": {
+      "checkup": "精密体检",
+      "referral": "重症转诊",
+      "stemCell": "干细胞治疗",
+      "consultation": "云问诊预约",
+      "pharmacy": "常用药专区"
+    },
+    "supportLinks": {
+      "guide": "门诊就医指南",
+      "visa": "医疗签证协助",
+      "fees": "费用说明",
+      "faq": "常见问题",
+      "contact": "联系我们"
+    },
+    "legal": {
+      "terms": "使用条款",
+      "privacy": "隐私政策",
+      "cookies": "Cookie 设置"
+    },
+    "copyright": "© 2026 医疗法人德智会.",
+    "mapModal": {
+      "title": "医疗法人德智会 - 位置",
+      "address": "日本东京都港区樱花大道 1-2-3",
+      "mapPlaceholder": "Google Maps 地图组件"
+    }
   },
   "hero": {
     "badge": "JAPAN TOP MEDICAL",
-    "title": "连接全球患者，<br>提供顶尖医疗方案",
+    "title1": "连接全球患者",
+    "title2": "提供顶尖医疗方案",
     "description": "专属的重症转诊通道、前沿干细胞治疗与高精度癌筛体检。结合本地优质资源，为您提供跨越国界的健康保障。",
     "btnOverseas": "海外患者服务通道",
     "btnLocal": "本地门诊指南"
@@ -57,5 +85,104 @@
       "title": "紧急医疗援助",
       "description": "24小时多语言支持"
     }
+  },
+  "services": {
+    "title": "特色医疗服务",
+    "subtitle": "汇聚日本尖端医疗技术，为全球患者提供定制化的治疗与预防方案。",
+    "items": {
+      "checkup": {
+        "title": "精密体检 (Ningen Dock)",
+        "description": "结合 PET-CT、MRI 等高精度设备的全身深度检查，有效发现极早期病变，防患于未然。"
+      },
+      "referral": {
+        "title": "重症转诊与第二诊疗意见",
+        "description": "对接日本排名前十的大学附属医院，由权威专家提供治疗方案，并协助办理医疗签证。"
+      },
+      "stemCell": {
+        "title": "干细胞再生治疗",
+        "description": "运用国际领先的细胞培养技术，针对抗衰老、关节损伤及某些慢性疾病的创新疗法。"
+      }
+    }
+  },
+  "pharmacy": {
+    "title": "常用药科普与指南",
+    "subtitle": "日本高品质处方药及日常非处方药(OTC)详细介绍。",
+    "viewAll": "查看全部药品",
+    "items": {
+      "eve": {
+        "name": "EVE Quick 头痛药",
+        "description": "缓解头痛、发热症状，见效快且对胃部温和。"
+      },
+      "takeda": {
+        "name": "武田 降压药 (示例)",
+        "description": "用于高血压的长期控制，需凭医生处方购买。"
+      },
+      "taisho": {
+        "name": "大正 综合感冒药",
+        "description": "有效缓解感冒引起的多种症状，家庭常备。"
+      },
+      "nmn": {
+        "name": "高纯度 NMN 胶囊",
+        "description": "抗衰老细胞修复前沿产品，日本本土制造。"
+      }
+    },
+    "categories": {
+      "painRelief": "镇痛解热",
+      "cardiovascular": "心血管",
+      "respiratory": "呼吸道",
+      "regenerative": "再生医学"
+    },
+    "tags": {
+      "otc": "非处方 OTC",
+      "prescription": "处方药",
+      "supplement": "保健品"
+    }
+  },
+  "cases": {
+    "title": "医疗案例与成就",
+    "subtitle": "真实医疗数据背书，见证每一次生命的奇迹。",
+    "readReport": "阅读完整报告",
+    "items": {
+      "cancer": {
+        "tag": "早期癌筛",
+        "title": "通过 PET-CT 发现0期胃癌",
+        "summary": "张先生（55岁，中国籍），在定制精密体检中发现极早期胃部病变，并于当周安排内视镜微创切除..."
+      },
+      "lungCancer": {
+        "tag": "重症转诊",
+        "title": "晚期肺癌的跨国联合诊疗",
+        "summary": "协助国内患者转诊至东京大学医学部附属医院，获取新型靶向药治疗方案，患者生存质量大幅提升..."
+      }
+    }
+  },
+  "doctors": {
+    "title": "权威专家团队",
+    "viewAll": "查看全部医生",
+    "moreExperts": "更多特聘专家",
+    "items": {
+      "tanaka": {
+        "name": "田中 健一",
+        "title": "肿瘤内科 主任医师",
+        "specialty": "专注于消化道肿瘤的靶向治疗与早期筛查。"
+      },
+      "sato": {
+        "name": "佐藤 美咲",
+        "title": "再生医学科 专家",
+        "specialty": "主导多项干细胞抗衰老及组织修复临床研究。"
+      }
+    }
+  },
+  "partners": {
+    "title": "深度合作医疗网络",
+    "items": {
+      "tokyo": "东京医学中心",
+      "juntendo": "顺天堂联合医院",
+      "kansai": "关西干细胞研究所",
+      "association": "日本精密体检协会"
+    }
+  },
+  "about": {
+    "title": "关于我们",
+    "subtitle": "致力于连接全球患者与日本顶尖医疗资源"
   }
 }
