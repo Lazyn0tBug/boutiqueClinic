@@ -289,6 +289,12 @@
     container-name: responsive-card;
   }
 
+  /* 页面容器 - 用于页面级容器查询 */
+  .page-container {
+    container-type: inline-size;
+    container-name: page;
+  }
+
   /* 容器查询示例：卡片在小容器中垂直布局，大容器中水平布局 */
   @container card (min-width: 300px) {
     .card-adaptive {
@@ -313,6 +319,157 @@
   @container responsive-card (min-width: 200px) {
     .doctor-card-info {
       text-align: left;
+    }
+  }
+
+  /* ==========================================
+     页面级容器查询样式 (响应式排版)
+     ========================================== */
+  
+  /* 页面标题 - 基于容器大小的响应式排版 */
+  @container page (min-width: 1280px) {
+    .page-heading-1 {
+      font-size: 2.5rem;
+    }
+    .page-heading-2 {
+      font-size: 2rem;
+    }
+    .page-heading-3 {
+      font-size: 1.5rem;
+    }
+    .page-padding-x {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    .page-gap {
+      gap: 1.5rem;
+    }
+  }
+
+  @container page (min-width: 1024px) and (max-width: 1279px) {
+    .page-heading-1 {
+      font-size: 2.25rem;
+    }
+    .page-heading-2 {
+      font-size: 1.75rem;
+    }
+    .page-heading-3 {
+      font-size: 1.375rem;
+    }
+    .page-padding-x {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .page-gap {
+      gap: 1.25rem;
+    }
+  }
+
+  @container page (min-width: 768px) and (max-width: 1023px) {
+    .page-heading-1 {
+      font-size: 2rem;
+    }
+    .page-heading-2 {
+      font-size: 1.5rem;
+    }
+    .page-heading-3 {
+      font-size: 1.25rem;
+    }
+    .page-padding-x {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    .page-gap {
+      gap: 1rem;
+    }
+  }
+
+  @container page (min-width: 640px) and (max-width: 767px) {
+    .page-heading-1 {
+      font-size: 1.75rem;
+    }
+    .page-heading-2 {
+      font-size: 1.375rem;
+    }
+    .page-heading-3 {
+      font-size: 1.125rem;
+    }
+    .page-padding-x {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .page-gap {
+      gap: 0.75rem;
+    }
+  }
+
+  @container page (max-width: 639px) {
+    .page-heading-1 {
+      font-size: 1.5rem;
+    }
+    .page-heading-2 {
+      font-size: 1.25rem;
+    }
+    .page-heading-3 {
+      font-size: 1rem;
+    }
+    .page-padding-x {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+    .page-gap {
+      gap: 0.5rem;
+    }
+  }
+
+  /* 响应式网格 - 基于页面容器宽度自动调整列数 */
+  @container page (min-width: 1280px) {
+    .grid-responsive {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @container page (min-width: 1024px) and (max-width: 1279px) {
+    .grid-responsive {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @container page (min-width: 768px) and (max-width: 1023px) {
+    .grid-responsive {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @container page (max-width: 767px) {
+    .grid-responsive {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* 响应式 Flex 布局 */
+  @container page (min-width: 768px) {
+    .flex-responsive {
+      flex-direction: row;
+    }
+  }
+
+  @container page (max-width: 767px) {
+    .flex-responsive {
+      flex-direction: column;
+    }
+  }
+
+  /* 隐藏类 - 基于容器宽度 */
+  @container page (max-width: 767px) {
+    .hide-mobile {
+      display: none;
+    }
+  }
+
+  @container page (min-width: 768px) {
+    .hide-desktop {
+      display: none;
     }
   }
 }
