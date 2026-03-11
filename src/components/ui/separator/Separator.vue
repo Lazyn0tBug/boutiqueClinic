@@ -11,11 +11,13 @@ const props = withDefaults(defineProps<SeparatorProps & { class?: HTMLAttributes
 
 <template>
   <SeparatorPrimitive
-    :class="cn(
-      'shrink-0 bg-border',
-      props.orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
-      props.class,
-    )"
+    :class="
+      cn(
+        'shrink-0 bg-border',
+        props.orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
+        props.class,
+      )
+    "
     :orientation="props.orientation"
     :decorative="props.decorative"
   />

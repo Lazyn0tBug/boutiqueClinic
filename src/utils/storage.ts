@@ -205,10 +205,7 @@ class StorageManager {
   /**
    * 设置多个值
    */
-  async setMany(
-    entries: readonly [StorageKey, unknown][],
-    ttl?: number,
-  ): Promise<void> {
+  async setMany(entries: readonly [StorageKey, unknown][], ttl?: number): Promise<void> {
     await Promise.all(entries.map(([key, value]) => this.set(key, value, ttl)))
   }
 

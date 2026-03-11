@@ -21,7 +21,7 @@ export const useAppStore = defineStore('app', () => {
   )
 
   // Actions
-  const setLocale = (newLocale: Locale): Promise<void> => 
+  const setLocale = (newLocale: Locale): Promise<void> =>
     Promise.try(async () => {
       locale.value = newLocale
 
@@ -36,7 +36,7 @@ export const useAppStore = defineStore('app', () => {
     })
 
   // 初始化应用设置
-  const initialize = (): Promise<void> => 
+  const initialize = (): Promise<void> =>
     Promise.try(async () => {
       if (isInitialized.value) return
 

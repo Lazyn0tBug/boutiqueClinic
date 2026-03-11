@@ -17,9 +17,7 @@ app.use(router)
 
 // 初始化应用存储和路由缓存
 const appStore = useAppStore()
-Promise.try(() => 
-  Promise.all([appStore.initialize(), initializeRouterCache()])
-).catch((error) => {
+Promise.try(() => Promise.all([appStore.initialize(), initializeRouterCache()])).catch((error) => {
   console.error('[Main] Failed to initialize:', error)
 })
 

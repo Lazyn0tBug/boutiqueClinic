@@ -8,14 +8,13 @@ const VALID_LOCALES = ['zh-CN', 'zh-TW', 'en', 'ja'] as const satisfies readonly
 const DEFAULT_LOCALE: Locale = 'zh-CN'
 
 // 类型守卫：检查是否为有效的语言
-const isValidLocale = (locale: string): locale is Locale =>
-  VALID_LOCALES.includes(locale as Locale)
+const isValidLocale = (locale: string): locale is Locale => VALID_LOCALES.includes(locale as Locale)
 
 // 内存缓存，用于同步读取语言设置
 let cachedLocale: Locale = DEFAULT_LOCALE
 
 // 初始化缓存（在应用启动时调用）
-export const initializeRouterCache = (): Promise<void> => 
+export const initializeRouterCache = (): Promise<void> =>
   Promise.try(async () => {
     const savedLocale = await unifiedStorage.get<Locale>(StorageKeys.APP_LANGUAGE)
     if (savedLocale != null && isValidLocale(savedLocale)) {

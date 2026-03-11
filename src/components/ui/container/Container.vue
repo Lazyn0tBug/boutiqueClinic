@@ -33,10 +33,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const sizeClasses = {
-  sm: 'max-w-3xl',      // 48rem
-  md: 'max-w-5xl',      // 64rem
-  lg: 'max-w-7xl',      // 80rem
-  xl: 'max-w-[90rem]',  // 90rem (完美替换了 1440px)
+  sm: 'max-w-3xl', // 48rem
+  md: 'max-w-5xl', // 64rem
+  lg: 'max-w-7xl', // 80rem
+  xl: 'max-w-[90rem]', // 90rem (完美替换了 1440px)
   full: 'max-w-full',
 }
 
@@ -48,10 +48,10 @@ const containerClass = computed(() =>
     sizeClasses[props.size],
     // ✨ 核心优化：直接使用我们在 main.css 写的无级缩放流体边距！
     // 彻底抛弃 px-4 md:px-6 lg:px-8 这种阶梯式断点
-    !props.noPadding && 'page-padding-x', 
+    !props.noPadding && 'page-padding-x',
     // 合并外部传入的 class
-    props.class
-  )
+    props.class,
+  ),
 )
 </script>
 

@@ -84,8 +84,9 @@ class LocalStorageFallback {
 
     try {
       // 只清除带前缀的键
-      const keysToRemove = Array.from({ length: localStorage.length }, (_, i) => localStorage.key(i))
-        .filter((key): key is string => key?.startsWith(this.#prefix) ?? false)
+      const keysToRemove = Array.from({ length: localStorage.length }, (_, i) =>
+        localStorage.key(i),
+      ).filter((key): key is string => key?.startsWith(this.#prefix) ?? false)
 
       for (const key of keysToRemove) {
         localStorage.removeItem(key)
