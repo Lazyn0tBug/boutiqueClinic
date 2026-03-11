@@ -9,7 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import {
   Sheet,
@@ -49,13 +48,10 @@ const displayLangCode = computed(() => {
 })
 
 // 切換語言
-const changeLanguage = async (locale: Locale) => {
-  try {
-    await appStore.setLocale(locale)
-  } catch (error) {
+const changeLanguage = (locale: Locale) => 
+  Promise.try(() => appStore.setLocale(locale)).catch((error) => {
     console.error('[AppHeader] Failed to change language:', error)
-  }
-}
+  })
 </script>
 
 <template>
