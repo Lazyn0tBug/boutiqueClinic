@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Button } from '@/components/ui/button'
 import {
@@ -51,7 +51,7 @@ interface Partner {
 
 // ========== State & Data ==========
 
-const services = ref<Service[]>([
+const services = computed<Service[]>(() => [
   {
     title: t('services.items.checkup.title'),
     description: t('services.items.checkup.description'),
@@ -78,7 +78,7 @@ const services = ref<Service[]>([
   },
 ])
 
-const pharmacyItems = ref<PharmacyItem[]>([
+const pharmacyItems = computed<PharmacyItem[]>(() => [
   {
     name: t('pharmacy.items.eve.name'),
     description: t('pharmacy.items.eve.description'),
@@ -113,7 +113,7 @@ const pharmacyItems = ref<PharmacyItem[]>([
   },
 ])
 
-const caseStudies = ref<CaseStudy[]>([
+const caseStudies = computed<CaseStudy[]>(() => [
   {
     tag: t('cases.items.cancer.tag'),
     title: t('cases.items.cancer.title'),
@@ -128,7 +128,7 @@ const caseStudies = ref<CaseStudy[]>([
   },
 ])
 
-const doctors = ref<Doctor[]>([
+const doctors = computed<Doctor[]>(() => [
   {
     name: t('doctors.items.tanaka.name'),
     title: t('doctors.items.tanaka.title'),
@@ -149,7 +149,7 @@ const doctors = ref<Doctor[]>([
   },
 ])
 
-const partners = ref<Partner[]>([
+const partners = computed<Partner[]>(() => [
   { name: t('partners.items.tokyo'), icon: 'ph-hospital' },
   { name: t('partners.items.juntendo'), icon: 'ph-cross' },
   { name: t('partners.items.kansai'), icon: 'ph-flask' },

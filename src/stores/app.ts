@@ -46,6 +46,12 @@ export const useAppStore = defineStore('app', () => {
       if (savedLocale != null && isValidLocaleCode(savedLocale)) {
         locale.value = savedLocale
         i18n.global.locale.value = savedLocale
+      } else {
+        // 没有保存的语言设置时，使用 i18n 检测到的浏览器语言
+        const detectedLocale = i18n.global.locale.value
+        if (isValidLocaleCode(detectedLocale)) {
+          locale.value = detectedLocale
+        }
       }
 
       // 设置 HTML lang
