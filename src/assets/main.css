@@ -295,6 +295,53 @@
     container-name: page;
   }
 
+  /* ==========================================
+     移动端滚动卡片容器查询样式
+     使用规范容器查询长度单位: cqw (容器宽度的 1%)
+     ========================================== */
+  
+  /* 滚动卡片容器 - 横向滚动布局 */
+  .scroll-card-container {
+    container-type: inline-size;
+    container-name: scroll-card;
+  }
+
+  /* 服务卡片 - 移动端滚动模式 */
+  @container scroll-card (max-width: 767px) {
+    .scroll-card-services {
+      width: 85cqw;
+      min-width: 260px;
+      max-width: 320px;
+    }
+  }
+
+  /* 药品卡片 - 移动端滚动模式 */
+  @container scroll-card (max-width: 767px) {
+    .scroll-card-pharmacy {
+      width: 55cqw;
+      min-width: 150px;
+      max-width: 200px;
+    }
+  }
+
+  /* 案例卡片 - 移动端滚动模式 */
+  @container scroll-card (max-width: 767px) {
+    .scroll-card-case {
+      width: 90cqw;
+      min-width: 300px;
+      max-width: 380px;
+    }
+  }
+
+  /* 医生卡片 - 移动端滚动模式 */
+  @container scroll-card (max-width: 767px) {
+    .scroll-card-doctor {
+      width: 55cqw;
+      min-width: 140px;
+      max-width: 200px;
+    }
+  }
+
   /* 容器查询示例：卡片在小容器中垂直布局，大容器中水平布局 */
   @container card (min-width: 300px) {
     .card-adaptive {

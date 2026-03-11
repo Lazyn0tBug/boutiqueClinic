@@ -272,17 +272,17 @@ const partners = computed<Partner[]>(() => [
           </p>
         </div>
 
-        <!-- 行動端：固定高度滾動區域 -->
+        <!-- 行動端：固定高度滾動區域 (使用容器查詢) -->
         <div 
           v-if="isMobile" 
-          class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4"
+          class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4 scroll-card-container"
           style="max-height: 320px; overflow-y: auto;"
         >
           <div class="flex gap-4 w-max">
             <Card
               v-for="(service, index) in services"
               :key="index"
-              class="overflow-hidden group hover:border-primary/40 transition-colors shrink-0 w-[280px] snap-center"
+              class="overflow-hidden group hover:border-primary/40 transition-colors shrink-0 scroll-card-services snap-center"
             >
               <div class="aspect-[16/10] overflow-hidden border-b border-border">
                 <img
@@ -349,17 +349,17 @@ const partners = computed<Partner[]>(() => [
           </Button>
         </div>
 
-        <!-- 行動端：固定高度滾動區域 -->
+        <!-- 行動端：固定高度滾動區域 (使用容器查詢) -->
         <div 
           v-if="isMobile" 
-          class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4"
+          class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4 scroll-card-container"
           style="max-height: 320px; overflow-y: auto;"
         >
           <div class="flex gap-4 w-max">
             <Card
               v-for="(medicine, index) in pharmacyItems"
               :key="index"
-              class="p-4 group cursor-pointer hover:border-primary/40 transition-colors shrink-0 w-[160px] snap-center"
+              class="p-4 group cursor-pointer hover:border-primary/40 transition-colors shrink-0 scroll-card-pharmacy snap-center"
             >
               <div
                 class="aspect-square bg-muted rounded-md flex items-center justify-center relative mb-3 border border-border"
@@ -439,17 +439,17 @@ const partners = computed<Partner[]>(() => [
             </p>
           </div>
 
-          <!-- 行動端：固定高度滾動區域 -->
+          <!-- 行動端：固定高度滾動區域 (使用容器查詢) -->
           <div 
             v-if="isMobile" 
-            class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4"
+            class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4 scroll-card-container"
             style="max-height: 320px; overflow-y: auto;"
           >
             <div class="flex gap-4 w-max">
               <Card
                 v-for="(caseItem, index) in caseStudies"
                 :key="index"
-                class="flex flex-row overflow-hidden hover:border-primary/50 transition-colors shrink-0 w-[320px] snap-center"
+                class="flex flex-row overflow-hidden hover:border-primary/50 transition-colors shrink-0 scroll-card-case snap-center"
               >
                 <div
                   class="w-1/3 bg-muted border-r border-border flex items-center justify-center p-4 aspect-square"
@@ -509,10 +509,10 @@ const partners = computed<Partner[]>(() => [
             <a href="#" class="text-sm font-medium text-primary hover:underline min-h-[44px] flex items-center hidden md:flex">{{ t('doctors.viewAll') }}</a>
           </div>
 
-          <!-- 行動端：固定高度滾動區域 -->
+          <!-- 行動端：固定高度滾動區域 (使用容器查詢) -->
           <div 
             v-if="isMobile" 
-            class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4"
+            class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4 scroll-card-container"
             style="max-height: 320px; overflow-y: auto;"
           >
             <div class="flex gap-4 w-max">
@@ -520,7 +520,7 @@ const partners = computed<Partner[]>(() => [
               <Card
                 v-for="(doctor, index) in doctors"
                 :key="index"
-                class="p-4 text-center group shrink-0 w-[160px] snap-center"
+                class="p-4 text-center group shrink-0 scroll-card-doctor snap-center"
               >
                 <div
                   class="aspect-square w-20 mx-auto rounded-full border-4 border-background shadow-sm overflow-hidden mb-3 ring-1 ring-border group-hover:ring-primary/50 transition-all"
@@ -541,7 +541,7 @@ const partners = computed<Partner[]>(() => [
 
               <!-- 預留占位 -->
               <Card
-                class="p-4 text-center flex flex-col items-center justify-center border-dashed border-2 hover:border-primary/50 transition-colors bg-transparent shadow-none cursor-pointer shrink-0 w-[160px] snap-center"
+                class="p-4 text-center flex flex-col items-center justify-center border-dashed border-2 hover:border-primary/50 transition-colors bg-transparent shadow-none cursor-pointer shrink-0 scroll-card-doctor snap-center"
               >
                 <div class="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-2">
                   <i class="ph ph-user-plus text-xl text-muted-foreground"></i>
