@@ -6,6 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import ViteCompression from 'vite-plugin-compression2'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -31,6 +32,12 @@ export default defineConfig({
       extensions: ['vue'],
       dts: 'src/components.d.ts',
       deep: true,
+    }),
+    // Brotli 压缩配置
+    ViteCompression({
+      algorithm: 'brotliCompress',
+      ext: '.br',
+      threshold: 10240,
     }),
   ],
   resolve: {
