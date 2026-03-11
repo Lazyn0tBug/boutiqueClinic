@@ -58,7 +58,7 @@ export const useAppStore = defineStore('app', () => {
       document.documentElement.lang = locale.value
 
       isInitialized.value = true
-    }).catch((error) => {
+    }).catch((error: unknown) => {
       console.error('[AppStore] Failed to initialize:', error)
       // 使用默认值
       document.documentElement.lang = locale.value
