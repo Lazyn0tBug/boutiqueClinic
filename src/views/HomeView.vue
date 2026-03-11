@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,6 +11,23 @@ import {
 import { Container } from '@/components/ui/container'
 
 const { t } = useI18n()
+
+// ========== Mobile State ==========
+const isMobile = ref(false)
+const mobileBreakpoint = 768
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth < mobileBreakpoint
+}
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+})
 
 // ========== Types ==========
 interface Service {
@@ -255,8 +272,41 @@ const partners = computed<Partner[]>(() => [
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 card-container">
-          <!-- 服務卡片動態渲染 -->
+        <!-- 行動端：固定高度滾動區域 -->
+        <div 
+          v-if="isMobile" 
+          class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4"
+          style="max-height: 320px; overflow-y: auto;"
+        >
+          <div class="flex gap-4 w-max">
+            <Card
+              v-for="(service, index) in services"
+              :key="index"
+              class="overflow-hidden group hover:border-primary/40 transition-colors shrink-0 w-[280px] snap-center"
+            >
+              <div class="aspect-[16/10] overflow-hidden border-b border-border">
+                <img
+                  :src="service.image"
+                  :srcset="service.imageSrcset"
+                  sizes="280px"
+                  :alt="service.title"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+              <CardContent class="p-4">
+                <CardTitle class="text-lg mb-2">{{ service.title }}</CardTitle>
+                <CardDescription class="line-clamp-2 mb-4">
+                  {{ service.description }}
+                </CardDescription>
+                <Button variant="outline" class="w-full min-h-[44px]">{{ t('common.viewDetail') }}</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <!-- 桌面端：網格布局 -->
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 card-container">
           <Card
             v-for="(service, index) in services"
             :key="index"
@@ -266,7 +316,7 @@ const partners = computed<Partner[]>(() => [
               <img
                 :src="service.image"
                 :srcset="service.imageSrcset"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 1200px) 50vw, 33vw"
                 :alt="service.title"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
@@ -274,7 +324,9 @@ const partners = computed<Partner[]>(() => [
             </div>
             <CardContent class="p-6 flex flex-col flex-grow">
               <CardTitle class="text-xl mb-2">{{ service.title }}</CardTitle>
-              <CardDescription class="mb-6 flex-grow">{{ service.description }}</CardDescription>
+              <CardDescription class="mb-6 flex-grow">
+                {{ service.description }}
+              </CardDescription>
               <Button variant="outline" class="w-full min-h-[44px]">{{ t('common.viewDetail') }}</Button>
             </CardContent>
           </Card>
@@ -297,8 +349,48 @@ const partners = computed<Partner[]>(() => [
           </Button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 card-container">
-          <!-- 藥品卡片動態渲染 -->
+        <!-- 行動端：固定高度滾動區域 -->
+        <div 
+          v-if="isMobile" 
+          class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4"
+          style="max-height: 320px; overflow-y: auto;"
+        >
+          <div class="flex gap-4 w-max">
+            <Card
+              v-for="(medicine, index) in pharmacyItems"
+              :key="index"
+              class="p-4 group cursor-pointer hover:border-primary/40 transition-colors shrink-0 w-[160px] snap-center"
+            >
+              <div
+                class="aspect-square bg-muted rounded-md flex items-center justify-center relative mb-3 border border-border"
+              >
+                <span
+                  class="absolute top-2 left-2 inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold transition-colors"
+                  :class="medicine.tagClass"
+                >
+                  {{ medicine.tag }}
+                </span>
+                <i
+                  :class="[
+                    'ph text-4xl text-muted-foreground/50 group-hover:text-primary/70 transition-colors',
+                    medicine.icon,
+                  ]"
+                ></i>
+              </div>
+              <CardTitle class="text-sm truncate">{{ medicine.name }}</CardTitle>
+              <CardDescription class="line-clamp-2 text-xs">
+                {{ medicine.description }}
+              </CardDescription>
+              <div class="flex items-center justify-between mt-3 pt-3 border-t border-border">
+                <span class="text-xs text-muted-foreground font-medium">{{ medicine.category }}</span>
+                <i class="ph ph-arrow-right text-muted-foreground"></i>
+              </div>
+            </Card>
+          </div>
+        </div>
+
+        <!-- 桌面端：網格布局 -->
+        <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 card-container">
           <Card
             v-for="(medicine, index) in pharmacyItems"
             :key="index"
@@ -330,8 +422,6 @@ const partners = computed<Partner[]>(() => [
             </div>
           </Card>
         </div>
-
-        <Button variant="outline" class="w-full mt-6 md:hidden min-h-[44px]">{{ t('pharmacy.viewAll') }}</Button>
       </Container>
     </section>
 
@@ -349,8 +439,42 @@ const partners = computed<Partner[]>(() => [
             </p>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 card-container">
-            <!-- 案例動態渲染 -->
+          <!-- 行動端：固定高度滾動區域 -->
+          <div 
+            v-if="isMobile" 
+            class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4"
+            style="max-height: 320px; overflow-y: auto;"
+          >
+            <div class="flex gap-4 w-max">
+              <Card
+                v-for="(caseItem, index) in caseStudies"
+                :key="index"
+                class="flex flex-row overflow-hidden hover:border-primary/50 transition-colors shrink-0 w-[320px] snap-center"
+              >
+                <div
+                  class="w-1/3 bg-muted border-r border-border flex items-center justify-center p-4 aspect-square"
+                >
+                  <i :class="['ph text-4xl text-primary/60', caseItem.icon]"></i>
+                </div>
+                <div class="w-2/3 p-4 flex flex-col justify-center">
+                  <span
+                    class="inline-flex w-fit items-center rounded-md border border-border bg-background px-2 py-0.5 text-xs font-semibold text-foreground mb-2"
+                  >{{ caseItem.tag }}</span>
+                  <CardTitle class="text-base mb-1">{{ caseItem.title }}</CardTitle>
+                  <CardDescription class="line-clamp-2 text-xs">
+                    {{ caseItem.summary }}
+                  </CardDescription>
+                  <a
+                    href="#"
+                    class="text-xs font-medium text-primary hover:underline flex items-center gap-1 mt-2 w-fit"
+                  >{{ t('cases.readReport') }} <i class="ph ph-arrow-right text-xs"></i></a>
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          <!-- 桌面端：網格布局 -->
+          <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-6 card-container">
             <Card
               v-for="(caseItem, index) in caseStudies"
               :key="index"
@@ -382,10 +506,53 @@ const partners = computed<Partner[]>(() => [
         <div>
           <div class="flex justify-between items-end mb-8 border-b border-border pb-4">
             <h2 class="text-2xl font-bold tracking-tight text-foreground text-balance">{{ t('doctors.title') }}</h2>
-            <a href="#" class="text-sm font-medium text-primary hover:underline min-h-[44px] flex items-center">{{ t('doctors.viewAll') }}</a>
+            <a href="#" class="text-sm font-medium text-primary hover:underline min-h-[44px] flex items-center hidden md:flex">{{ t('doctors.viewAll') }}</a>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 card-container">
+          <!-- 行動端：固定高度滾動區域 -->
+          <div 
+            v-if="isMobile" 
+            class="md:hidden overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-4 -mb-4"
+            style="max-height: 320px; overflow-y: auto;"
+          >
+            <div class="flex gap-4 w-max">
+              <!-- 醫生卡片 -->
+              <Card
+                v-for="(doctor, index) in doctors"
+                :key="index"
+                class="p-4 text-center group shrink-0 w-[160px] snap-center"
+              >
+                <div
+                  class="aspect-square w-20 mx-auto rounded-full border-4 border-background shadow-sm overflow-hidden mb-3 ring-1 ring-border group-hover:ring-primary/50 transition-all"
+                >
+                  <img 
+                    :src="doctor.image" 
+                    :srcset="doctor.imageSrcset"
+                    sizes="80px"
+                    :alt="doctor.name" 
+                    class="w-full h-full object-cover" 
+                    loading="lazy"
+                  />
+                </div>
+                <CardTitle class="text-base">{{ doctor.name }}</CardTitle>
+                <p class="text-xs font-medium text-primary mb-1">{{ doctor.title }}</p>
+                <CardDescription class="line-clamp-1 text-xs">{{ doctor.specialty }}</CardDescription>
+              </Card>
+
+              <!-- 預留占位 -->
+              <Card
+                class="p-4 text-center flex flex-col items-center justify-center border-dashed border-2 hover:border-primary/50 transition-colors bg-transparent shadow-none cursor-pointer shrink-0 w-[160px] snap-center"
+              >
+                <div class="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-2">
+                  <i class="ph ph-user-plus text-xl text-muted-foreground"></i>
+                </div>
+                <p class="text-xs font-medium text-muted-foreground">{{ t('doctors.moreExperts') }}</p>
+              </Card>
+            </div>
+          </div>
+
+          <!-- 桌面端：網格布局 -->
+          <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 card-container">
             <!-- 醫生卡片動態渲染 -->
             <Card
               v-for="(doctor, index) in doctors"
@@ -419,6 +586,11 @@ const partners = computed<Partner[]>(() => [
               <p class="text-sm font-medium text-muted-foreground">{{ t('doctors.moreExperts') }}</p>
             </Card>
           </div>
+
+          <!-- 行動端：查看更多連結 -->
+          <a href="#" class="md:hidden text-sm font-medium text-primary hover:underline min-h-[44px] flex items-center justify-center mt-4">
+            {{ t('doctors.viewAll') }} <i class="ph ph-arrow-right ml-1"></i>
+          </a>
         </div>
       </Container>
     </section>
