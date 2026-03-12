@@ -3,12 +3,16 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import HomeView from '../views/HomeView.vue'
 import { unifiedStorage, StorageKeys } from '@/utils/unifiedStorage'
 import type { Locale } from '@/types/locale'
+import { LOCALE_MAP, LOCALE_REVERSE_MAP } from '@/types/locale'
 
-const VALID_LOCALES = ['zh-CN', 'zh-TW', 'en', 'ja'] as const satisfies readonly Locale[]
-const DEFAULT_LOCALE: Locale = 'zh-CN'
+const VALID_LOCALES = ['cn', 'tw', 'en', 'ja'] as const satisfies readonly Locale[]
+const DEFAULT_LOCALE: Locale = 'cn'
 
 // 类型守卫：检查是否为有效的语言
 const isValidLocale = (locale: string): locale is Locale => VALID_LOCALES.includes(locale as Locale)
+
+// 获取完整的语言代码（用于 i18n）
+const getFullLocaleCode = (locale: Locale): string => LOCALE_MAP[locale]
 
 // 内存缓存，用于同步读取语言设置
 let cachedLocale: Locale = DEFAULT_LOCALE
