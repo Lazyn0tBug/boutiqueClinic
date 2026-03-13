@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import { unifiedStorage, StorageKeys } from '@/utils/unifiedStorage'
 import type { Locale } from '@/types/locale'
 import { LOCALE_MAP, LOCALE_REVERSE_MAP } from '@/types/locale'
+import { useAppStore } from '@/stores/app'
 
 const VALID_LOCALES = ['cn', 'tw', 'en', 'ja'] as const satisfies readonly Locale[]
 const DEFAULT_LOCALE: Locale = 'cn'
@@ -18,13 +19,16 @@ const getFullLocaleCode = (locale: Locale): string => LOCALE_MAP[locale]
 let cachedLocale: Locale = DEFAULT_LOCALE
 
 // 初始化缓存（在应用启动时调用）
-export const initializeRouterCache = (): Promise<void> =>
-  Promise.try(async () => {
+export const initializeRouterCache = async (): Promise<void> => {
+  try {
     const savedLocale = await unifiedStorage.get<Locale>(StorageKeys.APP_LANGUAGE)
     if (savedLocale != null && isValidLocale(savedLocale)) {
       cachedLocale = savedLocale
     }
-  })
+  } catch (error: unknown) {
+    console.error('[Router] Failed to initialize router cache:', error)
+  }
+}
 
 // 获取当前缓存的语言
 export const getCachedLocale = (): Locale => cachedLocale
@@ -80,16 +84,22 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
   const { locale } = to.params
 
   // 如果是带语言前缀的路由,验证语言参数
-  if (typeof locale === 'string' && !isValidLocale(locale)) {
-    // 无效语言,重定向到默认语言
-    const pathWithoutLocale = to.path.replace(`/${locale}`, '')
-    return `/${cachedLocale}${pathWithoutLocale}`
-  }
+  if (typeof locale === 'string') {
+    if (!isValidLocale(locale)) {
+      // 无效语言,重定向到默认语言的等效路径
+      const pathWithoutLocale = to.path.replace(`/${locale}`, '')
+      return `/${cachedLocale}${pathWithoutLocale || '/'}`
+    }
 
-  // 如果是有效语言,更新存储和缓存
-  if (typeof locale === 'string' && isValidLocale(locale)) {
+    // 有效语言，更新本地缓存标识
     cachedLocale = locale
-    await unifiedStorage.set(StorageKeys.APP_LANGUAGE, locale)
+
+    // 核心修改：确保在 URL 改变时（无论是手动修改还是代码 push），同步更新 Pinia store 的状态
+    // setLocale 会自动帮你保存 Storage 并切换 i18n
+    const appStore = useAppStore()
+    if (appStore.locale !== locale) {
+      await appStore.setLocale(locale)
+    }
   }
 
   // 返回 true 表示允许导航

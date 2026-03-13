@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/app'
 import type { Locale } from '@/types/locale'
+import { AVAILABLE_LOCALES } from '@/types/locale'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -16,31 +18,36 @@ import { Container } from '@/components/ui/container'
 
 const { t } = useI18n()
 const appStore = useAppStore()
+const route = useRoute()
+const router = useRouter()
 
 const isMobileMenuOpen = ref(false)
 
 const currentLocale = computed(() => appStore.locale)
 
-const languages = [
-  { code: 'zh-CN' as Locale, label: 'CN 简体中文' },
-  { code: 'zh-TW' as Locale, label: 'TW 繁体中文' },
-  { code: 'ja' as Locale, label: 'JP 日本語' },
-  { code: 'en' as Locale, label: 'EN English' },
-]
+// 使用全局配置映射语言列表
+const languages = AVAILABLE_LOCALES.map((l) => ({
+  code: l.code,
+  label: `${l.flag} ${l.name}`,
+}))
 
 const displayLangCode = computed(() => {
-  const map: Record<string, string> = {
-    'zh-CN': 'CN',
-    'zh-TW': 'TW',
-    ja: 'JP',
-    en: 'EN',
-  }
-  return map[currentLocale.value] || 'TW'
+  const localeOpt = AVAILABLE_LOCALES.find((l) => l.code === currentLocale.value)
+  return localeOpt ? localeOpt.flag : 'CN'
 })
 
 const changeLanguage = async (locale: Locale) => {
   try {
-    await appStore.setLocale(locale)
+    // 核心修改：如果当前在带有语言前缀的路由下，使用 router 改变 URL，让路由守卫去处理状态
+    if (route.params.locale && route.params.locale !== locale) {
+      await router.push({
+        ...route,
+        params: { ...route.params, locale },
+      })
+    } else {
+      // 兜底逻辑：如果由于某些原因不在标准多语言路由中，直接更新 store
+      await appStore.setLocale(locale)
+    }
   } catch (error) {
     console.error('[AppHeader] Failed to change language:', error)
   }

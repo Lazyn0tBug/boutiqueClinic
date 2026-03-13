@@ -21,8 +21,8 @@ export const useAppStore = defineStore('app', () => {
   )
 
   // Actions
-  const setLocale = (newLocale: Locale): Promise<void> =>
-    Promise.try(async () => {
+  const setLocale = async (newLocale: Locale): Promise<void> => {
+    try {
       locale.value = newLocale
 
       // 使用统一存储保存简化语言代码
@@ -34,11 +34,15 @@ export const useAppStore = defineStore('app', () => {
 
       // 更新 HTML lang 属性（使用完整代码）
       document.documentElement.lang = fullCode
-    })
+    } catch (error: unknown) {
+      console.error('切换语言失败:', error)
+      throw error // 重新抛出，让调用方处理 
+    }
+  }
 
   // 初始化应用设置
-  const initialize = (): Promise<void> =>
-    Promise.try(async () => {
+  const initialize = async (): Promise<void> => {
+    try {
       if (isInitialized.value) return
 
       // 从统一存储读取语言设置（可能是简化代码或完整代码）
@@ -67,11 +71,12 @@ export const useAppStore = defineStore('app', () => {
       document.documentElement.lang = LOCALE_MAP[locale.value]
 
       isInitialized.value = true
-    }).catch((error: unknown) => {
+    } catch (error: unknown) {
       console.error('[AppStore] Failed to initialize:', error)
       // 使用默认值
       document.documentElement.lang = LOCALE_MAP[locale.value]
-    })
+    }
+  }
 
   // 同步初始化 HTML lang（用于 SSR 或初始渲染）
   document.documentElement.lang = LOCALE_MAP[locale.value]
