@@ -27,7 +27,12 @@ import {
   PhInstagramLogo,
   PhTwitterLogo,
 } from '@phosphor-icons/vue'
-import { PhYoutubeLogoFill, PhInstagramLogoFill, PhTwitterLogoFill, PhCrossFill } from '@phosphor-icons/vue'
+import {
+  PhYoutubeLogoFill,
+  PhInstagramLogoFill,
+  PhTwitterLogoFill,
+  PhCrossFill,
+} from '@phosphor-icons/vue'
 
 const props = defineProps<{
   name: string
@@ -63,7 +68,7 @@ const iconComponent = computed(() => {
     'ph-instagram-logo': PhInstagramLogo,
     'ph-twitter-logo': PhTwitterLogo,
   }
-  
+
   // Handle fill variants
   const fillIcons: Record<string, any> = {
     'ph-fill ph-cross': PhCrossFill,
@@ -71,12 +76,12 @@ const iconComponent = computed(() => {
     'ph-fill ph-instagram-logo': PhInstagramLogoFill,
     'ph-fill ph-twitter-logo': PhTwitterLogoFill,
   }
-  
+
   // Check if name contains 'fill'
   if (props.name.startsWith('ph-fill')) {
     return fillIcons[props.name] || null
   }
-  
+
   return icons[props.name] || null
 })
 </script>

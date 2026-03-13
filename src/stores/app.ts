@@ -36,7 +36,7 @@ export const useAppStore = defineStore('app', () => {
       document.documentElement.lang = fullCode
     } catch (error: unknown) {
       console.error('切换语言失败:', error)
-      throw error // 重新抛出，让调用方处理 
+      throw error // 重新抛出，让调用方处理
     }
   }
 

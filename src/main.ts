@@ -9,7 +9,6 @@ import router, { initializeRouterCache } from './router'
 import i18n from './plugins/i18n'
 import { useAppStore } from './stores/app'
 
-
 const bootstrap = async () => {
   const app = createApp(App)
   const pinia = createPinia()
