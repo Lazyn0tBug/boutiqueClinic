@@ -37,10 +37,10 @@
   --color-input: oklch(var(--input));
   --color-ring: oklch(var(--ring));
 
-  /* 圓角映射 */
+  /* 圓角映射 - 使用相對單位 */
   --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 0.125rem);
+  --radius-sm: calc(var(--radius) - 0.25rem);
 }
 
 /* ==========================================
@@ -59,7 +59,7 @@
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.14 0.01 260);
     --popover: 0.98 0.01 250;
-    --popover-foreground: 0.14 0.01 260;
+    --popover-foreground: oklch(0.14 0.01 260);
 
     /* 主色调 - 使用你的 Primary 定义 */
     --primary: oklch(0.5 0.18 250);
@@ -75,7 +75,7 @@
     --accent: oklch(0.96 0.01 260);
     --accent-foreground: oklch(0.14 0.01 260);
 
-    /* 破坏性动作（如删除）- 保持标准红色感，但亮度微调以匹配风格 */
+    /* 破坏性动作（如删除） */
     --destructive: oklch(0.6 0.2 25);
     --destructive-foreground: oklch(0.98 0 0);
 
@@ -84,7 +84,7 @@
     --input: oklch(0.9 0.01 260);
     --ring: oklch(0.5 0.18 250);
 
-    /* 图表颜色 - 建议根据你的主色相 (250-260) 进行同类色/邻近色衍生 */
+    /* 图表颜色 */
     --chart-1: oklch(0.5 0.18 250);
     --chart-2: oklch(0.65 0.12 210);
     --chart-3: oklch(0.4 0.1 280);
@@ -105,439 +105,145 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
 
   body {
+    @apply bg-background text-foreground;
     background-color: var(--color-background);
     color: var(--color-foreground);
+    line-height: clamp(1.4, 1.5cqi, 1.6);
   }
 }
 
 /* ==========================================
-   现代化 CSS 特性
+   全流式設計優化 (Intrinsic Design)
    ========================================== */
 
-/* 1. 滚动条样式 - scrollbar-color 和 scrollbar-gutter */
+/* 1. 滚动条样式 */
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* 现代 scrollbar-color: thumb track */
     scrollbar-color: oklch(var(--muted-foreground)) oklch(var(--background));
-    /* scrollbar-gutter: 防止内容因滚动条出现而跳动 */
     scrollbar-gutter: stable;
   }
 
-  /* 滚动容器样式 */
-  .scroll-container {
-    scrollbar-color: oklch(var(--muted-foreground) / 0.5) transparent;
-    scrollbar-gutter: stable;
-    overflow-y: auto;
-  }
-
-  /* 细滚动条变体 */
-  .scroll-thin {
-    scrollbar-width: thin;
-    scrollbar-color: oklch(var(--muted-foreground) / 0.3) transparent;
-  }
-
-  /* 隐藏滚动条但保持滚动功能 */
-  .scroll-hidden {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  /* WebKit 滚动条样式 (用于更精细的控制) */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: oklch(var(--background));
-    border-radius: 4px;
-  }
-
+  ::-webkit-scrollbar { width: 0.5rem; height: 0.5rem; }
+  ::-webkit-scrollbar-track { background: oklch(var(--background)); border-radius: 0.25rem; }
   ::-webkit-scrollbar-thumb {
     background: oklch(var(--muted-foreground));
-    border-radius: 4px;
-    border: 2px solid oklch(var(--background));
+    border-radius: 0.25rem;
+    border: 0.125rem solid oklch(var(--background));
   }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: oklch(var(--foreground) / 0.5);
-  }
-
-  /* 水平滚动条 */
-  ::-webkit-scrollbar:horizontal {
-    height: 6px;
-  }
+  ::-webkit-scrollbar-thumb:hover { background: oklch(var(--foreground) / 0.5); }
+  ::-webkit-scrollbar:horizontal { height: 0.375rem; }
 }
 
-/* 2. 文本换行优化 - text-wrap 和 white-space-collapse */
+/* 2. 流體排版 (Fluid Typography) */
 @layer base {
-  /* 平衡标题换行 - 浏览器自动优化断行点 */
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .text-avoid-orphans { orphans: 3; widows: 3; }
 
-  /* 段落优化换行 - 更好的排版效果 */
-  .text-pretty {
-    text-wrap: pretty;
-  }
-
-  /* 避免孤行和寡行 */
-  .text-avoid-orphans {
-    orphans: 3;
-    widows: 3;
-  }
-
-  /* 白色空间折叠控制 */
-  .whitespace-collapse-discard {
-    white-space-collapse: discard;
-  }
-
-  .whitespace-collapse-trim {
-    white-space-collapse: trim;
-  }
-
-  /* 标题默认使用 text-wrap: balance */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    text-wrap: balance;
-  }
-
-  /* 段落默认使用 text-wrap: pretty */
-  p {
-    text-wrap: pretty;
-  }
+  /* 標題根據容器寬度平滑縮放，無斷點 */
+  h1 { font-size: clamp(2rem, 5cqi + 1rem, 4rem); text-wrap: balance; }
+  h2 { font-size: clamp(1.5rem, 3cqi + 0.75rem, 2.5rem); text-wrap: balance; }
+  h3 { font-size: clamp(1.25rem, 2cqi + 0.5rem, 1.75rem); text-wrap: balance; }
+  p { text-wrap: pretty; }
 }
 
-/* 3. 宽高比 - aspect-ratio */
+/* 3. 寬高比 */
 @layer components {
-  /* 常用宽高比预设 */
-  .aspect-video {
-    aspect-ratio: 16 / 9;
-  }
-
-  .aspect-square {
-    aspect-ratio: 1 / 1;
-  }
-
-  .aspect-portrait {
-    aspect-ratio: 3 / 4;
-  }
-
-  .aspect-landscape {
-    aspect-ratio: 4 / 3;
-  }
-
-  .aspect-card {
-    aspect-ratio: 3 / 2;
-  }
-
-  .aspect-hero {
-    aspect-ratio: 21 / 9;
-  }
-
-  /* 医疗卡片常用比例 */
-  .aspect-doctor-photo {
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-  }
-
-  .aspect-service-card {
-    aspect-ratio: 16 / 10;
-  }
-
-  .aspect-medicine-box {
-    aspect-ratio: 1 / 1;
-  }
+  .aspect-video { aspect-ratio: 16 / 9; }
+  .aspect-square { aspect-ratio: 1 / 1; }
+  .aspect-card { aspect-ratio: 3 / 2; }
+  .aspect-doctor-photo { aspect-ratio: 1 / 1; object-fit: cover; }
 }
 
-/* 4. 容器查询 - Container Queries */
+/* 4. 真·無斷點流式佈局 (取代所有的 @container page 斷點) */
 @layer components {
-  /* 卡片容器 - 响应式布局基于容器宽度而非视口宽度 */
-  .card-container {
-    container-type: inline-size;
-    container-name: card;
-  }
-
-  /* 通用容器查询容器 */
-  .cq-container {
-    container-type: inline-size;
-  }
-
-  /* 侧边栏容器 */
-  .sidebar-container {
-    container-type: inline-size;
-    container-name: sidebar;
-  }
-
-  /* 网格容器 */
-  .grid-container {
-    container-type: inline-size;
-    container-name: grid;
-  }
-
-  /* 卡片内部响应式样式 */
-  .responsive-card {
-    container-type: inline-size;
-    container-name: responsive-card;
-  }
-
-  /* 页面容器 - 用于页面级容器查询 */
-  .page-container {
-    container-type: inline-size;
-    container-name: page;
-  }
-
-  /* ==========================================
-     移动端滚动卡片容器查询样式
-     使用规范容器查询长度单位: cqi (容器内联轴宽度) + clamp() 函数
-     ========================================== */
-
-  /* 滚动卡片容器 - 横向滚动布局 */
-  .scroll-card-container {
-    container-type: inline-size;
-    container-name: scroll-card;
-  }
-
-  /* 使用 clamp(MIN, VAL, MAX) 完美取代 min-width + width + max-width */
-  @container scroll-card (max-width: 767px) {
-    .scroll-card-services {
-      inline-size: clamp(260px, 85cqi, 320px);
-    }
-
-    .scroll-card-pharmacy {
-      inline-size: clamp(150px, 55cqi, 200px);
-    }
-
-    .scroll-card-case {
-      inline-size: clamp(300px, 90cqi, 380px);
-    }
-
-    .scroll-card-doctor {
-      inline-size: clamp(140px, 55cqi, 200px);
-    }
-  }
-
-  /* 容器查询示例：卡片在小容器中垂直布局，大容器中水平布局 */
-  @container card (min-width: 300px) {
-    .card-adaptive {
-      flex-direction: row;
-    }
-  }
-
-  @container card (max-width: 299px) {
-    .card-adaptive {
-      flex-direction: column;
-    }
-  }
-
-  /* 服务卡片容器查询 */
-  @container card (min-width: 400px) {
-    .service-card-content {
-      padding: 1.5rem;
-    }
-  }
-
-  /* 医生卡片容器查询 */
-  @container responsive-card (min-width: 200px) {
-    .doctor-card-info {
-      text-align: left;
-    }
-  }
-
-  /* ==========================================
-     页面级容器查询样式 (响应式排版 - 流体缩放版本)
-     ========================================== */
-
-  /* 使用 clamp(最小值, 基于容器宽度的动态值, 最大值) 实现平滑的无级缩放 */
-  .page-heading-1 {
-    font-size: clamp(1.5rem, 3cqi + 1rem, 2.5rem);
-  }
-
-  .page-heading-2 {
-    font-size: clamp(1.25rem, 2.5cqi + 0.75rem, 2rem);
-  }
-
-  .page-heading-3 {
-    font-size: clamp(1rem, 1.5cqi + 0.75rem, 1.5rem);
-  }
-
+  .page-container { container-type: inline-size; container-name: page; }
+  
   .page-padding-x {
-    /* 现代逻辑属性：padding-inline 相当于 padding-left + padding-right */
-    padding-inline: clamp(0.75rem, 3cqi + 0.2rem, 2rem);
+    padding-inline: clamp(1rem, 5cqi, 3rem);
   }
 
   .page-gap {
-    gap: clamp(0.5rem, 2cqi + 0.1rem, 1.5rem);
+    gap: clamp(1rem, 3cqi, 2.5rem);
   }
 
-  /* 响应式网格 - 基于页面容器宽度自动调整列数 */
-  @container page (min-width: 1280px) {
-    .grid-responsive {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  /* * [核心優化] 終極流式網格 (Intrinsic Grid)
+   * 捨棄了原本的 @container (min-width: 80rem) 等判定。
+   * 邏輯：每列最小 16rem (約 256px)，如果空間夠就自動並排 (auto-fit)，
+   * 如果空間不夠，min(100%, 16rem) 保證它在極小螢幕下會縮小到 100% 寬度而不會溢出。
+   */
+  .grid-responsive {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: clamp(1rem, 3cqi, 2rem);
   }
 
-  @container page (min-width: 1024px) and (max-width: 1279px) {
-    .grid-responsive {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  /*
+   * [核心優化] 流體彈性佈局 (Intrinsic Flex)
+   * 取代原本判斷螢幕寬度來切換 flex-direction 的做法。
+   */
+  .flex-responsive {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1rem, 3cqi, 2rem);
   }
-
-  @container page (min-width: 768px) and (max-width: 1023px) {
-    .grid-responsive {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @container page (max-width: 767px) {
-    .grid-responsive {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* 响应式 Flex 布局 */
-  @container page (min-width: 768px) {
-    .flex-responsive {
-      flex-direction: row;
-    }
-  }
-
-  @container page (max-width: 767px) {
-    .flex-responsive {
-      flex-direction: column;
-    }
-  }
-
-  /* 隐藏类 - 基于容器宽度 */
-  @container page (max-width: 767px) {
-    .hide-mobile {
-      display: none;
-    }
-  }
-
-  @container page (min-width: 768px) {
-    .hide-desktop {
-      display: none;
-    }
+  .flex-responsive > * {
+    /* 基礎寬度 20rem，允許縮放，當總寬度不足時自動換行 */
+    flex: 1 1 min(100%, 20rem); 
   }
 }
 
-/* 5. :has() 选择器 - 父元素基于子元素状态选择 */
+/* 5. :has() 选择器 - 智能交互狀態 */
 @layer components {
-  /* 表单组：包含错误输入时显示错误样式 */
-  .form-group:has(:invalid:not(:placeholder-shown)) {
-    .form-label {
-      color: oklch(var(--destructive));
-    }
-  }
-
-  /* 表单组：包含必填字段时显示标记 */
-  .form-group:has(:required) {
-    .form-label::after {
-      content: ' *';
-      color: oklch(var(--destructive));
-    }
-  }
-
-  /* 卡片：包含图片时调整布局 */
-  .shadcn-card:has(img) {
-    overflow: hidden;
-  }
-
-  /* 导航项：包含激活链接时高亮 */
-  .nav-item:has(.router-link-active) {
-    background-color: oklch(var(--accent));
-    color: oklch(var(--accent-foreground));
-  }
-
-  /* 下拉菜单：包含打开状态时显示 */
+  .form-group:has(:invalid:not(:placeholder-shown)) .form-label { color: oklch(var(--destructive)); }
+  .form-group:has(:required) .form-label::after { content: ' *'; color: oklch(var(--destructive)); }
+  .shadcn-card:has(img) { overflow: hidden; }
+  .nav-item:has(.router-link-active) { background-color: oklch(var(--accent)); color: oklch(var(--accent-foreground)); }
+  
   .dropdown:has(.dropdown-trigger:focus) .dropdown-content,
-  .dropdown:has(.dropdown-trigger[aria-expanded='true']) .dropdown-content {
-    display: block;
-  }
-
-  /* 表格行：包含选中复选框时高亮 */
-  .table-row:has(input[type='checkbox']:checked) {
-    background-color: oklch(var(--accent) / 0.5);
-  }
-
-  /* 输入框容器：包含聚焦输入时显示边框 */
+  .dropdown:has(.dropdown-trigger[aria-expanded='true']) .dropdown-content { display: block; }
+  
+  .table-row:has(input[type='checkbox']:checked) { background-color: oklch(var(--accent) / 0.5); }
+  
   .input-wrapper:has(:focus) {
     border-color: oklch(var(--ring));
-    box-shadow: 0 0 0 1px oklch(var(--ring));
+    box-shadow: 0 0 0 0.125rem oklch(var(--ring) / 0.2);
   }
 
-  /* 卡片：悬停时包含聚焦元素 */
   .shadcn-card:has(:focus-visible) {
-    outline: 2px solid oklch(var(--ring));
-    outline-offset: 2px;
+    outline: 0.125rem solid oklch(var(--ring));
+    outline-offset: 0.125rem;
   }
 
-  /* 按钮：包含加载状态时禁用交互 */
-  .sh-btn:has(.loading-spinner) {
-    pointer-events: none;
-    opacity: 0.7;
-  }
-
-  /* 列表项：包含激活状态 */
-  .list-item:has(.active) {
-    border-left: 3px solid oklch(var(--primary));
-    background-color: oklch(var(--primary) / 0.1);
-  }
-
-  /* 移动端菜单：打开时的样式 */
-  .mobile-menu-container:has(.mobile-menu-open) {
-    overflow: hidden;
-  }
-
-  /* 头部：滚动时有阴影 */
-  .site-header:has(.scrolled) {
-    box-shadow: 0 1px 3px oklch(0 0 0 / 0.1);
-  }
-
-  /* 表单：有错误时禁用提交按钮 */
-  form:has(:invalid:not(:focus)) button[type='submit'] {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  /* 图片容器：有 alt 属性时显示 */
-  figure:has(img[alt]) figcaption {
-    display: block;
-  }
+  .sh-btn:has(.loading-spinner) { pointer-events: none; opacity: 0.7; }
+  .list-item:has(.active) { border-left: 0.1875rem solid oklch(var(--primary)); background-color: oklch(var(--primary) / 0.1); }
+  .mobile-menu-container:has(.mobile-menu-open) { overflow: hidden; }
+  
+  .site-header:has(.scrolled) { box-shadow: 0 0.0625rem 0.1875rem oklch(0 0 0 / 0.1); }
+  form:has(:invalid:not(:focus)) button[type='submit'] { opacity: 0.5; cursor: not-allowed; }
+  figure:has(img[alt]) figcaption { display: block; }
 }
 
 /* ==========================================
    Shadcn 核心組件樣式 (替代 DaisyUI)
    ========================================== */
 @layer components {
-  /* 按鈕重構 (shadcn button 風格) */
   .sh-btn {
-    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95;
+    min-height: 2.5rem;
+    padding-inline: 1.25rem;
   }
-  .sh-btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm;
-  }
-  .sh-btn-outline {
-    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground shadow-sm;
-  }
+  
+  .sh-btn-primary { @apply bg-primary text-primary-foreground hover:brightness-110 shadow-sm; }
+  .sh-btn-outline { @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground; }
 
-  /* 卡片重構 (shadcn card 風格) */
   .shadcn-card {
     @apply bg-card text-card-foreground border border-border rounded-lg shadow-sm;
+    padding: clamp(1rem, 2cqi, 1.5rem);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 }
 
@@ -545,15 +251,14 @@
    其他工具樣式
    ========================================== */
 #app {
-  /* 使用動態視口高度，避免行動端位址列收合導致的版面跳動 */
   min-height: 100dvh;
 }
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 0.25rem);
+  --radius-md: calc(var(--radius) - 0.125rem);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 0.25rem);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -587,6 +292,39 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.552 0.016 285.938);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.552 0.016 285.938);
+}
 /*
 .dark {
   --background: oklch(0.141 0.005 285.823);
