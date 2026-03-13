@@ -3,9 +3,18 @@
     "browser": true
   },
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["import","oxc","eslint","unicorn","jsdoc","typescript","vue","vitest"],
+  "plugins": [
+    "import",
+    "oxc",
+    "eslint",
+    "unicorn",
+    "jsdoc",
+    "typescript",
+    "vue",
+    "vitest"
+  ],
   "categories": {
-     "correctness": "error",
+    "correctness": "error",
     "suspicious": "warn",
     "pedantic": "off"
   },
@@ -46,5 +55,8 @@
     "builtin": true
   },
   "globals": {},
-  "ignorePatterns": []
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**"
+  ]
 }

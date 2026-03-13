@@ -7,7 +7,6 @@ import tailwindcss from '@tailwindcss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { compression } from 'vite-plugin-compression2'
-import Oxc from 'unplugin-oxc/vite'
 
 // https://vite.dev/config/
 export default defineConfig({

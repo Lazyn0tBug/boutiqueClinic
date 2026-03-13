@@ -1,3 +1,4 @@
+/* eslint-disable-next-line import/no-unassigned-import */
 import './assets/main.css'
 
 import { createApp } from 'vue'

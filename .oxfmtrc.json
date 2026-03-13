@@ -1,5 +1,15 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "*.min.js",
+    "*.min.css",
+    "*.js.br",
+    "*.css.br",
+    "*.js.gz",
+    "*.css.gz"
+  ]
 }

@@ -8,6 +8,10 @@ export type Locale = 'zh-CN' | 'zh-TW' | 'en' | 'ja'
 
 // 从浏览器语言获取默认语言（仅作为初始值）
 function getBrowserLocale(): Locale {
+  // 测试环境中 navigator 可能不存在
+  if (typeof navigator === 'undefined' || !navigator.language) {
+    return 'zh-CN'
+  }
   const browserLang = navigator.language.toLowerCase()
   if (browserLang.startsWith('zh-cn') || browserLang === 'zh-hans') {
     return 'zh-CN'
@@ -21,7 +25,7 @@ function getBrowserLocale(): Locale {
   if (browserLang.startsWith('en')) {
     return 'en'
   }
-  return 'zh-CN' // 默认繁体中文
+  return 'zh-CN' // 默认简体中文
 }
 
 const i18n = createI18n({
