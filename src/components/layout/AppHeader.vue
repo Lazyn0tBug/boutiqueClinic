@@ -23,9 +23,12 @@ const router = useRouter()
 
 const isMobileMenuOpen = ref(false)
 
+// 核心交互状态控制
+const activeMenu = ref<string | null>(null)
+const activeSubItem = ref<string | null>(null)
+
 const currentLocale = computed(() => appStore.locale)
 
-// 使用全局配置映射语言列表
 const languages = AVAILABLE_LOCALES.map((l) => ({
   code: l.code,
   label: `${l.flag} ${l.name}`,
@@ -38,14 +41,9 @@ const displayLangCode = computed(() => {
 
 const changeLanguage = async (locale: Locale) => {
   try {
-    // 核心修改：如果当前在带有语言前缀的路由下，使用 router 改变 URL，让路由守卫去处理状态
     if (route.params.locale && route.params.locale !== locale) {
-      await router.push({
-        ...route,
-        params: { ...route.params, locale },
-      })
+      await router.push({ ...route, params: { ...route.params, locale } })
     } else {
-      // 兜底逻辑：如果由于某些原因不在标准多语言路由中，直接更新 store
       await appStore.setLocale(locale)
     }
   } catch (error) {
@@ -58,180 +56,143 @@ const changeLanguage = async (locale: Locale) => {
   <div class="h-16 md:h-[4.5rem] w-full shrink-0"></div>
 
   <header
-    class="fixed top-0 inset-x-0 z-50 w-full border-b border-primary/10 bg-background/70 backdrop-blur-md shadow-sm shadow-primary/5 supports-[backdrop-filter]:bg-background/50"
+    class="fixed top-0 inset-x-0 z-50 w-full transition-colors duration-300 bg-background/80 backdrop-blur-md border-b border-border shadow-sm supports-[backdrop-filter]:bg-background/50"
+    @mouseleave="activeMenu = null; activeSubItem = null"
   >
-    <div class="absolute inset-0 bg-primary/5 pointer-events-none -z-10"></div>
-
-    <Container
-      class="flex items-center justify-between h-16 md:h-[4.5rem] transition-all duration-300"
-    >
-      <div class="flex items-center gap-3">
+    <Container class="flex items-center justify-between h-16 md:h-[4.5rem] relative z-20">
+      
+      <div class="flex items-center gap-3 h-full">
         <Sheet v-model:open="isMobileMenuOpen">
           <SheetTrigger as-child>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Toggle Menu"
-              class="lg:hidden min-h-[44px] min-w-[44px]"
-            >
+            <Button variant="ghost" size="icon" class="lg:hidden min-h-[44px] min-w-[44px]">
               <i class="ph ph-list text-2xl"></i>
             </Button>
           </SheetTrigger>
-          <SheetContent
-            side="left"
-            class="w-72 sm:w-80 border-r-primary/10 shadow-2xl shadow-primary/10"
-          >
+          <SheetContent side="left" class="w-72 sm:w-80 overflow-y-auto z-[100]">
             <SheetHeader>
               <SheetTitle class="flex items-center gap-2">
                 <i class="ph-fill ph-cross text-primary text-xl"></i>
                 {{ t('footer.brandName') }}
               </SheetTitle>
             </SheetHeader>
-            <nav class="flex flex-col gap-1 mt-6">
-              <div
-                class="font-semibold text-xs text-muted-foreground px-3 py-2 uppercase tracking-wider"
-              >
-                {{ t('nav.services') }}
+            <nav class="flex flex-col mt-6">
+              <div class="mb-4 bg-primary/5 rounded-2xl p-3 border border-primary/10">
+                <div class="font-semibold text-sm text-primary px-2 pb-2">{{ t('nav.services') }}</div>
+                <div class="flex flex-col gap-1.5">
+                  <a href="#services" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary flex items-center gap-3 bg-background border border-border/50" @click="isMobileMenuOpen = false">
+                    <div class="w-1.5 h-1.5 rounded-full bg-primary/60"></div>
+                    {{ t('footer.quickLinks.checkup') }}
+                  </a>
+                  <a href="#services" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary flex items-center gap-3 bg-background border border-border/50" @click="isMobileMenuOpen = false">
+                    <div class="w-1.5 h-1.5 rounded-full bg-primary/60"></div>
+                    {{ t('footer.quickLinks.stemCell') }}
+                  </a>
+                  <a href="#services" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary flex items-center gap-3 bg-background border border-border/50" @click="isMobileMenuOpen = false">
+                    <div class="w-1.5 h-1.5 rounded-full bg-primary/60"></div>
+                    {{ t('footer.quickLinks.referral') }}
+                  </a>
+                </div>
               </div>
-              <a
-                href="#services"
-                class="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors min-h-[44px] flex items-center"
-                @click="isMobileMenuOpen = false"
-                >{{ t('nav.servicesMenu.featured') }}</a
-              >
-              <a
-                href="#services"
-                class="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors min-h-[44px] flex items-center"
-                @click="isMobileMenuOpen = false"
-                >{{ t('nav.servicesMenu.booking') }}</a
-              >
-
-              <Separator class="my-3 opacity-50" />
-
-              <a
-                href="#pharmacy"
-                class="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors min-h-[44px] flex items-center"
-                @click="isMobileMenuOpen = false"
-                >{{ t('nav.pharmacy') }}</a
-              >
-              <a
-                href="#partners"
-                class="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors min-h-[44px] flex items-center"
-                @click="isMobileMenuOpen = false"
-                >{{ t('nav.partners') }}</a
-              >
-              <a
-                href="#information"
-                class="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors min-h-[44px] flex items-center"
-                @click="isMobileMenuOpen = false"
-                >{{ t('nav.cases') }}</a
-              >
-              <a
-                href="#footer"
-                class="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors min-h-[44px] flex items-center"
-                @click="isMobileMenuOpen = false"
-                >{{ t('nav.about') }}</a
-              >
+              <Separator class="mb-4 opacity-50" />
+              <a href="#pharmacy" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/5 hover:text-primary" @click="isMobileMenuOpen = false">{{ t('nav.pharmacy') }}</a>
+              <a href="#partners" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/5 hover:text-primary" @click="isMobileMenuOpen = false">{{ t('nav.partners') }}</a>
+              <a href="#information" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/5 hover:text-primary" @click="isMobileMenuOpen = false">{{ t('nav.cases') }}</a>
+              <a href="#footer" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/5 hover:text-primary" @click="isMobileMenuOpen = false">{{ t('nav.about') }}</a>
             </nav>
           </SheetContent>
         </Sheet>
 
-        <a
-          href="/"
-          class="flex items-center gap-2 font-bold text-lg md:text-xl tracking-tight hover:opacity-80 transition-opacity"
-        >
+        <a href="/" class="flex items-center gap-2 font-bold text-lg md:text-xl tracking-tight">
           <i class="ph-fill ph-cross text-primary text-2xl"></i>
-          <span class="text-balance">{{ t('footer.brandName') }}</span>
-          <span
-            class="text-xs text-muted-foreground font-normal hidden xl:inline-block border-l border-border pl-2 ml-1 text-pretty"
-            >{{ t('about.subtitle') }}</span
-          >
+          <span>{{ t('footer.brandName') }}</span>
         </a>
       </div>
 
-      <nav class="hidden lg:flex items-center gap-1.5">
-        <DropdownMenu>
-          <DropdownMenuTrigger as-child>
-            <Button
-              variant="ghost"
-              class="min-h-[44px] font-medium hover:bg-primary/10 hover:text-primary"
-              >{{ t('nav.services') }}</Button
-            >
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            class="w-48 bg-background/80 backdrop-blur-lg border-primary/10 shadow-xl shadow-primary/5"
+      <nav class="hidden lg:flex items-center h-full">
+        
+        <div class="relative h-full flex items-center" @mouseenter="activeMenu = 'services'">
+          
+          <a
+            href="#services"
+            class="h-full px-6 flex items-center gap-1.5 font-medium transition-colors duration-200"
+            :class="activeMenu === 'services' ? 'bg-muted/80 backdrop-blur-xl bg-primary text-primary-foreground' : 'hover:bg-muted/50 text-foreground'"
           >
-            <DropdownMenuItem as-child>
-              <a
-                href="#services"
-                class="w-full cursor-pointer md:min-h-0 md:h-10 flex items-center focus:bg-primary/10 focus:text-primary"
-                >{{ t('nav.servicesMenu.featured') }}</a
-              >
-            </DropdownMenuItem>
-            <DropdownMenuItem as-child>
-              <a
-                href="#services"
-                class="w-full cursor-pointer md:min-h-0 md:h-10 flex items-center focus:bg-primary/10 focus:text-primary"
-                >{{ t('nav.servicesMenu.booking') }}</a
-              >
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            {{ t('nav.services') }}
+            <i class="ph ph-caret-down text-xs transition-transform duration-300" :class="activeMenu === 'services' ? 'rotate-180' : 'opacity-50'"></i>
+          </a>
 
-        <Button
-          variant="ghost"
-          as-child
-          class="min-h-[44px] font-medium hover:bg-primary/10 hover:text-primary"
-        >
-          <a href="#pharmacy">{{ t('nav.pharmacy') }}</a>
-        </Button>
-        <Button
-          variant="ghost"
-          as-child
-          class="min-h-[44px] font-medium hover:bg-primary/10 hover:text-primary"
-        >
-          <a href="#partners">{{ t('nav.partners') }}</a>
-        </Button>
-        <Button
-          variant="ghost"
-          as-child
-          class="min-h-[44px] font-medium hover:bg-primary/10 hover:text-primary"
-        >
-          <a href="#information">{{ t('nav.cases') }}</a>
-        </Button>
-        <Button
-          variant="ghost"
-          as-child
-          class="min-h-[44px] font-medium hover:bg-primary/10 hover:text-primary"
-        >
-          <a href="#footer">{{ t('nav.about') }}</a>
-        </Button>
+          <div
+            class="absolute top-full left-0 h-16 flex items-center transition-opacity duration-200 z-30 whitespace-nowrap min-w-max"
+            :class="activeMenu === 'services' ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'"
+          >
+            <a
+              href="#services"
+              @mouseenter="activeSubItem = 'checkup'"
+              @mouseleave="activeSubItem = null"
+              class="h-16 px-6 flex items-center gap-2 text-sm font-semibold transition-all cursor-pointer"
+              :class="activeSubItem === 'checkup' ? 'bg-background text-primary shadow-[0_0_15px_rgba(0,0,0,0.05)] relative z-10' : 'text-primary-foreground hover:text-foreground'"
+            >
+              <i class="ph-fill ph-heartbeat text-lg"></i>
+              {{ t('footer.quickLinks.checkup') }}
+            </a>
+            
+            <a
+              href="#services"
+              @mouseenter="activeSubItem = 'stemCell'"
+              @mouseleave="activeSubItem = null"
+              class="h-16 px-6 flex items-center gap-2 text-sm font-semibold transition-all cursor-pointer"
+              :class="activeSubItem === 'stemCell' ? 'bg-background text-primary shadow-[0_0_15px_rgba(0,0,0,0.05)] relative z-10' : 'text-primary-foreground hover:text-foreground'"
+            >
+              <i class="ph-fill ph-flask text-lg"></i>
+              {{ t('footer.quickLinks.stemCell') }}
+            </a>
+            
+            <a
+              href="#services"
+              @mouseenter="activeSubItem = 'referral'"
+              @mouseleave="activeSubItem = null"
+              class="h-16 px-6 flex items-center gap-2 text-sm font-semibold transition-all cursor-pointer"
+              :class="activeSubItem === 'referral' ? 'bg-background text-primary shadow-[0_0_15px_rgba(0,0,0,0.05)] relative z-10' : 'text-primary-foreground hover:text-foreground'"
+            >
+              <i class="ph-fill ph-stethoscope text-lg"></i>
+              {{ t('footer.quickLinks.referral') }}
+            </a>
+          </div>
+        </div>
+
+        <div class="h-full flex items-center" @mouseenter="activeMenu = null">
+          <a href="#pharmacy" class="h-full px-5 flex items-center font-medium hover:bg-muted/50 text-foreground transition-colors">
+            {{ t('nav.pharmacy') }}
+          </a>
+        </div>
+        <div class="h-full flex items-center" @mouseenter="activeMenu = null">
+          <a href="#partners" class="h-full px-5 flex items-center font-medium hover:bg-muted/50 text-foreground transition-colors">
+            {{ t('nav.partners') }}
+          </a>
+        </div>
+        <div class="h-full flex items-center" @mouseenter="activeMenu = null">
+          <a href="#information" class="h-full px-5 flex items-center font-medium hover:bg-muted/50 text-foreground transition-colors">
+            {{ t('nav.cases') }}
+          </a>
+        </div>
+        <div class="h-full flex items-center" @mouseenter="activeMenu = null">
+          <a href="#footer" class="h-full px-5 flex items-center font-medium hover:bg-muted/50 text-foreground transition-colors">
+            {{ t('nav.about') }}
+          </a>
+        </div>
       </nav>
 
-      <div class="flex items-center gap-1 md:gap-2">
+      <div class="flex items-center gap-1 md:gap-2 h-full" @mouseenter="activeMenu = null">
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
-            <Button
-              variant="ghost"
-              class="gap-1.5 min-h-[44px] hover:bg-primary/10 hover:text-primary"
-            >
+            <Button variant="ghost" class="gap-1.5 hover:bg-muted/50">
               <i class="ph ph-translate text-xl"></i>
-              <span class="font-medium tracking-wide hidden sm:inline-block">{{
-                displayLangCode
-              }}</span>
-              <i class="ph ph-caret-down text-xs text-muted-foreground opacity-70"></i>
+              <span class="font-medium tracking-wide hidden sm:inline-block">{{ displayLangCode }}</span>
+              <i class="ph ph-caret-down text-xs opacity-70"></i>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            class="w-40 bg-background/80 backdrop-blur-lg border-primary/10 shadow-xl shadow-primary/5"
-          >
-            <DropdownMenuItem
-              v-for="lang in languages"
-              :key="lang.code"
-              @click="changeLanguage(lang.code)"
-              class="cursor-pointer md:min-h-0 md:h-10 flex items-center justify-between focus:bg-primary/10 focus:text-primary"
-            >
+          <DropdownMenuContent align="end" class="w-40 bg-background/95 backdrop-blur-xl z-[60]">
+            <DropdownMenuItem v-for="lang in languages" :key="lang.code" @click="changeLanguage(lang.code)" class="cursor-pointer flex justify-between">
               {{ lang.label }}
               <i v-if="lang.code === currentLocale" class="ph-bold ph-check text-primary"></i>
             </DropdownMenuItem>
@@ -240,29 +201,22 @@ const changeLanguage = async (locale: Locale) => {
 
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="User Profile"
-              class="min-h-[44px] min-w-[44px] hover:bg-primary/10 hover:text-primary"
-            >
+            <Button variant="ghost" size="icon" class="hover:bg-muted/50">
               <i class="ph ph-user text-xl"></i>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            class="w-40 bg-background/80 backdrop-blur-lg border-primary/10 shadow-xl shadow-primary/5"
-          >
+          <DropdownMenuContent align="end" class="w-40 bg-background/95 backdrop-blur-xl z-[60]">
             <DropdownMenuItem as-child>
-              <a
-                href="#admin"
-                class="w-full cursor-pointer md:min-h-0 md:h-10 flex items-center focus:bg-primary/10 focus:text-primary"
-                >{{ t('footer.supportLinks.contact') }}</a
-              >
+              <a href="#admin" class="w-full cursor-pointer text-primary">{{ t('footer.supportLinks.contact') }}</a>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
     </Container>
+
+    <div
+      class="absolute top-full left-0 w-full transition-all duration-200 border-border z-10"
+      :class="activeMenu ? 'h-16 opacity-100 bg-muted/80 backdrop-blur-xl border-b shadow-sm bg-primary' : 'h-0 opacity-0 bg-transparent border-transparent pointer-events-none'"
+    ></div>
   </header>
 </template>
