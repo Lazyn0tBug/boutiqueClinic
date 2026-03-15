@@ -51,7 +51,7 @@ const router = createRouter({
         {
           path: 'about',
           name: 'about',
-          component: () => import('../views/AboutView.vue'),
+          component: () => import('@/views/AboutView.vue'),
         },
         // 后续阶段添加更多路由
         // { path: 'services', name: 'services', component: () => import('../views/ServicesView.vue') },

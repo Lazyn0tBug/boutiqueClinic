@@ -12,9 +12,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetDescription } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
 import { Container } from '@/components/ui/container'
+
+// 引入 CVA 与 工具函数
+import { cva } from 'class-variance-authority'
+import { cn } from '@/lib/utils'
 
 const { t } = useI18n()
 const appStore = useAppStore()
@@ -23,10 +27,87 @@ const router = useRouter()
 
 const isMobileMenuOpen = ref(false)
 
-// 核心交互状态控制
+// 核心互动状态控制
 const activeMenu = ref<string | null>(null)
 const activeSubItem = ref<string | null>(null)
 
+// ==========================================
+//  [重构核心 1] 全局导航单一数据源
+// ==========================================
+const navConfig = [
+  {
+    id: 'services',
+    labelKey: 'nav.services',
+    href: '#services',
+    isDropdown: true,
+    subItems: [
+      { id: 'checkup', icon: 'ph-heartbeat', labelKey: 'footer.quickLinks.checkup', href: '#services' },
+      { id: 'stemCell', icon: 'ph-flask', labelKey: 'footer.quickLinks.stemCell', href: '#services' },
+      { id: 'referral', icon: 'ph-stethoscope', labelKey: 'footer.quickLinks.referral', href: '#services' },
+    ],
+  },
+  { id: 'pharmacy', labelKey: 'nav.pharmacy', href: '#pharmacy', isDropdown: false },
+  { id: 'partners', labelKey: 'nav.partners', href: '#partners', isDropdown: false },
+  { id: 'cases', labelKey: 'nav.cases', href: '#information', isDropdown: false },
+  { id: 'about', labelKey: 'nav.about', href: '#footer', isDropdown: false },
+]
+
+// ==========================================
+//  [重构核心 2] CVA 样式变体分层管理
+// ==========================================
+
+// 1. 桌面端主菜单项
+const desktopMainLinkVariants = cva(
+  "h-full flex items-center font-medium transition-colors duration-300 rounded-none cursor-pointer",
+  {
+    variants: {
+      type: {
+        normal: "px-5", 
+        dropdownTrigger: "w-nav-item justify-center gap-1.5", 
+      },
+      state: {
+        default: "hover:bg-muted/50 text-foreground", 
+        active: "bg-primary/80 backdrop-blur-md text-primary-foreground", 
+      }
+    },
+    defaultVariants: {
+      type: "normal",
+      state: "default"
+    }
+  }
+)
+
+// 2. 桌面端子菜单项
+const desktopSubLinkVariants = cva(
+  "h-16 w-nav-item flex justify-center items-center gap-2 text-sm font-semibold transition-colors duration-200 cursor-pointer rounded-none",
+  {
+    variants: {
+      state: {
+        default: "text-primary-foreground/90 hover:text-primary-foreground",
+        active: "bg-background/85 backdrop-blur-md text-primary shadow-nav-glow relative z-20"
+      }
+    },
+    defaultVariants: { state: "default" }
+  }
+)
+
+// 3. 移动端菜单项
+const mobileLinkVariants = cva(
+  "rounded-xl px-3 py-2.5 text-sm font-medium transition-colors flex items-center",
+  {
+    variants: {
+      type: {
+        normal: "text-foreground/80 hover:bg-muted hover:text-foreground", 
+        subItem: "text-foreground/80 hover:text-primary hover:bg-background gap-3 bg-background/50 border border-border/40 shadow-sm"
+      }
+    },
+    defaultVariants: { type: "normal" }
+  }
+)
+
+// ==========================================
+//  其他逻辑保留
+// ==========================================
 const currentLocale = computed(() => appStore.locale)
 
 const languages = AVAILABLE_LOCALES.map((l) => ({
@@ -56,7 +137,7 @@ const changeLanguage = async (locale: Locale) => {
   <div class="h-16 md:h-[4.5rem] w-full shrink-0"></div>
 
   <header
-    class="fixed top-0 inset-x-0 z-50 w-full transition-colors duration-300 bg-background/80 backdrop-blur-md border-b border-border shadow-sm supports-[backdrop-filter]:bg-background/50"
+    class="fixed top-0 inset-x-0 w-full transition-colors duration-300 bg-background/80 backdrop-blur-md border-b border-border shadow-sm supports-[backdrop-filter]:bg-background/50 z-[99999]"
     @mouseleave="activeMenu = null; activeSubItem = null"
   >
     <Container class="flex items-center justify-between h-16 md:h-[4.5rem] relative z-20">
@@ -68,36 +149,54 @@ const changeLanguage = async (locale: Locale) => {
               <i class="ph ph-list text-2xl"></i>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" class="w-72 sm:w-80 overflow-y-auto z-[100]">
+          <SheetContent side="left" class="w-72 sm:w-80 overflow-y-auto z-[100000]">
             <SheetHeader>
               <SheetTitle class="flex items-center gap-2">
                 <i class="ph-fill ph-cross text-primary text-xl"></i>
                 {{ t('footer.brandName') }}
               </SheetTitle>
+              
+              <SheetDescription class="sr-only">
+                Mobile Navigation Menu
+              </SheetDescription>
+              
             </SheetHeader>
-            <nav class="flex flex-col mt-6">
-              <div class="mb-4 bg-primary/5 rounded-2xl p-3 border border-primary/10">
-                <div class="font-semibold text-sm text-primary px-2 pb-2">{{ t('nav.services') }}</div>
-                <div class="flex flex-col gap-1.5">
-                  <a href="#services" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary flex items-center gap-3 bg-background border border-border/50" @click="isMobileMenuOpen = false">
-                    <div class="w-1.5 h-1.5 rounded-full bg-primary/60"></div>
-                    {{ t('footer.quickLinks.checkup') }}
-                  </a>
-                  <a href="#services" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary flex items-center gap-3 bg-background border border-border/50" @click="isMobileMenuOpen = false">
-                    <div class="w-1.5 h-1.5 rounded-full bg-primary/60"></div>
-                    {{ t('footer.quickLinks.stemCell') }}
-                  </a>
-                  <a href="#services" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary flex items-center gap-3 bg-background border border-border/50" @click="isMobileMenuOpen = false">
-                    <div class="w-1.5 h-1.5 rounded-full bg-primary/60"></div>
-                    {{ t('footer.quickLinks.referral') }}
-                  </a>
+            <nav class="flex flex-col gap-2 mt-6">
+              
+              <template v-for="item in navConfig" :key="item.id">
+                <div v-if="item.isDropdown" class="bg-primary/5 rounded-2xl p-3 border border-primary/10">
+                  <div class="font-semibold text-sm text-primary px-2 pb-3 flex items-center gap-2">
+                    <i class="ph-fill ph-squares-four text-base"></i>
+                    {{ t(item.labelKey) }}
+                  </div>
+                  <div class="flex flex-col gap-2">
+                    <a 
+                      v-for="sub in item.subItems" 
+                      :key="sub.id" 
+                      :href="sub.href" 
+                      :class="cn(mobileLinkVariants({ type: 'subItem' }))" 
+                      @click="isMobileMenuOpen = false"
+                    >
+                      <div class="bg-background shadow-sm p-1.5 rounded-lg text-primary flex items-center justify-center">
+                        <i class="ph-fill text-base" :class="sub.icon"></i>
+                      </div>
+                      {{ t(sub.labelKey) }}
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <Separator class="mb-4 opacity-50" />
-              <a href="#pharmacy" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/5 hover:text-primary" @click="isMobileMenuOpen = false">{{ t('nav.pharmacy') }}</a>
-              <a href="#partners" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/5 hover:text-primary" @click="isMobileMenuOpen = false">{{ t('nav.partners') }}</a>
-              <a href="#information" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/5 hover:text-primary" @click="isMobileMenuOpen = false">{{ t('nav.cases') }}</a>
-              <a href="#footer" class="rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-primary/5 hover:text-primary" @click="isMobileMenuOpen = false">{{ t('nav.about') }}</a>
+                
+                <Separator v-if="item.isDropdown" class="my-2 opacity-50" />
+
+                <a 
+                  v-else 
+                  :href="item.href" 
+                  :class="cn(mobileLinkVariants({ type: 'normal' }))" 
+                  @click="isMobileMenuOpen = false"
+                >
+                  {{ t(item.labelKey) }}
+                </a>
+              </template>
+
             </nav>
           </SheetContent>
         </Sheet>
@@ -110,76 +209,46 @@ const changeLanguage = async (locale: Locale) => {
 
       <nav class="hidden lg:flex items-center h-full">
         
-        <div class="relative h-full flex items-center" @mouseenter="activeMenu = 'services'">
+        <template v-for="item in navConfig" :key="item.id">
           
-          <a
-            href="#services"
-            class="h-full px-6 flex items-center gap-1.5 font-medium transition-colors duration-200"
-            :class="activeMenu === 'services' ? 'bg-muted/80 backdrop-blur-xl bg-primary text-primary-foreground' : 'hover:bg-muted/50 text-foreground'"
-          >
-            {{ t('nav.services') }}
-            <i class="ph ph-caret-down text-xs transition-transform duration-300" :class="activeMenu === 'services' ? 'rotate-180' : 'opacity-50'"></i>
-          </a>
+          <div v-if="item.isDropdown" class="relative h-full flex items-center" @mouseenter="activeMenu = item.id">
+            
+            <a
+              :href="item.href"
+              :class="cn(desktopMainLinkVariants({ type: 'dropdownTrigger', state: activeMenu === item.id ? 'active' : 'default' }))"
+            >
+              {{ t(item.labelKey) }}
+              <i class="ph ph-caret-down text-xs transition-transform duration-300" :class="activeMenu === item.id ? 'rotate-180' : 'opacity-50'"></i>
+            </a>
 
-          <div
-            class="absolute top-full left-0 h-16 flex items-center transition-opacity duration-200 z-30 whitespace-nowrap min-w-max"
-            :class="activeMenu === 'services' ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'"
-          >
-            <a
-              href="#services"
-              @mouseenter="activeSubItem = 'checkup'"
-              @mouseleave="activeSubItem = null"
-              class="h-16 px-6 flex items-center gap-2 text-sm font-semibold transition-all cursor-pointer"
-              :class="activeSubItem === 'checkup' ? 'bg-background text-primary shadow-[0_0_15px_rgba(0,0,0,0.05)] relative z-10' : 'text-primary-foreground hover:text-foreground'"
+            <div
+              class="absolute top-full left-0 h-16 flex items-center z-30 whitespace-nowrap min-w-max"
+              :class="activeMenu === item.id ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'"
             >
-              <i class="ph-fill ph-heartbeat text-lg"></i>
-              {{ t('footer.quickLinks.checkup') }}
-            </a>
-            
-            <a
-              href="#services"
-              @mouseenter="activeSubItem = 'stemCell'"
-              @mouseleave="activeSubItem = null"
-              class="h-16 px-6 flex items-center gap-2 text-sm font-semibold transition-all cursor-pointer"
-              :class="activeSubItem === 'stemCell' ? 'bg-background text-primary shadow-[0_0_15px_rgba(0,0,0,0.05)] relative z-10' : 'text-primary-foreground hover:text-foreground'"
+              <a
+                v-for="sub in item.subItems"
+                :key="sub.id"
+                :href="sub.href"
+                @mouseenter="activeSubItem = sub.id"
+                @mouseleave="activeSubItem = null"
+                :class="cn(desktopSubLinkVariants({ state: activeSubItem === sub.id ? 'active' : 'default' }))"
+              >
+                <i class="ph-fill text-lg" :class="sub.icon"></i>
+                {{ t(sub.labelKey) }}
+              </a>
+            </div>
+          </div>
+
+          <div v-else class="h-full flex items-center" @mouseenter="activeMenu = null">
+            <a 
+              :href="item.href" 
+              :class="cn(desktopMainLinkVariants({ type: 'normal', state: 'default' }))"
             >
-              <i class="ph-fill ph-flask text-lg"></i>
-              {{ t('footer.quickLinks.stemCell') }}
-            </a>
-            
-            <a
-              href="#services"
-              @mouseenter="activeSubItem = 'referral'"
-              @mouseleave="activeSubItem = null"
-              class="h-16 px-6 flex items-center gap-2 text-sm font-semibold transition-all cursor-pointer"
-              :class="activeSubItem === 'referral' ? 'bg-background text-primary shadow-[0_0_15px_rgba(0,0,0,0.05)] relative z-10' : 'text-primary-foreground hover:text-foreground'"
-            >
-              <i class="ph-fill ph-stethoscope text-lg"></i>
-              {{ t('footer.quickLinks.referral') }}
+              {{ t(item.labelKey) }}
             </a>
           </div>
-        </div>
 
-        <div class="h-full flex items-center" @mouseenter="activeMenu = null">
-          <a href="#pharmacy" class="h-full px-5 flex items-center font-medium hover:bg-muted/50 text-foreground transition-colors">
-            {{ t('nav.pharmacy') }}
-          </a>
-        </div>
-        <div class="h-full flex items-center" @mouseenter="activeMenu = null">
-          <a href="#partners" class="h-full px-5 flex items-center font-medium hover:bg-muted/50 text-foreground transition-colors">
-            {{ t('nav.partners') }}
-          </a>
-        </div>
-        <div class="h-full flex items-center" @mouseenter="activeMenu = null">
-          <a href="#information" class="h-full px-5 flex items-center font-medium hover:bg-muted/50 text-foreground transition-colors">
-            {{ t('nav.cases') }}
-          </a>
-        </div>
-        <div class="h-full flex items-center" @mouseenter="activeMenu = null">
-          <a href="#footer" class="h-full px-5 flex items-center font-medium hover:bg-muted/50 text-foreground transition-colors">
-            {{ t('nav.about') }}
-          </a>
-        </div>
+        </template>
       </nav>
 
       <div class="flex items-center gap-1 md:gap-2 h-full" @mouseenter="activeMenu = null">
@@ -191,7 +260,7 @@ const changeLanguage = async (locale: Locale) => {
               <i class="ph ph-caret-down text-xs opacity-70"></i>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" class="w-40 bg-background/95 backdrop-blur-xl z-[60]">
+          <DropdownMenuContent align="end" class="w-40 bg-background/95 backdrop-blur-xl z-[100000]">
             <DropdownMenuItem v-for="lang in languages" :key="lang.code" @click="changeLanguage(lang.code)" class="cursor-pointer flex justify-between">
               {{ lang.label }}
               <i v-if="lang.code === currentLocale" class="ph-bold ph-check text-primary"></i>
@@ -205,7 +274,7 @@ const changeLanguage = async (locale: Locale) => {
               <i class="ph ph-user text-xl"></i>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" class="w-40 bg-background/95 backdrop-blur-xl z-[60]">
+          <DropdownMenuContent align="end" class="w-40 bg-background/95 backdrop-blur-xl z-[100000]">
             <DropdownMenuItem as-child>
               <a href="#admin" class="w-full cursor-pointer text-primary">{{ t('footer.supportLinks.contact') }}</a>
             </DropdownMenuItem>
@@ -215,8 +284,8 @@ const changeLanguage = async (locale: Locale) => {
     </Container>
 
     <div
-      class="absolute top-full left-0 w-full transition-all duration-200 border-border z-10"
-      :class="activeMenu ? 'h-16 opacity-100 bg-muted/80 backdrop-blur-xl border-b shadow-sm bg-primary' : 'h-0 opacity-0 bg-transparent border-transparent pointer-events-none'"
+      class="absolute top-full left-0 w-full transition-all duration-300 z-10 border-b border-primary/20"
+      :class="activeMenu ? 'h-16 opacity-100 bg-primary/80 backdrop-blur-md shadow-sm' : 'h-0 opacity-0 bg-transparent pointer-events-none border-transparent'"
     ></div>
   </header>
 </template>
