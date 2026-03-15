@@ -53,6 +53,20 @@ const navConfig = [
 ]
 
 // ==========================================
+//  移动端：下拉折叠状态管理
+// ==========================================
+// 默认把 'services' 加入数组，代表初始状态下医疗服务是展开的（你也可以设为空数组 [] 默认全关）
+const expandedMobileMenus = ref<string[]>(['services']) 
+
+const toggleMobileMenu = (id: string) => {
+  if (expandedMobileMenus.value.includes(id)) {
+    expandedMobileMenus.value = expandedMobileMenus.value.filter(m => m !== id)
+  } else {
+    expandedMobileMenus.value.push(id)
+  }
+}
+
+// ==========================================
 //  [重构核心 2] CVA 样式变体分层管理
 // ==========================================
 
@@ -161,14 +175,26 @@ const changeLanguage = async (locale: Locale) => {
               </SheetDescription>
               
             </SheetHeader>
-            <nav class="flex flex-col gap-2 mt-8">
+          <nav class="flex flex-col gap-1 mt-6">
               <template v-for="item in navConfig" :key="item.id">
                 
-                <div v-if="item.isDropdown" class="flex flex-col mb-2">
-                  <div class="px-4 py-2 text-xs font-bold tracking-wider text-muted-foreground uppercase">
-                    {{ t(item.labelKey) }}
-                  </div>
-                  <div class="flex flex-col mt-1 space-y-1">
+                <div v-if="item.isDropdown" class="flex flex-col">
+                  
+                  <button 
+                    @click="toggleMobileMenu(item.id)"
+                    class="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-foreground hover:bg-muted/50 rounded-xl transition-colors"
+                  >
+                    <span>{{ t(item.labelKey) }}</span>
+                    <i 
+                      class="ph ph-caret-down text-sm transition-transform duration-300" 
+                      :class="expandedMobileMenus.includes(item.id) ? 'rotate-180' : ''"
+                    ></i>
+                  </button>
+                  
+                  <div 
+                    v-show="expandedMobileMenus.includes(item.id)"
+                    class="flex flex-col gap-1 mt-1 pl-4"
+                  >
                     <a 
                       v-for="sub in item.subItems" 
                       :key="sub.id" 
@@ -176,7 +202,7 @@ const changeLanguage = async (locale: Locale) => {
                       :class="cn(mobileLinkVariants({ type: 'subItem' }))" 
                       @click="isMobileMenuOpen = false"
                     >
-                      <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-muted/50 text-foreground shrink-0">
+                      <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-muted/50 text-foreground shrink-0 border border-border/50">
                         <i :class="['ph-fill text-lg', sub.icon]"></i>
                       </div>
                       {{ t(sub.labelKey) }}
