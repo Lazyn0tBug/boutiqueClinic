@@ -12,7 +12,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetDescription } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetDescription,
+} from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
 import { Container } from '@/components/ui/container'
 
@@ -41,9 +48,24 @@ const navConfig = [
     href: '#services',
     isDropdown: true,
     subItems: [
-      { id: 'checkup', icon: 'ph-heartbeat', labelKey: 'footer.quickLinks.checkup', href: '#services' },
-      { id: 'stemCell', icon: 'ph-flask', labelKey: 'footer.quickLinks.stemCell', href: '#services' },
-      { id: 'referral', icon: 'ph-stethoscope', labelKey: 'footer.quickLinks.referral', href: '#services' },
+      {
+        id: 'checkup',
+        icon: 'ph-heartbeat',
+        labelKey: 'footer.quickLinks.checkup',
+        href: '#services',
+      },
+      {
+        id: 'stemCell',
+        icon: 'ph-flask',
+        labelKey: 'footer.quickLinks.stemCell',
+        href: '#services',
+      },
+      {
+        id: 'referral',
+        icon: 'ph-stethoscope',
+        labelKey: 'footer.quickLinks.referral',
+        href: '#services',
+      },
     ],
   },
   { id: 'pharmacy', labelKey: 'nav.pharmacy', href: '#pharmacy', isDropdown: false },
@@ -56,11 +78,11 @@ const navConfig = [
 //  移动端：下拉折叠状态管理
 // ==========================================
 // 默认把 'services' 加入数组，代表初始状态下医疗服务是展开的（你也可以设为空数组 [] 默认全关）
-const expandedMobileMenus = ref<string[]>(['services']) 
+const expandedMobileMenus = ref<string[]>(['services'])
 
 const toggleMobileMenu = (id: string) => {
   if (expandedMobileMenus.value.includes(id)) {
-    expandedMobileMenus.value = expandedMobileMenus.value.filter(m => m !== id)
+    expandedMobileMenus.value = expandedMobileMenus.value.filter((m) => m !== id)
   } else {
     expandedMobileMenus.value.push(id)
   }
@@ -72,52 +94,50 @@ const toggleMobileMenu = (id: string) => {
 
 // 1. 桌面端主菜单项
 const desktopMainLinkVariants = cva(
-  "h-full flex items-center font-medium transition-colors duration-300 rounded-none cursor-pointer",
+  'h-full flex items-center font-medium transition-colors duration-300 rounded-none cursor-pointer',
   {
     variants: {
       type: {
-        normal: "px-5", 
-        dropdownTrigger: "w-nav-item justify-center gap-1.5", 
+        normal: 'px-5',
+        dropdownTrigger: 'w-nav-item justify-center gap-1.5',
       },
       state: {
-        default: "hover:bg-muted/50 text-foreground", 
-        active: "bg-primary/80 backdrop-blur-md text-primary-foreground", 
-      }
+        default: 'hover:bg-muted/50 text-foreground',
+        active: 'bg-primary/80 backdrop-blur-md text-primary-foreground',
+      },
     },
     defaultVariants: {
-      type: "normal",
-      state: "default"
-    }
-  }
+      type: 'normal',
+      state: 'default',
+    },
+  },
 )
 
 // 2. 桌面端子菜单项
 const desktopSubLinkVariants = cva(
-  "h-16 w-nav-item flex justify-center items-center gap-2 text-sm font-semibold transition-colors duration-200 cursor-pointer rounded-none",
+  'h-16 w-nav-item flex justify-center items-center gap-2 text-sm font-semibold transition-colors duration-200 cursor-pointer rounded-none',
   {
     variants: {
       state: {
-        default: "text-primary-foreground/90 hover:text-primary-foreground",
-        active: "bg-background/85 backdrop-blur-md text-primary shadow-nav-glow relative z-20"
-      }
+        default: 'text-primary-foreground/90 hover:text-primary-foreground',
+        active: 'bg-background/85 backdrop-blur-md text-primary shadow-nav-glow relative z-20',
+      },
     },
-    defaultVariants: { state: "default" }
-  }
+    defaultVariants: { state: 'default' },
+  },
 )
 
 // 3. 移动端菜单项
-const mobileLinkVariants = cva(
-  "w-full flex items-center gap-3 rounded-xl transition-colors",
-  {
-    variants: {
-      type: {
-        normal: "px-4 py-3 text-base font-medium text-foreground hover:bg-muted/50",
-        subItem: "px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
-      }
+const mobileLinkVariants = cva('w-full flex items-center gap-3 rounded-xl transition-colors', {
+  variants: {
+    type: {
+      normal: 'px-4 py-3 text-base font-medium text-foreground hover:bg-muted/50',
+      subItem:
+        'px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50',
     },
-    defaultVariants: { type: "normal" }
-  }
-)
+  },
+  defaultVariants: { type: 'normal' },
+})
 
 // ==========================================
 //  其他逻辑保留
@@ -152,10 +172,12 @@ const changeLanguage = async (locale: Locale) => {
 
   <header
     class="fixed top-0 inset-x-0 w-full transition-colors duration-300 bg-background/80 backdrop-blur-md border-b border-border shadow-sm supports-[backdrop-filter]:bg-background/50 z-[99999]"
-    @mouseleave="activeMenu = null; activeSubItem = null"
+    @mouseleave="
+      activeMenu = null
+      activeSubItem = null
+    "
   >
     <Container class="flex items-center justify-between h-16 md:h-[4.5rem] relative z-20">
-      
       <div class="flex items-center gap-3 h-full">
         <Sheet v-model:open="isMobileMenuOpen">
           <SheetTrigger as-child>
@@ -169,53 +191,50 @@ const changeLanguage = async (locale: Locale) => {
                 <i class="ph-fill ph-cross text-primary text-xl"></i>
                 {{ t('footer.brandName') }}
               </SheetTitle>
-              
-              <SheetDescription class="sr-only">
-                Mobile Navigation Menu
-              </SheetDescription>
-              
+
+              <SheetDescription class="sr-only"> Mobile Navigation Menu </SheetDescription>
             </SheetHeader>
-          <nav class="flex flex-col gap-1 mt-6">
+            <nav class="flex flex-col gap-1 mt-6">
               <template v-for="item in navConfig" :key="item.id">
-                
                 <div v-if="item.isDropdown" class="flex flex-col">
-                  
-                  <button 
+                  <button
                     @click="toggleMobileMenu(item.id)"
                     class="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-foreground hover:bg-muted/50 rounded-xl transition-colors"
                   >
                     <span>{{ t(item.labelKey) }}</span>
-                    <i 
-                      class="ph ph-caret-down text-sm transition-transform duration-300" 
+                    <i
+                      class="ph ph-caret-down text-sm transition-transform duration-300"
                       :class="expandedMobileMenus.includes(item.id) ? 'rotate-180' : ''"
                     ></i>
                   </button>
-                  
-                  <div 
+
+                  <div
                     v-show="expandedMobileMenus.includes(item.id)"
                     class="flex flex-col gap-1 mt-1 pl-4"
                   >
-                    <a 
-                      v-for="sub in item.subItems" 
-                      :key="sub.id" 
-                      :href="sub.href" 
-                      :class="cn(mobileLinkVariants({ type: 'subItem' }))" 
+                    <a
+                      v-for="sub in item.subItems"
+                      :key="sub.id"
+                      :href="sub.href"
+                      :class="cn(mobileLinkVariants({ type: 'subItem' }))"
                       @click="isMobileMenuOpen = false"
                     >
-                      <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-muted/50 text-foreground shrink-0 border border-border/50">
+                      <div
+                        class="flex items-center justify-center w-8 h-8 rounded-lg bg-muted/50 text-foreground shrink-0 border border-border/50"
+                      >
                         <i :class="['ph-fill text-lg', sub.icon]"></i>
                       </div>
                       {{ t(sub.labelKey) }}
                     </a>
                   </div>
                 </div>
-                
+
                 <Separator v-if="item.isDropdown" class="my-2 opacity-50" />
 
-                <a 
-                  v-else 
-                  :href="item.href" 
-                  :class="cn(mobileLinkVariants({ type: 'normal' }))" 
+                <a
+                  v-else
+                  :href="item.href"
+                  :class="cn(mobileLinkVariants({ type: 'normal' }))"
                   @click="isMobileMenuOpen = false"
                 >
                   {{ t(item.labelKey) }}
@@ -232,22 +251,37 @@ const changeLanguage = async (locale: Locale) => {
       </div>
 
       <nav class="hidden lg:flex items-center h-full">
-        
         <template v-for="item in navConfig" :key="item.id">
-          
-          <div v-if="item.isDropdown" class="relative h-full flex items-center" @mouseenter="activeMenu = item.id">
-            
+          <div
+            v-if="item.isDropdown"
+            class="relative h-full flex items-center"
+            @mouseenter="activeMenu = item.id"
+          >
             <a
               :href="item.href"
-              :class="cn(desktopMainLinkVariants({ type: 'dropdownTrigger', state: activeMenu === item.id ? 'active' : 'default' }))"
+              :class="
+                cn(
+                  desktopMainLinkVariants({
+                    type: 'dropdownTrigger',
+                    state: activeMenu === item.id ? 'active' : 'default',
+                  }),
+                )
+              "
             >
               {{ t(item.labelKey) }}
-              <i class="ph ph-caret-down text-xs transition-transform duration-300" :class="activeMenu === item.id ? 'rotate-180' : 'opacity-50'"></i>
+              <i
+                class="ph ph-caret-down text-xs transition-transform duration-300"
+                :class="activeMenu === item.id ? 'rotate-180' : 'opacity-50'"
+              ></i>
             </a>
 
             <div
               class="absolute top-full left-0 h-16 flex items-center z-30 whitespace-nowrap min-w-max"
-              :class="activeMenu === item.id ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'"
+              :class="
+                activeMenu === item.id
+                  ? 'opacity-100 visible'
+                  : 'opacity-0 invisible pointer-events-none'
+              "
             >
               <a
                 v-for="sub in item.subItems"
@@ -255,7 +289,13 @@ const changeLanguage = async (locale: Locale) => {
                 :href="sub.href"
                 @mouseenter="activeSubItem = sub.id"
                 @mouseleave="activeSubItem = null"
-                :class="cn(desktopSubLinkVariants({ state: activeSubItem === sub.id ? 'active' : 'default' }))"
+                :class="
+                  cn(
+                    desktopSubLinkVariants({
+                      state: activeSubItem === sub.id ? 'active' : 'default',
+                    }),
+                  )
+                "
               >
                 <i class="ph-fill text-lg" :class="sub.icon"></i>
                 {{ t(sub.labelKey) }}
@@ -264,14 +304,13 @@ const changeLanguage = async (locale: Locale) => {
           </div>
 
           <div v-else class="h-full flex items-center" @mouseenter="activeMenu = null">
-            <a 
-              :href="item.href" 
+            <a
+              :href="item.href"
               :class="cn(desktopMainLinkVariants({ type: 'normal', state: 'default' }))"
             >
               {{ t(item.labelKey) }}
             </a>
           </div>
-
         </template>
       </nav>
 
@@ -280,12 +319,22 @@ const changeLanguage = async (locale: Locale) => {
           <DropdownMenuTrigger as-child>
             <Button variant="ghost" class="gap-1.5 hover:bg-muted/50">
               <i class="ph ph-translate text-xl"></i>
-              <span class="font-medium tracking-wide hidden sm:inline-block">{{ displayLangCode }}</span>
+              <span class="font-medium tracking-wide hidden sm:inline-block">{{
+                displayLangCode
+              }}</span>
               <i class="ph ph-caret-down text-xs opacity-70"></i>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" class="w-40 bg-background/95 backdrop-blur-xl z-[100000]">
-            <DropdownMenuItem v-for="lang in languages" :key="lang.code" @click="changeLanguage(lang.code)" class="cursor-pointer flex justify-between">
+          <DropdownMenuContent
+            align="end"
+            class="w-40 bg-background/95 backdrop-blur-xl z-[100000]"
+          >
+            <DropdownMenuItem
+              v-for="lang in languages"
+              :key="lang.code"
+              @click="changeLanguage(lang.code)"
+              class="cursor-pointer flex justify-between"
+            >
               {{ lang.label }}
               <i v-if="lang.code === currentLocale" class="ph-bold ph-check text-primary"></i>
             </DropdownMenuItem>
@@ -298,9 +347,14 @@ const changeLanguage = async (locale: Locale) => {
               <i class="ph ph-user text-xl"></i>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" class="w-40 bg-background/95 backdrop-blur-xl z-[100000]">
+          <DropdownMenuContent
+            align="end"
+            class="w-40 bg-background/95 backdrop-blur-xl z-[100000]"
+          >
             <DropdownMenuItem as-child>
-              <a href="#admin" class="w-full cursor-pointer text-primary">{{ t('footer.supportLinks.contact') }}</a>
+              <a href="#admin" class="w-full cursor-pointer text-primary">{{
+                t('footer.supportLinks.contact')
+              }}</a>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -309,7 +363,11 @@ const changeLanguage = async (locale: Locale) => {
 
     <div
       class="absolute top-full left-0 w-full transition-all duration-300 z-10 border-b border-primary/20"
-      :class="activeMenu ? 'h-16 opacity-100 bg-primary/80 backdrop-blur-md shadow-sm' : 'h-0 opacity-0 bg-transparent pointer-events-none border-transparent'"
+      :class="
+        activeMenu
+          ? 'h-16 opacity-100 bg-primary/80 backdrop-blur-md shadow-sm'
+          : 'h-0 opacity-0 bg-transparent pointer-events-none border-transparent'
+      "
     ></div>
   </header>
 </template>

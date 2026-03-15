@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import {
-DialogContent as SheetContentPrimitive,
+  DialogContent as SheetContentPrimitive,
   DialogOverlay,
   DialogClose,
   DialogPortal, // 引入 Portal 传送门

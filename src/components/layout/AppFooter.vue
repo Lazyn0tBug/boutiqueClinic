@@ -19,42 +19,38 @@ const footerConfig = {
   socials: [
     { id: 'youtube', icon: 'ph-youtube-logo', href: '#' },
     { id: 'instagram', icon: 'ph-instagram-logo', href: '#' },
-    { id: 'twitter', icon: 'ph-twitter-logo', href: '#' }
+    { id: 'twitter', icon: 'ph-twitter-logo', href: '#' },
   ],
   legal: [
     { id: 'privacy', labelKey: 'footer.legal.privacy', href: '#' },
-    { id: 'terms', labelKey: 'footer.legal.terms', href: '#' }
+    { id: 'terms', labelKey: 'footer.legal.terms', href: '#' },
   ],
   medicalServices: [
     { id: 'featured', labelKey: 'nav.servicesMenu.featured', href: '#services' },
     { id: 'pharmacy', labelKey: 'nav.pharmacy', href: '#pharmacy' },
     { id: 'cases', labelKey: 'nav.cases', href: '#information' },
-    { id: 'partners', labelKey: 'nav.partners', href: '#partners' }
-  ]
+    { id: 'partners', labelKey: 'nav.partners', href: '#partners' },
+  ],
 }
 
 // ==========================================
 //  [重构核心 2] CVA 样式变体
 // ==========================================
-const footerLinkVariants = cva(
-  "transition-colors",
-  {
-    variants: {
-      type: {
-        social: "text-white/70 hover:text-white text-2xl",
-        legal: "hover:text-white",
-        nav: "text-white/80 hover:text-white"
-      }
-    }
-  }
-)
+const footerLinkVariants = cva('transition-colors', {
+  variants: {
+    type: {
+      social: 'text-white/70 hover:text-white text-2xl',
+      legal: 'hover:text-white',
+      nav: 'text-white/80 hover:text-white',
+    },
+  },
+})
 </script>
 
 <template>
   <footer class="bg-primary text-primary-foreground border-t border-white/10">
     <Container class="py-10 md:py-16 lg:py-20">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-        
         <div class="lg:col-span-5 flex flex-col items-start">
           <div class="flex items-center gap-3 font-bold text-xl md:text-2xl tracking-tight mb-5">
             <i class="ph-fill ph-cross text-white text-2xl md:text-3xl mt-0.5"></i>
@@ -96,9 +92,10 @@ const footerLinkVariants = cva(
 
         <div class="lg:col-span-7">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 md:gap-12">
-            
             <div class="hidden lg:flex flex-col gap-6">
-              <h5 class="text-sm font-bold tracking-widest text-white border-b border-white/10 pb-3">
+              <h5
+                class="text-sm font-bold tracking-widest text-white border-b border-white/10 pb-3"
+              >
                 {{ t('footer.medicalServices') }}
               </h5>
               <ul class="space-y-4 text-sm font-medium">
@@ -111,7 +108,9 @@ const footerLinkVariants = cva(
             </div>
 
             <div class="flex flex-col gap-6">
-              <h5 class="text-sm font-bold tracking-widest text-white border-b border-white/10 pb-3">
+              <h5
+                class="text-sm font-bold tracking-widest text-white border-b border-white/10 pb-3"
+              >
                 {{ t('footer.supportLinks.contact') }}
               </h5>
               <div class="space-y-5 text-sm">
