@@ -93,12 +93,12 @@ const desktopSubLinkVariants = cva(
 
 // 3. 移动端菜单项
 const mobileLinkVariants = cva(
-  "rounded-xl px-3 py-2.5 text-sm font-medium transition-colors flex items-center",
+  "w-full flex items-center gap-3 rounded-xl transition-colors",
   {
     variants: {
       type: {
-        normal: "text-foreground/80 hover:bg-muted hover:text-foreground", 
-        subItem: "text-foreground/80 hover:text-primary hover:bg-background gap-3 bg-background/50 border border-border/40 shadow-sm"
+        normal: "px-4 py-3 text-base font-medium text-foreground hover:bg-muted/50",
+        subItem: "px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
       }
     },
     defaultVariants: { type: "normal" }
@@ -161,15 +161,14 @@ const changeLanguage = async (locale: Locale) => {
               </SheetDescription>
               
             </SheetHeader>
-            <nav class="flex flex-col gap-2 mt-6">
-              
+            <nav class="flex flex-col gap-2 mt-8">
               <template v-for="item in navConfig" :key="item.id">
-                <div v-if="item.isDropdown" class="bg-primary/5 rounded-2xl p-3 border border-primary/10">
-                  <div class="font-semibold text-sm text-primary px-2 pb-3 flex items-center gap-2">
-                    <i class="ph-fill ph-squares-four text-base"></i>
+                
+                <div v-if="item.isDropdown" class="flex flex-col mb-2">
+                  <div class="px-4 py-2 text-xs font-bold tracking-wider text-muted-foreground uppercase">
                     {{ t(item.labelKey) }}
                   </div>
-                  <div class="flex flex-col gap-2">
+                  <div class="flex flex-col mt-1 space-y-1">
                     <a 
                       v-for="sub in item.subItems" 
                       :key="sub.id" 
@@ -177,8 +176,8 @@ const changeLanguage = async (locale: Locale) => {
                       :class="cn(mobileLinkVariants({ type: 'subItem' }))" 
                       @click="isMobileMenuOpen = false"
                     >
-                      <div class="bg-background shadow-sm p-1.5 rounded-lg text-primary flex items-center justify-center">
-                        <i class="ph-fill text-base" :class="sub.icon"></i>
+                      <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-muted/50 text-foreground shrink-0">
+                        <i :class="['ph-fill text-lg', sub.icon]"></i>
                       </div>
                       {{ t(sub.labelKey) }}
                     </a>
@@ -196,7 +195,6 @@ const changeLanguage = async (locale: Locale) => {
                   {{ t(item.labelKey) }}
                 </a>
               </template>
-
             </nav>
           </SheetContent>
         </Sheet>

@@ -204,7 +204,8 @@ const partners = computed<Partner[]>(() => [
 
 <template>
   <main class="flex-1">
-    <div class="relative w-full h-[75vh] min-h-[500px] flex items-center justify-center overflow-hidden border-b border-border bg-background">
+    <div class="relative w-full flex items-center justify-center overflow-hidden border-b border-border bg-background pt-32 pb-20 md:pt-40 md:pb-32 lg:pt-48 lg:pb-40">
+      
       <div class="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop"
@@ -214,7 +215,7 @@ const partners = computed<Partner[]>(() => [
         <div class="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
       </div>
 
-      <Container as="header" size="lg" class="relative z-10 w-full text-center py-20 page-container">
+      <Container as="header" size="lg" class="relative z-10 w-full text-center page-container">
         <div class="inline-flex items-center rounded-full border border-border bg-background/80 backdrop-blur-md px-3 py-1 text-sm font-medium mb-8 text-foreground shadow-sm">
           <span class="flex h-2 w-2 rounded-full bg-primary mr-2"></span>
           {{ t('hero.badge') }}
