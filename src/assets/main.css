@@ -218,6 +218,19 @@
   form:has(:invalid:not(:focus)) button[type='submit'] { opacity: 0.5; cursor: not-allowed; }
   figure:has(img[alt]) figcaption { display: block; }
 
+  /* 移動端橫向滑動，桌面端自動轉為 Grid 網格的萬用容器 */
+  .mobile-swipe-row {
+    @apply flex md:grid gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-4 px-4 md:mx-0 md:px-0 pb-6 md:pb-0;
+    scrollbar-width: none; /* 隱藏 Firefox 滾動條 */
+  }
+  .mobile-swipe-row::-webkit-scrollbar {
+    display: none; /* 隱藏 Chrome/Safari 滾動條 */
+  }
+  /* 搭配使用的子卡片吸附設定 */
+  .mobile-swipe-card {
+    @apply shrink-0 snap-center ;
+  }
+
   /* ⚠️ 技术债提示：
     项目已使用 src/components/ui/button 与 card 的 Vue 组件。
     强烈建议未来完全移除 .sh-btn 和 .shadcn-card，全量迁移到 Vue CVA 变体中管理。
